@@ -14,7 +14,7 @@
 
         body {
             margin: 0;
-            background-color: var(--rm-white);
+            background: url('https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/header/pattern.png'), #f4f4f4;
             color: var(--rm-navy);
             font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
@@ -31,7 +31,7 @@
         .loader-logo { height: 100px; width: auto; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(0.9); } 50% { transform: scale(1.05); } 100% { transform: scale(0.9); } }
 
-        /* --- MENU (MAX LEWO) --- */
+        /* --- MENU --- */
         .header-main { 
             background: var(--rm-white); 
             border-bottom: 1px solid #EEE; 
@@ -46,14 +46,9 @@
         .nav-left { display: flex; align-items: center; }
         .logo-nav { height: 50px; width: auto; margin-right: 25px; }
         .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-        .nav-links li { 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            font-size: 0.85rem; 
-            cursor: pointer; 
-        }
+        .nav-links li { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; cursor: pointer; }
 
-        /* DROPDOWN JĘZYKÓW */
+        /* JĘZYKI */
         .lang-container { position: relative; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
         .lang-list { 
             display: none; position: absolute; right: 0; top: 100%; 
@@ -61,60 +56,78 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
         .lang-container:hover .lang-list { display: block; }
-        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f9f9f9; text-decoration: none; color: inherit; }
+        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f9f9f9; cursor: pointer; }
         .lang-item:hover { background: #f4f4f4; }
         .lang-item img { width: 18px; height: auto; }
 
-        /* --- MATCH CENTRE (WYŚRODKOWANE) --- */
-        .match-centre { 
-            background-color: var(--rm-darker); 
-            color: white; 
-            padding: 40px 20px; 
-            text-align: center;
+        /* --- MATCH CENTRE (EFEKT SZKŁA) --- */
+        .match-centre-wrapper {
+            background: linear-gradient(rgba(8, 22, 51, 0.9), rgba(0, 28, 88, 0.8)), url('https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/header/pattern.png');
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
         }
+
+        .match-centre-glass {
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.05); /* Przezroczystość bieli */
+            backdrop-filter: blur(15px); /* Efekt rozmycia szkła */
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
         .mc-main-row { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             gap: 40px; 
-            font-size: 1.8rem; 
-            font-weight: 700; 
+            font-size: 2rem; 
+            font-weight: 800; 
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
+
         .mc-score-box { 
-            background: rgba(255, 255, 255, 0.1); 
+            background: var(--rm-gold); 
+            color: var(--rm-navy);
             padding: 5px 25px; 
             border-radius: 4px; 
             font-weight: 900;
         }
-        
-        /* DOLNA SEKCJA Z KRESKĄ */
-        .mc-details-container {
-            display: inline-flex;
+
+        /* BLOK INFORMACJI PO LEWEJ Z KRESKĄ */
+        .mc-footer-left {
+            display: flex;
             flex-direction: column;
             align-items: flex-start;
             text-align: left;
-            border-left: 3px solid var(--rm-gold);
-            padding-left: 15px;
+            border-left: 4px solid var(--rm-gold);
+            padding-left: 20px;
         }
-        .mc-comp-info {
+
+        .mc-comp-title {
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
-        .mc-sub-text {
-            font-size: 0.85rem;
-            opacity: 0.7;
+
+        .mc-date-info {
+            font-size: 0.9rem;
+            opacity: 0.8;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         /* --- HERO --- */
-        .hero { padding: 100px 20px; text-align: center; }
-        .hero h1 { font-size: 4rem; font-weight: 900; margin: 0; color: var(--rm-navy); }
+        .hero { padding: 120px 20px; text-align: center; }
+        .hero h1 { font-size: 5rem; font-weight: 900; margin: 0; color: var(--rm-navy); letter-spacing: -2px; }
         .hero h1 span { color: #0055ff; }
     </style>
 </head>
@@ -147,12 +160,14 @@
         </nav>
     </header>
 
-    <div class="match-centre" id="mc-wrap">
-        </div>
+    <div class="match-centre-wrapper">
+        <div class="match-centre-glass" id="mc-display">
+            </div>
+    </div>
 
     <section class="hero">
         <h1 id="hero-title"><span>DYNAMO</span> WROCŁAW</h1>
-        <p id="hero-sub">OFFICIAL WEBSITE</p>
+        <p style="font-weight: 800; opacity: 0.5; letter-spacing: 5px;">STRONA OFICJALNA</p>
     </section>
 
     <script>
@@ -179,27 +194,22 @@
 
         function renderMatch() {
             const now = new Date();
-            // Szukamy ostatniego meczu do wyświetlenia wyniku (do 48h po)
-            const lastMatch = [...matches].reverse().find(m => m.date < now);
-            const isWithin48h = lastMatch && (now - lastMatch.date) < (48 * 60 * 60 * 1000);
+            const last = [...matches].reverse().find(m => m.date < now);
+            const isWithin48h = last && (now - last.date) < (48 * 60 * 60 * 1000);
+            const active = isWithin48h ? last : matches.find(m => m.date > now);
             
-            // Jeśli nie ma wyniku w ciągu 48h, bierzemy następny mecz
-            const active = isWithin48h ? lastMatch : matches.find(m => m.date > now);
+            const mc = document.getElementById('mc-display');
+            const dateStr = active.date.toLocaleDateString('pl-PL');
             
-            if (!active) return;
-
-            const mc = document.getElementById('mc-wrap');
             mc.innerHTML = `
                 <div class="mc-main-row">
                     <span>${active.home}</span>
                     <div class="mc-score-box">${active.score}</div>
                     <span>${active.away}</span>
                 </div>
-                <div class="mc-details-container">
-                    <div class="mc-comp-info">${active.comp} • ${active.kolejka}</div>
-                    <div class="mc-sub-text">
-                        ${active.date.toLocaleDateString('pl-PL')} • ${active.venue}
-                    </div>
+                <div class="mc-footer-left">
+                    <div class="mc-comp-title">${active.comp} • ${active.kolejka}</div>
+                    <div class="mc-date-info">${dateStr} • ${active.venue}</div>
                 </div>
             `;
         }
