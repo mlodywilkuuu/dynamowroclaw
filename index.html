@@ -7,29 +7,16 @@
     <style>
         :root {
             --rm-navy: #001C58;
-            --rm-darker: #081633;
             --rm-white: #FFFFFF;
             --rm-gold: #FEBE10;
         }
 
         body {
             margin: 0;
-            background: url('https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/header/pattern.png'), #f4f4f4;
+            background-color: #f4f4f4;
             color: var(--rm-navy);
             font-family: 'Segoe UI', sans-serif;
-            overflow-x: hidden;
         }
-
-        /* --- PRELOADER --- */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: #fff;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s ease;
-        }
-        .loader-logo { height: 100px; width: auto; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(0.9); } 50% { transform: scale(1.05); } 100% { transform: scale(0.9); } }
 
         /* --- MENU --- */
         .header-main { 
@@ -38,10 +25,7 @@
             position: sticky; top: 0; z-index: 1000; 
         }
         .nav-container { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 15px; 
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; 
         }
         .nav-left { display: flex; align-items: center; }
         .logo-nav { height: 50px; width: auto; margin-right: 25px; }
@@ -56,118 +40,109 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
         .lang-container:hover .lang-list { display: block; }
-        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f9f9f9; cursor: pointer; }
-        .lang-item:hover { background: #f4f4f4; }
-        .lang-item img { width: 18px; height: auto; }
+        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
-        /* --- MATCH CENTRE (EFEKT SZKŁA) --- */
-        .match-centre-wrapper {
-            background: linear-gradient(rgba(8, 22, 51, 0.9), rgba(0, 28, 88, 0.8)), url('https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/header/pattern.png');
-            padding: 40px 0;
+        /* --- MATCH CENTRE: EFEKT SZKŁA I GRADIENT NA CAŁEJ STREFIE --- */
+        .match-centre-zone {
+            /* Gradient niebiesko-biały z efektem szkła */
+            background: linear-gradient(135deg, rgba(0, 28, 88, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 25px 0;
+            width: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
+            color: var(--rm-navy); /* Ciemny tekst dla kontrastu na jasnym fragmencie gradientu */
         }
 
-        .match-centre-glass {
-            width: 90%;
-            max-width: 1200px;
-            background: rgba(255, 255, 255, 0.05); /* Przezroczystość bieli */
-            backdrop-filter: blur(15px); /* Efekt rozmycia szkła */
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            color: white;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        .mc-main-row { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 40px; 
-            font-size: 2rem; 
-            font-weight: 800; 
-            text-transform: uppercase;
-            margin-bottom: 30px;
-        }
-
-        .mc-score-box { 
-            background: var(--rm-gold); 
-            color: var(--rm-navy);
-            padding: 5px 25px; 
-            border-radius: 4px; 
-            font-weight: 900;
-        }
-
-        /* BLOK INFORMACJI PO LEWEJ Z KRESKĄ */
-        .mc-footer-left {
+        .mc-content-row {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            width: 95%;
+        }
+
+        /* LEWA STRONA: KRESKA + INFO */
+        .mc-info-block {
             border-left: 4px solid var(--rm-gold);
             padding-left: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .mc-comp-title {
+        .mc-comp-line {
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 5px;
         }
 
-        .mc-date-info {
-            font-size: 0.9rem;
+        .mc-date-line {
+            font-size: 0.85rem;
             opacity: 0.8;
-            text-transform: uppercase;
             font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* ŚRODEK: MECZ W JEDNEJ LINII */
+        .mc-match-line {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .mc-score-pill {
+            background: var(--rm-navy);
+            color: white;
+            padding: 6px 25px;
+            border-radius: 4px;
+            font-size: 1.4rem;
         }
 
         /* --- HERO --- */
-        .hero { padding: 120px 20px; text-align: center; }
-        .hero h1 { font-size: 5rem; font-weight: 900; margin: 0; color: var(--rm-navy); letter-spacing: -2px; }
+        .hero { padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 4.5rem; font-weight: 900; margin: 0; color: var(--rm-navy); }
         .hero h1 span { color: #0055ff; }
     </style>
 </head>
 <body>
-
-    <div id="preloader">
-        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="loader-logo">
-    </div>
 
     <header class="header-main">
         <nav class="nav-container">
             <div class="nav-left">
                 <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
                 <ul class="nav-links">
-                    <li onclick="location.reload()" id="txt-home">Start</li>
-                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')" id="txt-sched">Terminarz</li>
-                    <li id="txt-table">Tabela</li>
-                    <li id="txt-team">Drużyna</li>
+                    <li onclick="location.reload()">Start</li>
+                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')">Terminarz</li>
+                    <li>Tabela</li>
+                    <li>Drużyna</li>
                 </ul>
             </div>
-            
             <div class="lang-container">
                 🌐 <span id="current-lang">PL</span>
                 <div class="lang-list">
-                    <div class="lang-item" onclick="setLang('pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</div>
-                    <div class="lang-item" onclick="setLang('en')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</div>
-                    <div class="lang-item" onclick="setLang('ru')"><img src="https://flagcdn.com/w20/ru.png"> PUSSKIY</div>
+                    <div class="lang-item" onclick="setLang('pl')">POLSKI</div>
+                    <div class="lang-item" onclick="setLang('en')">ENGLISH</div>
+                    <div class="lang-item" onclick="setLang('ru')">PUSSKIY</div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="match-centre-wrapper">
-        <div class="match-centre-glass" id="mc-display">
+    <div class="match-centre-zone">
+        <div class="mc-content-row" id="mc-data">
             </div>
     </div>
 
     <section class="hero">
-        <h1 id="hero-title"><span>DYNAMO</span> WROCŁAW</h1>
-        <p style="font-weight: 800; opacity: 0.5; letter-spacing: 5px;">STRONA OFICJALNA</p>
+        <h1><span>DYNAMO</span> WROCŁAW</h1>
+        <p style="font-weight: 800; opacity: 0.4; letter-spacing: 4px;">OFFICIAL WEBSITE</p>
     </section>
 
     <script>
@@ -198,44 +173,28 @@
             const isWithin48h = last && (now - last.date) < (48 * 60 * 60 * 1000);
             const active = isWithin48h ? last : matches.find(m => m.date > now);
             
-            const mc = document.getElementById('mc-display');
+            const mc = document.getElementById('mc-data');
             const dateStr = active.date.toLocaleDateString('pl-PL');
             
             mc.innerHTML = `
-                <div class="mc-main-row">
-                    <span>${active.home}</span>
-                    <div class="mc-score-box">${active.score}</div>
-                    <span>${active.away}</span>
+                <div class="mc-info-block">
+                    <div class="mc-comp-line">${active.comp} • ${active.kolejka}</div>
+                    <div class="mc-date-line">${dateStr} • ${active.venue}</div>
                 </div>
-                <div class="mc-footer-left">
-                    <div class="mc-comp-title">${active.comp} • ${active.kolejka}</div>
-                    <div class="mc-date-info">${dateStr} • ${active.venue}</div>
+                
+                <div class="mc-match-line">
+                    <span>${active.home}</span>
+                    <div class="mc-score-pill">${active.score}</div>
+                    <span>${active.away}</span>
                 </div>
             `;
         }
 
-        const dict = {
-            pl: { home: "Start", sched: "Terminarz", table: "Tabela", team: "Drużyna" },
-            en: { home: "Home", sched: "Schedule", table: "Table", team: "Team" },
-            ru: { home: "Главная", sched: "Расписание", table: "Таблица", team: "Команда" }
-        };
-
         function setLang(l) {
-            document.getElementById('txt-home').innerText = dict[l].home;
-            document.getElementById('txt-sched').innerText = dict[l].sched;
-            document.getElementById('txt-table').innerText = dict[l].table;
-            document.getElementById('txt-team').innerText = dict[l].team;
             document.getElementById('current-lang').innerText = l.toUpperCase();
         }
 
-        window.onload = () => {
-            renderMatch();
-            setTimeout(() => { 
-                const pre = document.getElementById('preloader');
-                pre.style.opacity = '0';
-                setTimeout(() => pre.style.display='none', 800);
-            }, 2000);
-        };
+        window.onload = renderMatch;
     </script>
 </body>
 </html>
