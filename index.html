@@ -33,8 +33,8 @@
         .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
         .nav-links li { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; cursor: pointer; }
 
-        /* MENU JĘZYKÓW Z FLAGAMI */
-        .lang-container { position: relative; cursor: pointer; }
+        /* MENU JĘZYKÓW */
+        .lang-container { position: relative; cursor: pointer; z-index: 1001; }
         .lang-active { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.8rem; padding: 5px 10px; border-radius: 4px; background: #f4f4f4; }
         .lang-list { 
             display: none; position: absolute; right: 0; top: 100%; 
@@ -46,7 +46,7 @@
         .lang-item:hover { background: var(--rm-navy); color: white; }
         .lang-item img { width: 20px; height: auto; border-radius: 2px; }
 
-        /* --- MATCH CENTRE: PEŁNY PASEK SZKŁO + GRADIENT --- */
+        /* --- MATCH CENTRE: FULL GLASS --- */
         .match-centre-bar {
             width: 100%;
             background: linear-gradient(90deg, rgba(0, 28, 88, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
@@ -58,44 +58,22 @@
             align-items: center;
         }
 
-        .mc-wrapper {
-            width: 100%;
-            padding: 0 30px;
-            display: flex;
-            align-items: center;
-        }
+        .mc-wrapper { width: 100%; padding: 0 30px; display: flex; align-items: center; }
 
-        /* INFO PO LEWEJ */
-        .mc-info-left {
-            border-left: 3px solid var(--rm-gold);
-            padding-left: 15px;
-            flex: 1; /* Spycha środek na miejsce */
-        }
+        .mc-info-left { border-left: 3px solid var(--rm-gold); padding-left: 15px; flex: 1; }
         .mc-info-left span { display: block; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
         .mc-comp { font-weight: 800; font-size: 0.85rem; margin-bottom: 2px; }
         .mc-meta { font-weight: 600; font-size: 0.75rem; opacity: 0.8; }
 
-        /* MECZ NA ŚRODKU */
         .mc-match-center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            flex: 2;
+            display: flex; align-items: center; justify-content: center; gap: 25px; 
+            font-size: 1.5rem; font-weight: 800; text-transform: uppercase; flex: 2;
         }
         .mc-score {
-            background: var(--rm-navy);
-            color: white;
-            padding: 5px 25px;
-            border-radius: 4px;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: var(--rm-navy); color: white; padding: 5px 25px; border-radius: 4px;
+            font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-
-        .mc-spacer-right { flex: 1; } /* Równowaga dla lewej strony */
+        .mc-spacer-right { flex: 1; }
 
         /* --- HERO --- */
         .hero { padding: 120px 20px; text-align: center; }
@@ -110,64 +88,71 @@
             <div class="nav-left">
                 <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
                 <ul class="nav-links">
-                    <li onclick="location.reload()">Start</li>
-                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')">Terminarz</li>
-                    <li>Tabela</li>
-                    <li>Drużyna</li>
+                    <li onclick="location.reload()" data-key="nav_start">Start</li>
+                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')" data-key="nav_sched">Terminarz</li>
+                    <li data-key="nav_table">Tabela</li>
+                    <li data-key="nav_team">Drużyna</li>
                 </ul>
             </div>
 
             <div class="lang-container">
                 <div class="lang-active" id="active-lang">
-                    <img id="current-flag" src="https://flagcdn.com/w20/pl.png" width="20"> PL
+                    <img src="https://flagcdn.com/w20/pl.png" width="20"> PL
                 </div>
                 <div class="lang-list">
-                    <div class="lang-item" onclick="changeLang('pl', 'PL', 'pl')">
-                        <img src="https://flagcdn.com/w20/pl.png"> POLSKI
-                    </div>
-                    <div class="lang-item" onclick="changeLang('en', 'EN', 'gb')">
-                        <img src="https://flagcdn.com/w20/gb.png"> ENGLISH
-                    </div>
-                    <div class="lang-item" onclick="changeLang('ru', 'RU', 'ru')">
-                        <img src="https://flagcdn.com/w20/ru.png"> PUSSKIY
-                    </div>
-                    <div class="lang-item" onclick="changeLang('es', 'ES', 'es')">
-                        <img src="https://flagcdn.com/w20/es.png"> ESPAÑOL
-                    </div>
+                    <div class="lang-item" onclick="changeLang('pl', 'PL', 'pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</div>
+                    <div class="lang-item" onclick="changeLang('en', 'EN', 'gb')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</div>
+                    <div class="lang-item" onclick="changeLang('ru', 'RU', 'ru')"><img src="https://flagcdn.com/w20/ru.png"> РОССИЙСКИЙ</div>
+                    <div class="lang-item" onclick="changeLang('es', 'ES', 'es')"><img src="https://flagcdn.com/w20/es.png"> ESPAÑOL</div>
                 </div>
             </div>
         </nav>
     </header>
 
     <div class="match-centre-bar">
-        <div class="mc-wrapper" id="mc-content">
-            </div>
+        <div class="mc-wrapper" id="mc-content"></div>
     </div>
 
     <section class="hero">
-        <h1><span>DYNAMO</span> WROCŁAW</h1>
-        <p style="font-weight: 800; opacity: 0.4; letter-spacing: 5px;">OFFICIAL WEBSITE</p>
+        <h1><span data-key="hero_dyn">DYNAMO</span> <span data-key="hero_wro">WROCŁAW</span></h1>
+        <p style="font-weight: 800; opacity: 0.4; letter-spacing: 5px;" data-key="hero_sub">OFFICIAL WEBSITE</p>
     </section>
 
     <script>
+        // SŁOWNIK TŁUMACZEŃ
+        const translations = {
+            pl: {
+                nav_start: "Start", nav_sched: "Terminarz", nav_table: "Tabela", nav_team: "Drużyna",
+                hero_sub: "STRONA OFICJALNA", hero_dyn: "DYNAMO", hero_wro: "WROCŁAW",
+                mc_kolejka: "Kolejka", mc_boisko: "Boisko", mc_liga: "Czwarta Liga"
+            },
+            en: {
+                nav_start: "Home", nav_sched: "Schedule", nav_table: "Standings", nav_team: "Team",
+                hero_sub: "OFFICIAL WEBSITE", hero_dyn: "DYNAMO", hero_wro: "WROCŁAW",
+                mc_kolejka: "Round", mc_boisko: "Pitch", mc_liga: "Fourth League"
+            },
+            ru: {
+                nav_start: "Главная", nav_sched: "Расписание", nav_table: "Таблица", nav_team: "Команда",
+                hero_sub: "ОФИЦИАЛЬНЫЙ САЙТ", hero_dyn: "ДИНАМО", hero_wro: "ВРОЦЛАВ",
+                mc_kolejka: "Тур", mc_boisko: "Поле", mc_liga: "Четвертая Лига"
+            },
+            es: {
+                nav_start: "Inicio", nav_sched: "Calendario", nav_table: "Clasificación", nav_team: "Equipo",
+                hero_sub: "SITIO OFICIAL", hero_dyn: "DYNAMO", hero_wro: "WROCŁAW",
+                mc_kolejka: "Jornada", mc_boisko: "Campo", mc_liga: "Cuarta Liga"
+            }
+        };
+
+        let currentLang = 'pl';
+
         const matches = [
             { 
-                date: new Date('2026-04-02T20:00:00'), 
-                home: "FC Dinamo Wrocław", 
-                away: "NDR", 
-                score: "2 - 3", 
-                comp: "Czwarta Liga", 
-                kolejka: "Kolejka 1",
-                venue: "Boisko nr 3" 
+                date: new Date('2026-04-02T20:00:00'), home: "FC Dinamo Wrocław", away: "NDR", 
+                score: "2 - 3", comp: "mc_liga", kolejka: 1, venue: 3 
             },
             { 
-                date: new Date('2026-04-07T19:00:00'), 
-                home: "Mocne Chłopy", 
-                away: "FC Dinamo Wrocław", 
-                score: "19:00", 
-                comp: "Czwarta Liga", 
-                kolejka: "Kolejka 2",
-                venue: "Boisko nr 1" 
+                date: new Date('2026-04-07T19:00:00'), home: "Mocne Chłopy", away: "FC Dinamo Wrocław", 
+                score: "19:00", comp: "mc_liga", kolejka: 2, venue: 1 
             }
         ];
 
@@ -178,29 +163,36 @@
             const active = isWithin48h ? last : matches.find(m => m.date > now);
             
             const mc = document.getElementById('mc-content');
-            const dateStr = active.date.toLocaleDateString('pl-PL');
+            const dateStr = active.date.toLocaleDateString(currentLang === 'en' ? 'en-GB' : 'pl-PL');
+            const t = translations[currentLang];
             
             mc.innerHTML = `
                 <div class="mc-info-left">
-                    <span class="mc-comp">${active.comp} • ${active.kolejka}</span>
-                    <span class="mc-meta">${dateStr} • ${active.venue}</span>
+                    <span class="mc-comp">${t[active.comp]} • ${t.mc_kolejka} ${active.kolejka}</span>
+                    <span class="mc-meta">${dateStr} • ${t.mc_boisko} nr ${active.venue}</span>
                 </div>
-                
                 <div class="mc-match-center">
                     <span>${active.home}</span>
                     <div class="mc-score">${active.score}</div>
                     <span>${active.away}</span>
                 </div>
-
                 <div class="mc-spacer-right"></div>
             `;
         }
 
-        function changeLang(code, label, flag) {
-            document.getElementById('active-lang').innerHTML = `
-                <img src="https://flagcdn.com/w20/${flag}.png" width="20"> ${label}
-            `;
-            // Tutaj możesz dodać logikę zmiany tekstów na stronie
+        function changeLang(lang, label, flag) {
+            currentLang = lang;
+            // Zmiana flagi w menu
+            document.getElementById('active-lang').innerHTML = `<img src="https://flagcdn.com/w20/${flag}.png" width="20"> ${label}`;
+            
+            // Tłumaczenie statycznych elementów
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                el.innerText = translations[lang][key];
+            });
+
+            // Ponowne renderowanie meczu z nowym językiem
+            renderMatch();
         }
 
         window.onload = renderMatch;
