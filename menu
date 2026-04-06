@@ -1,0 +1,78 @@
+<style>
+    .club-nav {
+        background-color: #1a1a1a;
+        padding: 0.5rem 2rem;
+        display: flex;
+        justify-content: flex-end; /* Przyciski i logo do prawej */
+        align-items: center;
+        border-bottom: 3px solid #00ff00;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .club-nav ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        margin-right: 20px;
+    }
+
+    .club-nav ul li {
+        margin: 0 15px;
+    }
+
+    .club-nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: 0.3s;
+    }
+
+    .club-nav ul li a:hover {
+        color: #00ff00;
+    }
+
+    .club-logo-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .club-logo {
+        height: 50px; /* Wysokość loga */
+        width: 50px;
+        border-radius: 50%;
+        border: 2px solid #00ff00;
+        object-fit: cover;
+    }
+
+    /* Wygląd na telefonie */
+    @media (max-width: 768px) {
+        .club-nav {
+            flex-direction: column-reverse;
+            padding: 1rem;
+        }
+        .club-nav ul {
+            margin-right: 0;
+            margin-top: 15px;
+        }
+        .club-nav ul li {
+            margin: 0 8px;
+        }
+    }
+</style>
+
+<nav class="club-nav">
+    <ul>
+        <li><a href="#start">Start</a></li>
+        <li><a href="#terminarz">Terminarz</a></li>
+        <li><a href="#tabela">Tabela</a></li>
+        <li><a href="#druzyna">Drużyna</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+
+    <div class="club-logo-container">
+        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo">
+    </div>
+</nav>
