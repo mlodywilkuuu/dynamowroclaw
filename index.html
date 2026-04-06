@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FC Dynamo Wrocław | Oficjalna Strona</title>
+    <title>FC Dynamo Wrocław | Official Website</title>
     <style>
         :root {
             --rm-navy: #001C58;
@@ -20,21 +20,18 @@
             overflow-x: hidden;
         }
 
-        /* --- PRELOADER (3 SEKUNDY) --- */
+        /* --- PRELOADER --- */
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(135deg, #ffffff 0%, #0055ff 100%);
+            background: #fff;
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 1s ease;
+            z-index: 9999; transition: opacity 0.8s ease;
         }
-        .loader-logo {
-            height: 120px; width: auto; border-radius: 50%;
-            background: white; padding: 10px; animation: pulse 2s infinite;
-        }
+        .loader-logo { height: 100px; width: auto; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(0.9); } 50% { transform: scale(1.05); } 100% { transform: scale(0.9); } }
 
-        /* --- MENU (MAX LEWO, BEZ #) --- */
+        /* --- MENU (MAX LEWO + JĘZYKI) --- */
         .header-main { 
             background: var(--rm-white); 
             border-bottom: 1px solid #EEE; 
@@ -42,66 +39,75 @@
         }
         .nav-container { 
             display: flex; 
-            justify-content: flex-start; /* Wszystko do lewej */
+            justify-content: space-between; 
             align-items: center; 
             padding: 10px 15px; 
         }
-        .logo-nav { height: 55px; width: auto; margin-right: 30px; }
-        .nav-links { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
+        .nav-left { display: flex; align-items: center; }
+        .logo-nav { height: 50px; width: auto; margin-right: 25px; }
+        .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
         .nav-links li { 
             font-weight: 700; 
             text-transform: uppercase; 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             cursor: pointer; 
-            letter-spacing: 0.5px;
         }
-        .nav-links li:hover { color: #0055ff; }
 
-        /* --- MATCH CENTRE (STYL REAL MADRYT) --- */
+        /* DROPDOWN JĘZYKÓW */
+        .lang-container { position: relative; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
+        .lang-list { 
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: white; border: 1px solid #eee; min-width: 120px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+        .lang-container:hover .lang-list { display: block; }
+        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f9f9f9; }
+        .lang-item:hover { background: #f4f4f4; }
+        .lang-item img { width: 18px; height: auto; }
+
+        /* --- MATCH CENTRE (WYŚRODKOWANE) --- */
         .match-centre { 
             background-color: var(--rm-darker); 
             color: white; 
-            padding: 20px 40px; 
-            min-height: 80px;
-            display: flex;
-            align-items: center;
+            padding: 30px 20px; 
+            text-align: center;
         }
-        .mc-layout { 
+        .mc-competition-tag { 
+            color: var(--rm-gold); 
+            font-weight: 800; 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .mc-main-row { 
             display: flex; 
+            justify-content: center; 
             align-items: center; 
-            gap: 50px; 
-            width: 100%; 
+            gap: 30px; 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
         }
-        .mc-competition { 
-            border-left: 3px solid var(--rm-gold); 
-            padding-left: 15px; 
-        }
-        .mc-comp-name { display: block; font-weight: 800; font-size: 1rem; text-transform: uppercase; }
         .mc-score-box { 
             background: rgba(255, 255, 255, 0.1); 
-            padding: 5px 25px; 
+            padding: 5px 20px; 
             border-radius: 4px; 
-            font-weight: 900; 
-            font-size: 1.4rem;
+            font-weight: 900;
         }
-        .mc-teams {
-            font-size: 1.4rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        .mc-sub-details { 
+            margin-top: 15px; 
+            font-size: 0.85rem; 
+            opacity: 0.7; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
         }
 
         /* --- HERO --- */
-        .hero {
-            padding: 150px 20px;
-            text-align: center;
-            background: radial-gradient(circle, #ffffff 0%, #f0f2f5 100%);
-        }
-        .hero h1 { font-size: 4.5rem; font-weight: 900; margin: 0; color: var(--rm-navy); }
+        .hero { padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 4rem; font-weight: 900; margin: 0; color: var(--rm-navy); }
         .hero h1 span { color: #0055ff; }
-        .hero p { font-weight: 700; letter-spacing: 5px; color: #888; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -112,28 +118,36 @@
 
     <header class="header-main">
         <nav class="nav-container">
-            <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
-            <ul class="nav-links">
-                <li onclick="location.reload()">Start</li>
-                <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')">Terminarz</li>
-                <li>Tabela</li>
-                <li>Drużyna</li>
-            </ul>
+            <div class="nav-left">
+                <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
+                <ul class="nav-links">
+                    <li onclick="location.reload()" id="txt-home">Start</li>
+                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')" id="txt-sched">Terminarz</li>
+                    <li id="txt-table">Tabela</li>
+                    <li id="txt-team">Drużyna</li>
+                </ul>
+            </div>
+            
+            <div class="lang-container">
+                🌐 <span id="current-lang">PL</span>
+                <div class="lang-list">
+                    <div class="lang-item" onclick="setLang('pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</div>
+                    <div class="lang-item" onclick="setLang('en')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</div>
+                    <div class="lang-item" onclick="setLang('ru')"><img src="https://flagcdn.com/w20/ru.png"> PUSSKIY</div>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <div class="match-centre">
-        <div id="match-content" class="mc-layout">
-            </div>
-    </div>
+    <div class="match-centre" id="mc-wrap">
+        </div>
 
     <section class="hero">
-        <h1><span>DYNAMO</span> WROCŁAW</h1>
-        <p>Oficjalna Strona Klubu</p>
+        <h1 id="hero-title"><span>DYNAMO</span> WROCŁAW</h1>
+        <p id="hero-sub">OFFICIAL WEBSITE</p>
     </section>
 
     <script>
-        // Dane meczowe
         const matches = [
             { 
                 date: new Date('2026-04-02T20:00:00'), 
@@ -147,60 +161,53 @@
                 date: new Date('2026-04-07T19:00:00'), 
                 home: "Mocne Chłopy", 
                 away: "FC Dinamo Wrocław", 
-                score: null, 
+                score: "19:00", 
                 comp: "Czwarta Liga", 
                 venue: "Boisko nr 1" 
             }
         ];
 
-        function renderMatchCentre() {
+        function renderMatch() {
             const now = new Date();
-            const display = document.getElementById('match-content');
+            const last = [...matches].reverse().find(m => m.date < now);
+            const isWithin48h = last && (now - last.date) < (48 * 60 * 60 * 1000);
+            const active = isWithin48h ? last : matches.find(m => m.date > now);
             
-            // Szukamy ostatniego meczu
-            const lastPlayed = [...matches].reverse().find(m => m.date < now);
-            const isWithin48h = lastPlayed && (now - lastPlayed.date) < (48 * 60 * 60 * 1000);
-
-            if (isWithin48h) {
-                // Wyświetlaj wynik przez 48h
-                display.innerHTML = `
-                    <div class="mc-competition">
-                        <span class="mc-comp-name">${lastPlayed.comp}</span>
-                        <span style="font-size:0.7rem; opacity:0.6;">OSTATNI WYNIK</span>
-                    </div>
-                    <div class="mc-teams">
-                        ${lastPlayed.home} <span class="mc-score-box">${lastPlayed.score}</span> ${lastPlayed.away}
-                    </div>
-                    <div style="margin-left:auto; opacity:0.5; font-size:0.8rem;">${lastPlayed.venue}</div>
-                `;
-            } else {
-                // Wyświetlaj następny mecz
-                const next = matches.find(m => m.date > now);
-                if (next) {
-                    display.innerHTML = `
-                        <div class="mc-competition">
-                            <span class="mc-comp-name">${next.comp}</span>
-                            <span style="font-size:0.7rem; opacity:0.6;">NASTĘPNY MECZ</span>
-                        </div>
-                        <div class="mc-teams">
-                            ${next.home} <span class="mc-score-box" style="background:white; color:black;">VS</span> ${next.away}
-                        </div>
-                        <div style="margin-left:auto; opacity:0.5; font-size:0.8rem;">
-                            ${next.date.toLocaleDateString()} | ${next.venue}
-                        </div>
-                    `;
-                }
-            }
+            const mc = document.getElementById('mc-wrap');
+            mc.innerHTML = `
+                <span class="mc-competition-tag">${active.comp}</span>
+                <div class="mc-main-row">
+                    <span>${active.home}</span>
+                    <div class="mc-score-box">${active.score}</div>
+                    <span>${active.away}</span>
+                </div>
+                <div class="mc-sub-details">
+                    ${active.venue} • ${active.date.toLocaleDateString('pl-PL')}
+                </div>
+            `;
         }
 
-        window.addEventListener('load', () => {
-            renderMatchCentre();
+        const dict = {
+            pl: { home: "Start", sched: "Terminarz", table: "Tabela", team: "Drużyna" },
+            en: { home: "Home", sched: "Schedule", table: "Table", team: "Team" },
+            ru: { home: "Главная", sched: "Расписание", table: "Таблица", team: "Команда" }
+        };
+
+        function setLang(l) {
+            document.getElementById('txt-home').innerText = dict[l].home;
+            document.getElementById('txt-sched').innerText = dict[l].sched;
+            document.getElementById('txt-table').innerText = dict[l].table;
+            document.getElementById('txt-team').innerText = dict[l].team;
+            document.getElementById('current-lang').innerText = l.toUpperCase();
+        }
+
+        window.onload = () => {
+            renderMatch();
             setTimeout(() => { 
-                const preloader = document.getElementById('preloader');
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 1000);
-            }, 3000);
-        });
+                document.getElementById('preloader').style.opacity = '0';
+                setTimeout(() => document.getElementById('preloader').style.display='none', 800);
+            }, 2000);
+        };
     </script>
 </body>
 </html>
