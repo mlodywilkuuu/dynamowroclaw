@@ -20,6 +20,14 @@
             overflow: hidden; /* Blokuje przewijanie podczas ładowania */
         }
 
+        /* --- STYL DLA OSTRZEJSZEGO OBRAZU --- */
+        .sharp-img {
+            /* TO JEST KLUCZOWE: Wymusza ostrzejsze skalowanie na Chrome/Edge/Safari */
+            image-rendering: -webkit-optimize-contrast; 
+            image-rendering: crisp-edges;
+            image-rendering: pixelated;
+        }
+
         /* --- EKRAN ŁADOWANIA (PRELOADER) --- */
         #preloader {
             position: fixed;
@@ -27,7 +35,6 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            /* Biało-niebieski gradient klubowy */
             background: linear-gradient(135deg, #ffffff 0%, #0055ff 100%);
             display: flex;
             justify-content: center;
@@ -37,7 +44,7 @@
         }
 
         .loader-logo {
-            height: 150px; /* Nieco większe logo na starcie */
+            height: 150px;
             width: 150px;
             border-radius: 50%;
             background: white;
@@ -45,6 +52,7 @@
             border: 5px solid white;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             animation: pulseLogo 2s infinite ease-in-out;
+            object-fit: contain;
         }
 
         @keyframes pulseLogo {
@@ -53,10 +61,7 @@
             100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
 
-        #preloader.fade-out { 
-            opacity: 0; 
-            visibility: hidden; 
-        }
+        #preloader.fade-out { opacity: 0; visibility: hidden; }
 
         /* --- NAWIGACJA SZKLANA --- */
         .club-nav {
@@ -81,6 +86,7 @@
             border-radius: 50%;
             border: 2px solid white;
             background: white;
+            object-fit: contain;
         }
 
         .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
@@ -95,11 +101,7 @@
         .nav-links a:hover { color: var(--club-blue); }
 
         /* --- DROPDOWN JĘZYKÓW --- */
-        .lang-dropdown {
-            position: relative;
-            padding: 10px 0;
-        }
-
+        .lang-dropdown { position: relative; padding: 10px 0; }
         .lang-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -111,40 +113,15 @@
             align-items: center;
             gap: 8px;
         }
-
         .lang-content {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: #111;
-            border: 1px solid var(--club-blue);
-            min-width: 160px;
-            border-radius: 4px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            transition-delay: 0.1s;
+            display: block; position: absolute; right: 0; top: 100%;
+            background: #111; border: 1px solid var(--club-blue);
+            min-width: 160px; border-radius: 4px;
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: all 0.3s ease; transition-delay: 0.1s;
         }
-
-        .lang-dropdown:hover .lang-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            transition-delay: 0s;
-        }
-
-        .lang-content a {
-            color: white;
-            padding: 12px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.9rem;
-        }
-
+        .lang-dropdown:hover .lang-content { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+        .lang-content a { color: white; padding: 12px; text-decoration: none; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
         .lang-content a:hover { background: var(--club-blue); }
 
         /* --- TREŚĆ --- */
@@ -157,12 +134,12 @@
 <body>
 
     <div id="preloader">
-        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Dynamo Wrocław" class="loader-logo">
+        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Dynamo Wrocław" class="loader-logo sharp-img">
     </div>
 
     <nav class="club-nav">
         <div class="nav-left">
-            <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo-nav">
+            <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo-nav sharp-img">
             <ul class="nav-links">
                 <li><a href="#" id="link-start">Start</a></li>
                 <li><a href="#" id="link-schedule">Terminarz</a></li>
@@ -189,11 +166,10 @@
     </div>
 
     <script>
-        // TŁUMACZENIA
         const translations = {
             pl: { start: "Start", schedule: "Terminarz", table: "Tabela", team: "Drużyna", title: "<span>DYNAMO</span> WROCŁAW", sub: "Strona w budowie" },
             en: { start: "Home", schedule: "Schedule", table: "Table", team: "Team", title: "<span>DYNAMO</span> WROCŁAW", sub: "Website under construction" },
-            ru: { start: "Главная", schedule: "Расписание", table: "Таблица", team: "Команда", title: "<span>ДИНАМО</span> ВРОЦЛАВ", sub: "Сайт в разработке" },
+            ru: { start: "Главная", schedule: "Расписание", table: "Таблица", team: "Команда", title: "<span>ДИНАМО</span> ВРОЦЛАВ", sub: "Сайat в разработке" },
             es: { start: "Inicio", schedule: "Horario", table: "Tabla", team: "Equipo", title: "<span>DYNAMO</span> WROCŁAW", sub: "Sitio en construcción" },
             fr: { start: "Accueil", schedule: "Calendrier", table: "Classement", team: "Équipe", title: "<span>DYNAMO</span> WROCŁAW", sub: "Site en construction" }
         };
@@ -208,14 +184,10 @@
             document.getElementById('current-lang').innerText = lang.toUpperCase();
         }
 
-        // KONTROLA PRELOADERA
         window.addEventListener('load', function() {
-            // Ekran ładowania zniknie po 3 sekundach (3000ms)
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.classList.add('fade-out');
-                
-                // Odblokowanie przewijania strony po zniknięciu loadera
                 document.body.style.overflow = 'auto';
             }, 3000); 
         });
