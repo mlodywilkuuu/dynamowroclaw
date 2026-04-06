@@ -16,30 +16,28 @@
         /* NAWIGACJA Z EFEKTEM SZKŁA */
         .club-nav {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); 
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            
-            padding: 10px 20px; /* Margines od krawędzi bocznych */
+            padding: 10px 30px;
             display: flex;
-            justify-content: flex-end; /* Cała zawartość do prawej */
+            justify-content: space-between; /* Przyciski po lewej, logo/języki po prawej */
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* Kontener na przyciski - teraz przed logo */
+        /* PRZYCISKI PO LEWEJ */
         .nav-links {
             list-style: none;
             display: flex;
             margin: 0;
             padding: 0;
-            margin-right: 15px; /* Odstęp między przyciskami a logo */
         }
 
         .nav-links li {
-            margin: 0 10px;
+            margin-right: 25px;
         }
 
         .nav-links li a {
@@ -54,27 +52,80 @@
 
         .nav-links li a:hover {
             color: #00ff00;
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
         }
 
-        /* LOGO NA MAXA PO PRAWEJ */
-        .logo-wrapper {
+        /* KONTENER PO PRAWEJ (JĘZYKI + LOGO) */
+        .nav-right {
             display: flex;
             align-items: center;
+            gap: 20px;
         }
 
+        /* DROPDOWN JĘZYKÓW */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+            margin-top: 5px;
+        }
+
+        .lang-content a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .lang-content a:hover {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .lang-dropdown:hover .lang-content {
+            display: block;
+        }
+
+        /* LOGO */
         .club-logo {
             height: 50px;
             width: 50px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.3);
             object-fit: contain;
-            background: white; /* Logo Dynamo jest ciemne, więc białe tło je wyróżni */
-            transition: transform 0.3s ease;
-        }
-
-        .club-logo:hover {
-            transform: rotate(10deg) scale(1.1);
+            background: white;
         }
 
         .hero {
@@ -82,14 +133,7 @@
             padding: 150px 20px;
         }
 
-        .hero h1 {
-            font-size: clamp(2.5rem, 10vw, 5rem);
-            margin: 0;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        .hero span {
+        .hero h1 span {
             color: #00ff00;
         }
     </style>
@@ -105,14 +149,25 @@
             <li><a href="#">Kontakt</a></li>
         </ul>
 
-        <div class="logo-wrapper">
+        <div class="nav-right">
+            <div class="lang-dropdown">
+                <button class="lang-btn">🌐 Język</button>
+                <div class="lang-content">
+                    <a href="#"><img src="https://flagcdn.com/w20/pl.png" width="20"> Polski</a>
+                    <a href="#"><img src="https://flagcdn.com/w20/gb.png" width="20"> English</a>
+                    <a href="#"><img src="https://flagcdn.com/w20/ru.png" width="20"> Pусский</a>
+                    <a href="#"><img src="https://flagcdn.com/w20/es.png" width="20"> Español</a>
+                    <a href="#"><img src="https://flagcdn.com/w20/fr.png" width="20"> Français</a>
+                </div>
+            </div>
+
             <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo">
         </div>
     </nav>
 
     <div class="hero">
         <h1><span>DYNAMO</span> WROCŁAW</h1>
-        <p style="color: rgba(255,255,255,0.4); letter-spacing: 3px; font-size: 0.9rem;">W BUDOWIE</p>
+        <p style="color: rgba(255,255,255,0.4); letter-spacing: 3px;">STRONA W BUDOWIE</p>
     </div>
 
 </body>
