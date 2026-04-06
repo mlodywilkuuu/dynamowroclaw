@@ -7,20 +7,28 @@
     <style>
         body {
             margin: 0;
-            background-color: #0b0b0b;
+            /* Ciemne tło z lekkim gradientem, żeby efekt szkła był lepiej widoczny */
+            background: radial-gradient(circle at top, #1a1a1a 0%, #0b0b0b 100%);
             color: white;
             font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
         }
 
-        /* PASEK NAWIGACJI */
+        /* NAWIGACJA Z EFEKTEM SZKŁA */
         .club-nav {
-            background-color: #1a1a1a;
-            padding: 10px 30px;
+            /* Efekt Glassmorphism */
+            background: rgba(255, 255, 255, 0.05); /* Bardzo delikatne białe tło */
+            backdrop-filter: blur(10px); /* Rozmycie tła pod menu */
+            -webkit-backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna biała linia zamiast zielonej */
+            
+            padding: 10px 40px;
             display: flex;
-            /* To przesuwa cały zestaw (linki + logo) na prawą stronę */
-            justify-content: flex-end; 
+            justify-content: flex-end; /* Przyciski i logo do prawej */
             align-items: center;
-            border-bottom: 3px solid #00ff00;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         /* Kontener na przyciski */
@@ -29,7 +37,7 @@
             display: flex;
             margin: 0;
             padding: 0;
-            margin-right: 20px; /* Odstęp między ostatnim przyciskiem a logo */
+            margin-right: 30px;
         }
 
         .nav-links li {
@@ -38,37 +46,51 @@
 
         .nav-links li a {
             text-decoration: none;
-            color: white;
-            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8); /* Lekko przezroczysty biały */
+            font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.3s;
+            letter-spacing: 1px;
         }
 
         .nav-links li a:hover {
-            color: #00ff00;
+            color: #00ff00; /* Zielony akcent tylko przy najechaniu */
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
         }
 
         /* LOGO */
         .club-logo {
-            height: 60px;
-            width: 60px;
+            height: 55px;
+            width: 55px;
             border-radius: 50%;
-            border: 2px solid #00ff00;
+            /* Delikatna obwódka pasująca do efektu szkła */
+            border: 1px solid rgba(255, 255, 255, 0.2);
             object-fit: contain;
-            background-color: white; /* Białe tło pod logo, jeśli jest przezroczyste */
-            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
         }
 
+        .club-logo:hover {
+            transform: scale(1.1); /* Logo delikatnie rośnie po najechaniu */
+        }
+
+        /* TREŚĆ STRONY */
         .hero {
             text-align: center;
-            padding: 100px 20px;
+            padding: 150px 20px;
         }
 
         .hero h1 {
-            font-size: 4rem;
-            color: #00ff00;
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            color: white;
             margin: 0;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .hero span {
+            color: #00ff00; /* Zielone Dynamo */
         }
     </style>
 </head>
@@ -87,8 +109,8 @@
     </nav>
 
     <div class="hero">
-        <h1>DYNAMO WROCŁAW</h1>
-        <p>Strona w budowie</p>
+        <h1><span>DYNAMO</span> WROCŁAW</h1>
+        <p style="color: rgba(255,255,255,0.5); letter-spacing: 2px;">W BUDOWIE</p>
     </div>
 
 </body>
