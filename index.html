@@ -13,7 +13,7 @@
             min-height: 100vh;
         }
 
-        /* NAWIGACJA Z EFEKTEM SZKŁA */
+        /* NAWIGACJA SZKLANA */
         .club-nav {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
@@ -21,23 +21,36 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px 30px;
             display: flex;
-            justify-content: space-between; /* Przyciski po lewej, logo/języki po prawej */
+            justify-content: space-between; /* Logo/Przyciski lewo, Języki prawo */
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* PRZYCISKI PO LEWEJ */
+        /* LEWA STRONA: LOGO + PRZYCISKI */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .club-logo {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            object-fit: contain;
+            background: white;
+            flex-shrink: 0;
+        }
+
         .nav-links {
             list-style: none;
             display: flex;
             margin: 0;
             padding: 0;
-        }
-
-        .nav-links li {
-            margin-right: 25px;
+            gap: 20px;
         }
 
         .nav-links li a {
@@ -54,54 +67,44 @@
             color: #00ff00;
         }
 
-        /* KONTENER PO PRAWEJ (JĘZYKI + LOGO) */
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        /* DROPDOWN JĘZYKÓW */
+        /* PRAWA STRONA: JĘZYKI */
         .lang-dropdown {
             position: relative;
             display: inline-block;
+            padding-bottom: 10px; /* Bufor, żeby menu nie znikało */
+            margin-bottom: -10px;
         }
 
         .lang-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 8px 12px;
+            padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.8rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: 0.3s;
-        }
-
-        .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
         }
 
         .lang-content {
             display: none;
             position: absolute;
             right: 0;
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(10px);
+            top: 100%; /* Pojawia się zaraz pod przyciskiem */
+            background: rgba(25, 25, 25, 0.95);
+            backdrop-filter: blur(20px);
             min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 5px;
-            z-index: 1;
-            margin-top: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
         }
 
         .lang-content a {
             color: white;
-            padding: 10px 15px;
+            padding: 12px 15px;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -112,20 +115,12 @@
 
         .lang-content a:hover {
             background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
         }
 
+        /* Pokazywanie menu */
         .lang-dropdown:hover .lang-content {
             display: block;
-        }
-
-        /* LOGO */
-        .club-logo {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            object-fit: contain;
-            background: white;
         }
 
         .hero {
@@ -141,33 +136,33 @@
 <body>
 
     <nav class="club-nav">
-        <ul class="nav-links">
-            <li><a href="#">Start</a></li>
-            <li><a href="#">Terminarz</a></li>
-            <li><a href="#">Tabela</a></li>
-            <li><a href="#">Drużyna</a></li>
-            <li><a href="#">Kontakt</a></li>
-        </ul>
-
-        <div class="nav-right">
-            <div class="lang-dropdown">
-                <button class="lang-btn">🌐 Język</button>
-                <div class="lang-content">
-                    <a href="#"><img src="https://flagcdn.com/w20/pl.png" width="20"> Polski</a>
-                    <a href="#"><img src="https://flagcdn.com/w20/gb.png" width="20"> English</a>
-                    <a href="#"><img src="https://flagcdn.com/w20/ru.png" width="20"> Pусский</a>
-                    <a href="#"><img src="https://flagcdn.com/w20/es.png" width="20"> Español</a>
-                    <a href="#"><img src="https://flagcdn.com/w20/fr.png" width="20"> Français</a>
-                </div>
-            </div>
-
+        <div class="nav-left">
             <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo">
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Start</a></li>
+                <li><a href="#">Terminarz</a></li>
+                <li><a href="#">Tabela</a></li>
+                <li><a href="#">Drużyna</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
+        </div>
+
+        <div class="lang-dropdown">
+            <button class="lang-btn">🌐 Język</button>
+            <div class="lang-content">
+                <a href="#"><img src="https://flagcdn.com/w20/pl.png" alt="PL"> Polski</a>
+                <a href="#"><img src="https://flagcdn.com/w20/gb.png" alt="EN"> English</a>
+                <a href="#"><img src="https://flagcdn.com/w20/ru.png" alt="RU"> Pусский</a>
+                <a href="#"><img src="https://flagcdn.com/w20/es.png" alt="ES"> Español</a>
+                <a href="#"><img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français</a>
+            </div>
         </div>
     </nav>
 
     <div class="hero">
         <h1><span>DYNAMO</span> WROCŁAW</h1>
-        <p style="color: rgba(255,255,255,0.4); letter-spacing: 3px;">STRONA W BUDOWIE</p>
+        <p style="color: rgba(255,255,255,0.4); letter-spacing: 3px;">OFICJALNA STRONA KLUBU</p>
     </div>
 
 </body>
