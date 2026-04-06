@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FC Dynamo Wrocław | Official Website</title>
+    <title>FC Dynamo Wrocław | Oficjalna Strona</title>
     <style>
         :root {
             --rm-navy: #001C58;
+            --rm-darker: #081633;
             --rm-white: #FFFFFF;
-            --rm-gray: #F4F4F4;
             --rm-gold: #FEBE10;
         }
 
@@ -17,132 +17,68 @@
             background-color: var(--rm-white);
             color: var(--rm-navy);
             font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* --- MENU NA MAXA DO LEWEJ --- */
-        .header-main {
-            background: var(--rm-white);
-            border-bottom: 1px solid #EEE;
-            width: 100%;
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, #ffffff 0%, #0055ff 100%);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1s ease;
         }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px; /* Minimalny margines boczny */
+        .loader-logo {
+            height: 120px; width: 120px; border-radius: 50%;
+            background: white; padding: 10px; animation: pulse 2s infinite;
         }
+        @keyframes pulse { 0% { transform: scale(0.9); } 50% { transform: scale(1.05); } 100% { transform: scale(0.9); } }
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        /* --- MENU --- */
+        .header-main { background: var(--rm-white); border-bottom: 1px solid #EEE; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .logo-nav { height: 50px; width: auto; }
+        .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
+        .nav-links li { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; cursor: pointer; }
 
-        .logo-nav {
-            height: 50px;
-            width: auto;
-        }
+        /* --- MATCH CENTRE --- */
+        .match-centre { background-color: var(--rm-darker); color: white; padding: 25px 40px; }
+        .mc-layout { display: flex; align-items: center; gap: 60px; }
+        .mc-competition { border-left: 2px solid var(--rm-gold); padding-left: 15px; }
+        .mc-score-box { background: rgba(255, 255, 255, 0.1); padding: 5px 20px; border-radius: 4px; font-weight: 900; }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--rm-navy);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- MATCH CENTRE STYL REAL MADRYT (FOTO 1) --- */
-        .match-centre {
-            background-color: #0c1c38; /* Bardzo ciemny granat ze zdjęcia */
-            color: white;
-            padding: 25px 40px;
-            display: flex;
-            align-items: center;
-            min-height: 80px;
-        }
-
-        .mc-layout {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            width: 100%;
-        }
-
-        .mc-competition {
-            border-left: 2px solid var(--rm-gold);
-            padding-left: 15px;
-        }
-
-        .mc-comp-name {
-            display: block;
-            font-weight: 800;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-        }
-
-        .mc-matchday {
-            display: block;
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-top: 2px;
-        }
-
-        .mc-main-display {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .mc-score-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px 20px;
-            border-radius: 4px;
-            font-weight: 900;
-            min-width: 60px;
+        /* --- HERO (STRONA KLUBU) --- */
+        .hero {
+            padding: 100px 20px;
             text-align: center;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2000');
+            background-size: cover;
         }
+        .hero h1 { font-size: 4rem; font-weight: 900; margin: 0; letter-spacing: -1px; }
+        .hero h1 span { color: #0055ff; }
 
-        .mc-next-time {
-            background: var(--rm-white);
-            color: var(--rm-navy);
-            padding: 5px 15px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-
-        .mc-location {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        /* --- IKABYTE SECTION --- */
+        .support-section { background-color: #0a0e1a; padding: 60px 40px; color: white; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; }
+        .support-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 30px; text-align: center; }
+        .support-btn { background: #4ade80; color: black; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
 <body>
+
+    <div id="preloader">
+        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="loader-logo">
+    </div>
 
     <header class="header-main">
         <nav class="nav-container">
             <div class="nav-left">
                 <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
                 <ul class="nav-links">
-                    <li><a href="#">Start</a></li>
-                    <li><a href="#">Terminarz</a></li>
-                    <li><a href="#">Tabela</a></li>
-                    <li><a href="#">Drużyna</a></li>
+                    <li onclick="location.reload()">Start</li>
+                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')">Terminarz</li>
+                    <li>Tabela</li>
+                    <li>Drużyna</li>
                 </ul>
             </div>
         </nav>
@@ -153,75 +89,52 @@
             </div>
     </div>
 
+    <section class="hero">
+        <h1><span>DYNAMO</span> WROCŁAW</h1>
+        <p style="font-weight: 700; letter-spacing: 3px; opacity: 0.6;">OFICJALNA STRONA KLUBU</p>
+    </section>
+
+    <section class="support-section">
+        <div class="support-text">
+            <h2 style="font-size: 2rem;">Panel Zawodnika</h2>
+            <p style="opacity: 0.6;">Sprawdź status składek i płatności IkaByte bez kontaktu z supportem.</p>
+        </div>
+        <div class="support-card">
+            <h3>Status Składki</h3>
+            <input type="text" placeholder="Wpisz ID" style="width:80%; padding:10px; margin:10px 0; border-radius:5px; border:none;">
+            <button class="support-btn">Wyślij kod na e-mail</button>
+        </div>
+        <div class="support-card">
+            <h3>Pomoc</h3>
+            <p style="font-size: 0.8rem; opacity: 0.7;">Masz problem z logowaniem?</p>
+            <button style="background:none; border:1px solid white; color:white; padding:10px; border-radius:8px; cursor:pointer; width:100%;">Centrum Pomocy</button>
+        </div>
+    </section>
+
     <script>
-        // Dane z proligawroclaw.pl
         const matches = [
-            {
-                date: new Date('2026-04-02T20:00:00'),
-                home: "FC Dinamo Wrocław",
-                away: "NDR",
-                score: "2 - 3",
-                competition: "Czwarta Liga",
-                matchday: "Kolejka 1",
-                venue: "Boisko nr 3"
-            },
-            {
-                date: new Date('2026-04-07T19:00:00'),
-                home: "Mocne Chłopy",
-                away: "FC Dinamo Wrocław",
-                score: null,
-                competition: "Czwarta Liga",
-                matchday: "Kolejka 2",
-                venue: "Boisko nr 1"
-            }
+            { date: new Date('2026-04-02T20:00:00'), home: "FC Dinamo Wrocław", away: "NDR", score: "2 - 3", comp: "Czwarta Liga", venue: "Boisko nr 3" },
+            { date: new Date('2026-04-07T19:00:00'), home: "Mocne Chłopy", away: "FC Dinamo Wrocław", score: null, comp: "Czwarta Liga", venue: "Boisko nr 1" }
         ];
 
         function renderMatchCentre() {
             const now = new Date();
             const display = document.getElementById('match-content');
-            
-            // Szukamy ostatniego meczu, który się odbył
             const lastPlayed = [...matches].reverse().find(m => m.date < now);
-            
-            // Sprawdzamy czy od ostatniego meczu minęło mniej niż 48h
             const isWithin48h = lastPlayed && (now - lastPlayed.date) < (48 * 60 * 60 * 1000);
 
             if (isWithin48h) {
-                // POKAZUJ WYNIK ZAKOŃCZONEGO MECZU
-                display.innerHTML = `
-                    <div class="mc-competition">
-                        <span class="mc-comp-name">${lastPlayed.competition}</span>
-                        <span class="mc-matchday">${lastPlayed.matchday}</span>
-                    </div>
-                    <div class="mc-main-display">
-                        <span>${lastPlayed.home}</span>
-                        <div class="mc-score-box">${lastPlayed.score}</div>
-                        <span>${lastPlayed.away}</span>
-                    </div>
-                    <div class="mc-location">${lastPlayed.venue}</div>
-                `;
+                display.innerHTML = `<div class="mc-competition"><b>${lastPlayed.comp}</b></div><div style="font-size:1.5rem; font-weight:800;">${lastPlayed.home} <span class="mc-score-box">${lastPlayed.score}</span> ${lastPlayed.away}</div><div style="margin-left:auto; opacity:0.5;">${lastPlayed.venue}</div>`;
             } else {
-                // POKAZUJ NADCHODZĄCY MECZ
-                const nextMatch = matches.find(m => m.date > now);
-                if (nextMatch) {
-                    const timeStr = nextMatch.date.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'});
-                    display.innerHTML = `
-                        <div class="mc-competition">
-                            <span class="mc-comp-name">${nextMatch.competition}</span>
-                            <span class="mc-matchday">${nextMatch.matchday}</span>
-                        </div>
-                        <div class="mc-main-display">
-                            <span>${nextMatch.home}</span>
-                            <div class="mc-next-time">${timeStr}</div>
-                            <span>${nextMatch.away}</span>
-                        </div>
-                        <div class="mc-location">${nextMatch.date.toLocaleDateString('pl-PL')} | ${nextMatch.venue}</div>
-                    `;
-                }
+                const next = matches.find(m => m.date > now);
+                display.innerHTML = `<div class="mc-competition"><b>${next.comp}</b></div><div style="font-size:1.5rem; font-weight:800;">${next.home} <span class="mc-score-box" style="background:white; color:black;">VS</span> ${next.away}</div><div style="margin-left:auto; opacity:0.5;">${next.date.toLocaleDateString()} | ${next.venue}</div>`;
             }
         }
 
-        renderMatchCentre();
+        window.addEventListener('load', () => {
+            renderMatchCentre();
+            setTimeout(() => { document.getElementById('preloader').style.display = 'none'; }, 3000);
+        });
     </script>
 </body>
 </html>
