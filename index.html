@@ -31,7 +31,7 @@
         .loader-logo { height: 100px; width: auto; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(0.9); } 50% { transform: scale(1.05); } 100% { transform: scale(0.9); } }
 
-        /* --- MENU (MAX LEWO + JĘZYKI) --- */
+        /* --- MENU (MAX LEWO) --- */
         .header-main { 
             background: var(--rm-white); 
             border-bottom: 1px solid #EEE; 
@@ -61,7 +61,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
         .lang-container:hover .lang-list { display: block; }
-        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f9f9f9; }
+        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f9f9f9; text-decoration: none; color: inherit; }
         .lang-item:hover { background: #f4f4f4; }
         .lang-item img { width: 18px; height: auto; }
 
@@ -69,38 +69,46 @@
         .match-centre { 
             background-color: var(--rm-darker); 
             color: white; 
-            padding: 30px 20px; 
+            padding: 40px 20px; 
             text-align: center;
-        }
-        .mc-competition-tag { 
-            color: var(--rm-gold); 
-            font-weight: 800; 
-            font-size: 0.7rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            display: block;
         }
         .mc-main-row { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            gap: 30px; 
-            font-size: 1.6rem; 
+            gap: 40px; 
+            font-size: 1.8rem; 
             font-weight: 700; 
             text-transform: uppercase;
+            margin-bottom: 25px;
         }
         .mc-score-box { 
             background: rgba(255, 255, 255, 0.1); 
-            padding: 5px 20px; 
+            padding: 5px 25px; 
             border-radius: 4px; 
             font-weight: 900;
         }
-        .mc-sub-details { 
-            margin-top: 15px; 
-            font-size: 0.85rem; 
-            opacity: 0.7; 
-            text-transform: uppercase; 
+        
+        /* DOLNA SEKCJA Z KRESKĄ */
+        .mc-details-container {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            border-left: 3px solid var(--rm-gold);
+            padding-left: 15px;
+        }
+        .mc-comp-info {
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .mc-sub-text {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
 
@@ -155,6 +163,7 @@
                 away: "NDR", 
                 score: "2 - 3", 
                 comp: "Czwarta Liga", 
+                kolejka: "Kolejka 1",
                 venue: "Boisko nr 3" 
             },
             { 
@@ -163,26 +172,34 @@
                 away: "FC Dinamo Wrocław", 
                 score: "19:00", 
                 comp: "Czwarta Liga", 
+                kolejka: "Kolejka 2",
                 venue: "Boisko nr 1" 
             }
         ];
 
         function renderMatch() {
             const now = new Date();
-            const last = [...matches].reverse().find(m => m.date < now);
-            const isWithin48h = last && (now - last.date) < (48 * 60 * 60 * 1000);
-            const active = isWithin48h ? last : matches.find(m => m.date > now);
+            // Szukamy ostatniego meczu do wyświetlenia wyniku (do 48h po)
+            const lastMatch = [...matches].reverse().find(m => m.date < now);
+            const isWithin48h = lastMatch && (now - lastMatch.date) < (48 * 60 * 60 * 1000);
             
+            // Jeśli nie ma wyniku w ciągu 48h, bierzemy następny mecz
+            const active = isWithin48h ? lastMatch : matches.find(m => m.date > now);
+            
+            if (!active) return;
+
             const mc = document.getElementById('mc-wrap');
             mc.innerHTML = `
-                <span class="mc-competition-tag">${active.comp}</span>
                 <div class="mc-main-row">
                     <span>${active.home}</span>
                     <div class="mc-score-box">${active.score}</div>
                     <span>${active.away}</span>
                 </div>
-                <div class="mc-sub-details">
-                    ${active.venue} • ${active.date.toLocaleDateString('pl-PL')}
+                <div class="mc-details-container">
+                    <div class="mc-comp-info">${active.comp} • ${active.kolejka}</div>
+                    <div class="mc-sub-text">
+                        ${active.date.toLocaleDateString('pl-PL')} • ${active.venue}
+                    </div>
                 </div>
             `;
         }
@@ -204,8 +221,9 @@
         window.onload = () => {
             renderMatch();
             setTimeout(() => { 
-                document.getElementById('preloader').style.opacity = '0';
-                setTimeout(() => document.getElementById('preloader').style.display='none', 800);
+                const pre = document.getElementById('preloader');
+                pre.style.opacity = '0';
+                setTimeout(() => pre.style.display='none', 800);
             }, 2000);
         };
     </script>
