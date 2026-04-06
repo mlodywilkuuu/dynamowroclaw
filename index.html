@@ -3,196 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FC Dynamo Wrocław | Official Website</title>
+    <title>Kalendarz | FC Dynamo Wrocław</title>
     <style>
         :root {
             --rm-navy: #001C58;
+            --rm-dark: #081633;
             --rm-white: #FFFFFF;
-            --rm-gold: #FEBE10;
+            --rm-accent: #0055ff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            margin: 0;
-            background-color: #f8f9fb;
-            color: var(--rm-navy);
-            font-family: 'Segoe UI', sans-serif;
-            background-image: url('https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/header/pattern.png');
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--rm-white); font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0b1324 0%, #001C58 100%);
+            background-attachment: fixed; position: relative;
         }
 
-        /* --- NAWIGACJA --- */
-        .header-main { 
-            background: var(--rm-white); 
-            border-bottom: 1px solid #EEE; 
-            position: sticky; top: 0; z-index: 1000; 
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); z-index: -1;
         }
-        .nav-container { 
-            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; 
+
+        .header-mini {
+            background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid var(--glass-border);
+            padding: 10px 30px; display: flex; justify-content: flex-end; backdrop-filter: blur(5px);
         }
-        .nav-left { display: flex; align-items: center; }
-        .logo-nav { height: 50px; width: auto; margin-right: 25px; }
-        .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
-        .nav-links li { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; cursor: pointer; }
 
         /* MENU JĘZYKÓW */
         .lang-container { position: relative; cursor: pointer; z-index: 1001; }
-        .lang-active { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.8rem; padding: 5px 10px; border-radius: 4px; background: #f4f4f4; }
+        .lang-active { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.8rem; padding: 5px 12px; border-radius: 4px; background: rgba(255,255,255,0.1); }
         .lang-list { 
             display: none; position: absolute; right: 0; top: 100%; 
-            background: white; border: 1px solid #eee; min-width: 150px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;
+            background: white; border-radius: 8px; overflow: hidden; min-width: 150px;
         }
         .lang-container:hover .lang-list { display: block; }
-        .lang-item { padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 600; transition: 0.2s; }
-        .lang-item:hover { background: var(--rm-navy); color: white; }
-        .lang-item img { width: 20px; height: auto; border-radius: 2px; }
+        .lang-item { padding: 10px; display: flex; align-items: center; gap: 10px; color: var(--rm-navy); font-size: 0.8rem; font-weight: 600; }
+        .lang-item:hover { background: #eee; }
+        .lang-item img { width: 20px; }
 
-        /* --- MATCH CENTRE: FULL GLASS --- */
-        .match-centre-bar {
-            width: 100%;
-            background: linear-gradient(90deg, rgba(0, 28, 88, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 15px 0;
-            display: flex;
-            align-items: center;
+        .calendar-header { padding: 40px 20px 20px; text-align: center; }
+        .calendar-header h1 { font-size: 3rem; font-weight: 900; text-transform: uppercase; margin: 0; }
+
+        /* PASEK MIESIĘCY */
+        .month-picker {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 50px; padding: 5px; display: flex; gap: 5px;
+            overflow-x: auto; max-width: 1000px; margin: 0 auto 40px auto;
+            scrollbar-width: none;
+        }
+        .month-btn {
+            padding: 10px 25px; border-radius: 25px; border: none;
+            background: transparent; color: rgba(255, 255, 255, 0.4);
+            font-weight: 700; cursor: pointer; transition: 0.3s; white-space: nowrap;
+        }
+        .month-btn.active { background: var(--rm-accent); color: white; }
+        .month-btn:disabled { opacity: 0.2; cursor: default; }
+
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 20px 60px 20px;
         }
 
-        .mc-wrapper { width: 100%; padding: 0 30px; display: flex; align-items: center; }
-
-        .mc-info-left { border-left: 3px solid var(--rm-gold); padding-left: 15px; flex: 1; }
-        .mc-info-left span { display: block; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
-        .mc-comp { font-weight: 800; font-size: 0.85rem; margin-bottom: 2px; }
-        .mc-meta { font-weight: 600; font-size: 0.75rem; opacity: 0.8; }
-
-        .mc-match-center {
-            display: flex; align-items: center; justify-content: center; gap: 25px; 
-            font-size: 1.5rem; font-weight: 800; text-transform: uppercase; flex: 2;
+        .match-card {
+            background: rgba(255, 255, 255, 0.95); border-radius: 16px;
+            color: var(--rm-navy); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .mc-score {
-            background: var(--rm-navy); color: white; padding: 5px 25px; border-radius: 4px;
-            font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .mc-spacer-right { flex: 1; }
-
-        /* --- HERO --- */
-        .hero { padding: 120px 20px; text-align: center; }
-        .hero h1 { font-size: 5rem; font-weight: 900; margin: 0; letter-spacing: -2px; }
-        .hero h1 span { color: #0055ff; }
+        .match-card:hover { transform: translateY(-5px); }
+        .card-header { padding: 15px 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; border-bottom: 1px solid #eee; color: #888; }
+        .card-body { padding: 25px 20px; }
+        .match-title { font-size: 1.3rem; font-weight: 900; margin: 0 0 15px 0; }
+        .match-info { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; }
+        
+        .no-matches { text-align: center; grid-column: 1 / -1; padding: 50px; opacity: 0.5; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
-    <header class="header-main">
-        <nav class="nav-container">
-            <div class="nav-left">
-                <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
-                <ul class="nav-links">
-                    <li onclick="location.href='index.html'" data-key="nav_start">Start</li>
-                    <li onclick="location.href='mecze.html'" data-key="nav_sched">Terminarz</li>
-                    <li data-key="nav_table">Tabela</li>
-                    <li data-key="nav_team">Drużyna</li>
-                </ul>
+    <nav class="header-mini">
+        <div class="lang-container">
+            <div class="lang-active" id="active-lang">
+                <img src="https://flagcdn.com/w20/pl.png" width="20"> PL
             </div>
+            <div class="lang-list">
+                <div class="lang-item" onclick="changeLang('pl', 'PL', 'pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</div>
+                <div class="lang-item" onclick="changeLang('en', 'EN', 'gb')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</div>
+                <div class="lang-item" onclick="changeLang('ru', 'RU', 'ru')"><img src="https://flagcdn.com/w20/ru.png"> РОССИЙСКИЙ</div>
+                <div class="lang-item" onclick="changeLang('es', 'ES', 'es')"><img src="https://flagcdn.com/w20/es.png"> ESPAÑOL</div>
+            </div>
+        </div>
+    </nav>
 
-            <div class="lang-container">
-                <div class="lang-active" id="active-lang">
-                    <img src="https://flagcdn.com/w20/pl.png" width="20"> PL
-                </div>
-                <div class="lang-list">
-                    <div class="lang-item" onclick="changeLang('pl', 'PL', 'pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</div>
-                    <div class="lang-item" onclick="changeLang('en', 'EN', 'gb')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</div>
-                    <div class="lang-item" onclick="changeLang('ru', 'RU', 'ru')"><img src="https://flagcdn.com/w20/ru.png"> РОССИЙСКИЙ</div>
-                    <div class="lang-item" onclick="changeLang('es', 'ES', 'es')"><img src="https://flagcdn.com/w20/es.png"> ESPAÑOL</div>
-                </div>
-            </div>
-        </nav>
+    <header class="calendar-header">
+        <h1 data-key="cal_title">Kalendarz</h1>
     </header>
 
-    <div class="match-centre-bar">
-        <div class="mc-wrapper" id="mc-content"></div>
-    </div>
+    <div class="month-picker" id="month-picker">
+        </div>
 
-    <section class="hero">
-        <h1><span data-key="hero_dyn">DYNAMO</span> <span data-key="hero_wro">WROCŁAW</span></h1>
-        <p style="font-weight: 800; opacity: 0.4; letter-spacing: 5px;" data-key="hero_sub">OFFICIAL WEBSITE</p>
-    </section>
+    <main class="calendar-grid" id="calendar-content">
+        </main>
 
     <script>
-        // SŁOWNIK TŁUMACZEŃ
         const translations = {
-            pl: {
-                nav_start: "Start", nav_sched: "Terminarz", nav_table: "Tabela", nav_team: "Drużyna",
-                hero_sub: "STRONA OFICJALNA", hero_dyn: "DYNAMO", hero_wro: "WROCŁAW",
-                mc_kolejka: "Kolejka", mc_boisko: "Boisko", mc_liga: "Czwarta Liga"
-            },
-            en: {
-                nav_start: "Home", nav_sched: "Schedule", nav_table: "Standings", nav_team: "Team",
-                hero_sub: "OFFICIAL WEBSITE", hero_dyn: "DYNAMO", hero_wro: "WROCŁAW",
-                mc_kolejka: "Round", mc_boisko: "Pitch", mc_liga: "Fourth League"
-            },
-            ru: {
-                nav_start: "Главная", nav_sched: "Расписание", nav_table: "Таблица", nav_team: "Команда",
-                hero_sub: "ОФИЦИАЛЬНЫЙ САЙТ", hero_dyn: "ДИНАМО", hero_wro: "ВРОЦЛАВ",
-                mc_kolejka: "Тур", mc_boisko: "Поле", mc_liga: "Четвертая Лига"
-            },
-            es: {
-                nav_start: "Inicio", nav_sched: "Calendario", nav_table: "Clasificación", nav_team: "Equipo",
-                hero_sub: "SITIO OFICIAL", hero_dyn: "DYNAMO", hero_wro: "WROCŁAW",
-                mc_kolejka: "Jornada", mc_boisko: "Campo", mc_liga: "Cuarta Liga"
-            }
+            pl: { cal_title: "Kalendarz", sport: "Piłka Nożna", liga: "Czwarta Liga", pitch: "Boisko nr", empty: "Brak meczów w tym miesiącu" },
+            en: { cal_title: "Calendar", sport: "Football", liga: "Fourth League", pitch: "Pitch no.", empty: "No matches this month" },
+            ru: { cal_title: "Календарь", sport: "Футбол", liga: "Четвертая Лига", pitch: "Поле №", empty: "Нет матчей в этом месяце" },
+            es: { cal_title: "Calendario", sport: "Fútbol", liga: "Cuarta Liga", pitch: "Campo nº", empty: "No hay partidos este mes" }
         };
 
-        let currentLang = 'pl';
-
         const matches = [
-            { 
-                date: new Date('2026-04-02T20:00:00'), home: "FC Dinamo Wrocław", away: "NDR", 
-                score: "2 - 3", comp: "mc_liga", kolejka: 1, venue: 3 
-            },
-            { 
-                date: new Date('2026-04-07T19:00:00'), home: "Mocne Chłopy", away: "FC Dinamo Wrocław", 
-                score: "19:00", comp: "mc_liga", kolejka: 2, venue: 1 
-            }
+            { date: new Date('2026-04-02T20:00:00'), home: "FC Dynamo Wrocław", away: "NDR", venue: "3" },
+            { date: new Date('2026-04-07T19:00:00'), home: "Mocne Chłopy", away: "FC Dynamo Wrocław", venue: "1" },
+            { date: new Date('2026-04-13T20:00:00'), home: "FC Dynamo Wrocław", away: "Klimech PRO", venue: "3" },
+            { date: new Date('2026-04-21T21:00:00'), home: "RunnersHeads", away: "FC Dynamo Wrocław", venue: "1" },
+            { date: new Date('2026-05-05T20:00:00'), home: "FC Dynamo Wrocław", away: "Przykładowy Rywal", venue: "2" }
         ];
 
-        function renderMatch() {
+        let currentLang = 'pl';
+        let selectedMonth = new Date().getMonth(); // Domyślnie obecny miesiąc
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        function initMonths() {
+            const picker = document.getElementById('month-picker');
+            picker.innerHTML = monthNames.map((name, index) => {
+                const hasMatches = matches.some(m => m.date.getMonth() === index && m.date >= new Date().setHours(0,0,0,0));
+                return `
+                    <button class="month-btn ${index === selectedMonth ? 'active' : ''}" 
+                            onclick="selectMonth(${index})" 
+                            ${!hasMatches && index !== selectedMonth ? 'disabled' : ''}>
+                        ${name}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectMonth(index) {
+            selectedMonth = index;
+            initMonths();
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-content');
             const now = new Date();
-            const last = [...matches].reverse().find(m => m.date < now);
-            const isWithin48h = last && (now - last.date) < (48 * 60 * 60 * 1000);
-            const active = isWithin48h ? last : matches.find(m => m.date > now);
-            
-            const mc = document.getElementById('mc-content');
-            const dateStr = active.date.toLocaleDateString(currentLang === 'en' ? 'en-GB' : 'pl-PL');
+            now.setHours(0,0,0,0); // Reset godziny do porównania dni
             const t = translations[currentLang];
             
-            mc.innerHTML = `
-                <div class="mc-info-left">
-                    <span class="mc-comp">${t[active.comp]} • ${t.mc_kolejka} ${active.kolejka}</span>
-                    <span class="mc-meta">${dateStr} • ${t.mc_boisko} nr ${active.venue}</span>
+            // Filtruj: Tylko wybrany miesiąc ORAZ data >= dzisiaj
+            const filtered = matches.filter(m => m.date.getMonth() === selectedMonth && m.date >= now);
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="no-matches">${t.empty}</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(m => `
+                <div class="match-card">
+                    <div class="card-header">${t.sport} • ${t.liga}</div>
+                    <div class="card-body">
+                        <h2 class="match-title">${m.home} vs ${m.away}</h2>
+                        <div class="match-info">📅 ${m.date.toLocaleDateString(currentLang == 'en' ? 'en-GB' : 'pl-PL', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}</div>
+                        <div class="match-info">📍 ${t.pitch} ${m.venue}</div>
+                    </div>
                 </div>
-                <div class="mc-match-center">
-                    <span>${active.home}</span>
-                    <div class="mc-score">${active.score}</div>
-                    <span>${active.away}</span>
-                </div>
-                <div class="mc-spacer-right"></div>
-            `;
+            `).join('');
         }
 
         function changeLang(lang, label, flag) {
             currentLang = lang;
             document.getElementById('active-lang').innerHTML = `<img src="https://flagcdn.com/w20/${flag}.png" width="20"> ${label}`;
-            
             document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                el.innerText = translations[lang][key];
+                el.innerText = translations[lang][el.getAttribute('data-key')];
             });
-
-            renderMatch();
+            renderCalendar();
         }
 
-        window.onload = renderMatch;
+        window.onload = () => {
+            initMonths();
+            renderCalendar();
+        };
     </script>
 </body>
 </html>
