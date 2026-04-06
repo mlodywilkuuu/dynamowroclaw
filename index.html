@@ -88,8 +88,8 @@
             <div class="nav-left">
                 <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="logo-nav">
                 <ul class="nav-links">
-                    <li onclick="location.reload()" data-key="nav_start">Start</li>
-                    <li onclick="window.open('https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/')" data-key="nav_sched">Terminarz</li>
+                    <li onclick="location.href='index.html'" data-key="nav_start">Start</li>
+                    <li onclick="location.href='mecze.html'" data-key="nav_sched">Terminarz</li>
                     <li data-key="nav_table">Tabela</li>
                     <li data-key="nav_team">Drużyna</li>
                 </ul>
@@ -182,16 +182,13 @@
 
         function changeLang(lang, label, flag) {
             currentLang = lang;
-            // Zmiana flagi w menu
             document.getElementById('active-lang').innerHTML = `<img src="https://flagcdn.com/w20/${flag}.png" width="20"> ${label}`;
             
-            // Tłumaczenie statycznych elementów
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 el.innerText = translations[lang][key];
             });
 
-            // Ponowne renderowanie meczu z nowym językiem
             renderMatch();
         }
 
