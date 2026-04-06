@@ -3,193 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Oficjalna Strona</title>
+    <title>FC Dynamo Wrocław | Official Website</title>
     <style>
         :root {
-            --club-blue: #0055ff;
-            --club-white: #ffffff;
-            --club-black: #050505;
+            --rm-navy: #001C58;
+            --rm-gold: #FEBE10; /* Złoty akcent Realu */
+            --rm-white: #FFFFFF;
+            --rm-gray: #F4F4F4;
         }
 
         body {
             margin: 0;
-            background: radial-gradient(circle at top, #001a4d 0%, var(--club-black) 100%);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            overflow: hidden; /* Blokuje przewijanie podczas ładowania */
+            background-color: var(--rm-white);
+            color: var(--rm-navy);
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* --- STYL DLA OSTRZEJSZEGO OBRAZU --- */
-        .sharp-img {
-            /* TO JEST KLUCZOWE: Wymusza ostrzejsze skalowanie na Chrome/Edge/Safari */
-            image-rendering: -webkit-optimize-contrast; 
-            image-rendering: crisp-edges;
-            image-rendering: pixelated;
-        }
-
-        /* --- EKRAN ŁADOWANIA (PRELOADER) --- */
+        /* --- EKRAN ŁADOWANIA --- */
         #preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, #ffffff 0%, #0055ff 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease, visibility 1s ease;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, var(--rm-white) 0%, #CCD6E5 100%);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1s ease, visibility 1s ease;
         }
-
         .loader-logo {
-            height: 150px;
-            width: 150px;
-            border-radius: 50%;
-            background: white;
-            padding: 15px;
-            border: 5px solid white;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            animation: pulseLogo 2s infinite ease-in-out;
-            object-fit: contain;
+            height: 120px; width: 120px; border-radius: 50%;
+            background: white; padding: 10px;
+            animation: pulse 2s infinite ease-in-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        @keyframes pulseLogo {
-            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 30px rgba(255, 255, 255, 0); }
-            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.8; }
         }
-
         #preloader.fade-out { opacity: 0; visibility: hidden; }
 
-        /* --- NAWIGACJA SZKLANA --- */
-        .club-nav {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        /* --- MENU STYL REAL MADRYT --- */
+        .header-main {
+            background: var(--rm-white);
+            border-bottom: 1px solid #EEE;
+            position: sticky; top: 0; z-index: 1000;
         }
-
-        .nav-left { display: flex; align-items: center; gap: 20px; }
-
-        .club-logo-nav {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            border: 2px solid white;
-            background: white;
-            object-fit: contain;
+        .nav-container {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px;
         }
-
-        .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
+        .nav-left { display: flex; align-items: center; gap: 30px; }
+        .logo-nav {
+            height: 60px; width: 60px; object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
         .nav-links a {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.8);
-            text-transform: uppercase;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: 0.3s;
+            text-decoration: none; color: var(--rm-navy);
+            font-weight: 700; text-transform: uppercase; font-size: 0.8rem;
+            letter-spacing: 1px; transition: 0.3s;
         }
-        .nav-links a:hover { color: var(--club-blue); }
+        .nav-links a:hover { color: #0055ff; }
 
-        /* --- DROPDOWN JĘZYKÓW --- */
-        .lang-dropdown { position: relative; padding: 10px 0; }
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* --- MATCH CENTRE --- */
+        .match-centre {
+            background: var(--rm-navy);
             color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.9rem;
         }
-        .lang-content {
-            display: block; position: absolute; right: 0; top: 100%;
-            background: #111; border: 1px solid var(--club-blue);
-            min-width: 160px; border-radius: 4px;
-            opacity: 0; visibility: hidden; transform: translateY(10px);
-            transition: all 0.3s ease; transition-delay: 0.1s;
+        .mc-container {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: center; align-items: center; gap: 40px;
         }
-        .lang-dropdown:hover .lang-content { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
-        .lang-content a { color: white; padding: 12px; text-decoration: none; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
-        .lang-content a:hover { background: var(--club-blue); }
+        .mc-label {
+            color: var(--rm-gold); font-weight: 800; text-transform: uppercase; font-size: 0.7rem;
+        }
+        .mc-teams { font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .mc-score {
+            background: var(--rm-gold); color: var(--rm-navy);
+            padding: 2px 10px; font-weight: 900; border-radius: 3px; margin: 0 15px;
+        }
+        .mc-info { font-size: 0.75rem; opacity: 0.8; }
 
-        /* --- TREŚĆ --- */
-        .hero { text-align: center; padding: 150px 20px; }
-        .hero h1 { font-size: clamp(3rem, 10vw, 6rem); margin: 0; letter-spacing: 5px; }
-        .hero h1 span { color: var(--club-blue); text-shadow: 0 0 30px rgba(0, 85, 255, 0.3); }
-        .status-tag { display: inline-block; margin-top: 25px; padding: 6px 20px; border: 1px solid white; text-transform: uppercase; letter-spacing: 3px; opacity: 0.7; }
+        /* --- HERO --- */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,28,88,0.1), rgba(0,28,88,0.1)), url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center;
+        }
+        .hero h1 { font-size: 4rem; font-weight: 900; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+
+        /* --- JĘZYKI --- */
+        .lang-dropdown { position: relative; cursor: pointer; font-weight: 700; font-size: 0.75rem; }
+        .lang-content {
+            display: none; position: absolute; right: 0; background: white;
+            border: 1px solid #EEE; min-width: 120px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .lang-dropdown:hover .lang-content { display: block; }
+        .lang-content a { color: var(--rm-navy); padding: 10px; display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .lang-content a:hover { background: var(--rm-gray); }
     </style>
 </head>
 <body>
 
     <div id="preloader">
-        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Dynamo Wrocław" class="loader-logo sharp-img">
+        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="loader-logo">
     </div>
 
-    <nav class="club-nav">
-        <div class="nav-left">
-            <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo-nav sharp-img">
-            <ul class="nav-links">
-                <li><a href="#" id="link-start">Start</a></li>
-                <li><a href="#" id="link-schedule">Terminarz</a></li>
-                <li><a href="#" id="link-table">Tabela</a></li>
-                <li><a href="#" id="link-team">Drużyna</a></li>
-            </ul>
-        </div>
-
-        <div class="lang-dropdown">
-            <button class="lang-btn">🌐 <span id="current-lang">Język</span></button>
-            <div class="lang-content">
-                <a href="javascript:void(0)" onclick="changeLang('pl')"><img src="https://flagcdn.com/w20/pl.png"> Polski</a>
-                <a href="javascript:void(0)" onclick="changeLang('en')"><img src="https://flagcdn.com/w20/gb.png"> English</a>
-                <a href="javascript:void(0)" onclick="changeLang('ru')"><img src="https://flagcdn.com/w20/ru.png"> Pусский</a>
-                <a href="javascript:void(0)" onclick="changeLang('es')"><img src="https://flagcdn.com/w20/es.png"> Español</a>
-                <a href="javascript:void(0)" onclick="changeLang('fr')"><img src="https://flagcdn.com/w20/fr.png"> Français</a>
+    <header class="header-main">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Dynamo" class="logo-nav">
+                <ul class="nav-links">
+                    <li><a href="#" id="link-start">Start</a></li>
+                    <li><a href="https://proligawroclaw.pl/team/fc-dinamo-wroclaw/schedule/" target="_blank" id="link-schedule">Terminarz</a></li>
+                    <li><a href="#">Tabela</a></li>
+                    <li><a href="#">Drużyna</a></li>
+                </ul>
             </div>
-        </div>
-    </nav>
+            <div class="lang-dropdown">
+                🌐 <span id="current-lang">PL</span>
+                <div class="lang-content">
+                    <a href="javascript:void(0)" onclick="changeLang('pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</a>
+                    <a href="javascript:void(0)" onclick="changeLang('en')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</a>
+                    <a href="javascript:void(0)" onclick="changeLang('ru')"><img src="https://flagcdn.com/w20/ru.png"> PUSSKIY</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <div class="hero">
-        <h1 id="hero-title"><span>DYNAMO</span> WROCŁAW</h1>
-        <div class="status-tag" id="hero-sub">Strona w budowie</div>
+    <div class="match-centre">
+        <div class="mc-container" id="match-display">
+            </div>
     </div>
+
+    <section class="hero">
+        <h1 id="hero-title">DYNAMO WROCŁAW</h1>
+        <p id="hero-sub" style="font-weight: 700; letter-spacing: 2px;">OFFICIAL WEBSITE</p>
+    </section>
 
     <script>
+        // --- LOGIKA MATCH CENTRE ---
+        const lastMatch = {
+            date: new Date('2026-04-02T20:00:00'), // Data Twojego meczu ze screena
+            home: "FC Dinamo Wrocław",
+            away: "NDR",
+            score: "2 - 3",
+            league: "Czwarta Liga"
+        };
+
+        const nextMatch = {
+            date: "07/04/2026",
+            time: "19:00",
+            home: "Mocne Chłopy",
+            away: "FC Dinamo Wrocław",
+            venue: "Boisko nr 1"
+        };
+
+        function updateMatchCentre() {
+            const now = new Date();
+            const diffHours = (now - lastMatch.date) / (1000 * 60 * 60);
+            const container = document.getElementById('match-display');
+
+            if (diffHours <= 48) {
+                // Wyświetl wynik przez 48h
+                container.innerHTML = `
+                    <div><span class="mc-label">Ostatni wynik</span></div>
+                    <div class="mc-teams">${lastMatch.home} <span class="mc-score">${lastMatch.score}</span> ${lastMatch.away}</div>
+                    <div class="mc-info">${lastMatch.league}</div>
+                `;
+            } else {
+                // Wyświetl następny mecz
+                container.innerHTML = `
+                    <div><span class="mc-label">Następny mecz</span></div>
+                    <div class="mc-teams">${nextMatch.home} vs ${nextMatch.away}</div>
+                    <div class="mc-info">${nextMatch.date} | ${nextMatch.time} | ${nextMatch.venue}</div>
+                `;
+            }
+        }
+
+        // --- TŁUMACZENIA ---
         const translations = {
-            pl: { start: "Start", schedule: "Terminarz", table: "Tabela", team: "Drużyna", title: "<span>DYNAMO</span> WROCŁAW", sub: "Strona w budowie" },
-            en: { start: "Home", schedule: "Schedule", table: "Table", team: "Team", title: "<span>DYNAMO</span> WROCŁAW", sub: "Website under construction" },
-            ru: { start: "Главная", schedule: "Расписание", table: "Таблица", team: "Команда", title: "<span>ДИНАМО</span> ВРОЦЛАВ", sub: "Сайat в разработке" },
-            es: { start: "Inicio", schedule: "Horario", table: "Tabla", team: "Equipo", title: "<span>DYNAMO</span> WROCŁAW", sub: "Sitio en construcción" },
-            fr: { start: "Accueil", schedule: "Calendrier", table: "Classement", team: "Équipe", title: "<span>DYNAMO</span> WROCŁAW", sub: "Site en construction" }
+            pl: { start: "Start", schedule: "Terminarz", title: "DYNAMO WROCŁAW", sub: "OFICJALNA STRONA" },
+            en: { start: "Home", schedule: "Schedule", title: "DYNAMO WROCLAW", sub: "OFFICIAL WEBSITE" },
+            ru: { start: "Главная", schedule: "Расписание", title: "ДИНАМО ВРОЦЛАВ", sub: "ОФИЦИАЛЬНЫЙ САЙТ" }
         };
 
         function changeLang(lang) {
             document.getElementById('link-start').innerText = translations[lang].start;
             document.getElementById('link-schedule').innerText = translations[lang].schedule;
-            document.getElementById('link-table').innerText = translations[lang].table;
-            document.getElementById('link-team').innerText = translations[lang].team;
-            document.getElementById('hero-title').innerHTML = translations[lang].title;
+            document.getElementById('hero-title').innerText = translations[lang].title;
             document.getElementById('hero-sub').innerText = translations[lang].sub;
             document.getElementById('current-lang').innerText = lang.toUpperCase();
         }
 
-        window.addEventListener('load', function() {
+        window.addEventListener('load', () => {
+            updateMatchCentre();
             setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                preloader.classList.add('fade-out');
-                document.body.style.overflow = 'auto';
-            }, 3000); 
+                document.getElementById('preloader').classList.add('fade-out');
+            }, 2500);
         });
     </script>
 </body>
