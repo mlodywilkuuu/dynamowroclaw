@@ -17,31 +17,59 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #0b1324; /* Ciemne tło jak na screenie */
+            min-height: 100vh;
             color: var(--rm-white);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            /* Efekt szkła i gradient na całe tło */
+            background: linear-gradient(135deg, #0b1324 0%, #001C58 100%);
+            background-attachment: fixed;
+            position: relative;
         }
 
-        /* --- NAGŁÓWEK KALENDARZA --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        /* --- PASEK JĘZYKOWY --- */
+        .header-mini {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: flex-end;
+            backdrop-filter: blur(5px);
+        }
+
+        .lang-container { position: relative; cursor: pointer; z-index: 1001; }
+        .lang-active { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.8rem; padding: 5px 12px; border-radius: 4px; background: rgba(255,255,255,0.1); color: white; }
+        .lang-list { 
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: white; border: 1px solid #eee; min-width: 150px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;
+        }
+        .lang-container:hover .lang-list { display: block; }
+        .lang-item { padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 600; color: var(--rm-navy); transition: 0.2s; }
+        .lang-item:hover { background: var(--rm-navy); color: white; }
+        .lang-item img { width: 20px; border-radius: 2px; }
+
+        /* --- KALENDARZ --- */
         .calendar-header {
-            padding: 40px 20px;
+            padding: 40px 20px 20px;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
         }
 
-        .calendar-header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 0;
-        }
+        .calendar-header h1 { font-size: 3rem; font-weight: 900; margin: 0; text-transform: uppercase; letter-spacing: -1px; }
 
-        /* --- PASEK MIESIĘCY --- */
         .month-picker {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             border-radius: 50px;
             padding: 5px;
@@ -57,164 +85,117 @@
             border-radius: 25px;
             border: none;
             background: transparent;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.5);
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
             white-space: nowrap;
         }
 
-        .month-btn.active {
-            background: var(--rm-accent);
-            color: white;
-        }
+        .month-btn.active { background: var(--rm-accent); color: white; }
 
-        /* --- SIATKA KALENDARZA --- */
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px 60px 20px;
         }
 
-        /* --- KARTA MECZU --- */
+        /* --- KARTA MECZU (SZKLANA) --- */
         .match-card {
-            background: var(--rm-white);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
             overflow: hidden;
             color: var(--rm-navy);
-            transition: transform 0.3s ease;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .match-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
-            padding: 15px 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-bottom: 1px solid #eee;
-            color: #666;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .match-title {
-            font-size: 1.25rem;
-            font-weight: 900;
-            margin: 0 0 15px 0;
-            line-height: 1.2;
-        }
-
-        .match-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #444;
-        }
-
-        .match-info svg {
-            width: 16px;
-            height: 16px;
-            opacity: 0.6;
-        }
-
-        .match-result {
-            margin-top: 15px;
-            display: inline-block;
-            background: var(--rm-dark);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-weight: 800;
-        }
-
+        .match-card:hover { transform: translateY(-8px); }
+        .card-header { padding: 15px 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; border-bottom: 1px solid #eee; color: #888; }
+        .card-body { padding: 25px 20px; }
+        .match-title { font-size: 1.3rem; font-weight: 900; margin: 0 0 15px 0; }
+        .match-info { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; }
     </style>
 </head>
 <body>
 
+    <nav class="header-mini">
+        <div class="lang-container">
+            <div class="lang-active" id="active-lang">
+                <img src="https://flagcdn.com/w20/pl.png" width="20"> PL
+            </div>
+            <div class="lang-list">
+                <div class="lang-item" onclick="changeLang('pl', 'PL', 'pl')"><img src="https://flagcdn.com/w20/pl.png"> POLSKI</div>
+                <div class="lang-item" onclick="changeLang('en', 'EN', 'gb')"><img src="https://flagcdn.com/w20/gb.png"> ENGLISH</div>
+                <div class="lang-item" onclick="changeLang('ru', 'RU', 'ru')"><img src="https://flagcdn.com/w20/ru.png"> РОССИЙСКИЙ</div>
+                <div class="lang-item" onclick="changeLang('es', 'ES', 'es')"><img src="https://flagcdn.com/w20/es.png"> ESPAÑOL</div>
+            </div>
+        </div>
+    </nav>
+
     <header class="calendar-header">
-        <h1>Calendar</h1>
+        <h1 data-key="cal_title">Kalendarz</h1>
     </header>
 
     <div class="month-picker">
-        <button class="month-btn">Jul</button>
-        <button class="month-btn">Aug</button>
-        <button class="month-btn">Sep</button>
-        <button class="month-btn">Oct</button>
-        <button class="month-btn">Nov</button>
-        <button class="month-btn">Dec</button>
-        <button class="month-btn">Jan</button>
-        <button class="month-btn">Feb</button>
-        <button class="month-btn">Mar</button>
-        <button class="month-btn active">Apr</button>
-        <button class="month-btn">May</button>
-        <button class="month-btn">Jun</button>
+        <button class="month-btn">Jul</button><button class="month-btn">Aug</button><button class="month-btn">Sep</button>
+        <button class="month-btn">Oct</button><button class="month-btn">Nov</button><button class="month-btn">Dec</button>
+        <button class="month-btn">Jan</button><button class="month-btn">Feb</button><button class="month-btn">Mar</button>
+        <button class="month-btn active">Apr</button><button class="month-btn">May</button><button class="month-btn">Jun</button>
     </div>
 
-    <main class="calendar-grid">
-        <div class="match-card">
-            <div class="card-header">Piłka Nożna • Czwarta Liga</div>
-            <div class="card-body">
-                <h2 class="match-title">FC Dynamo Wrocław vs NDR</h2>
-                <div class="match-info">
-                    📅 Czwartek, 2 Kwietnia, 20:00
-                </div>
-                <div class="match-info">
-                    📍 Boisko nr 3
-                </div>
-                <div class="match-result">Wynik: 2 - 3</div>
-            </div>
-        </div>
+    <main class="calendar-grid" id="calendar-content">
+        </main>
 
-        <div class="match-card">
-            <div class="card-header">Piłka Nożna • Czwarta Liga</div>
-            <div class="card-body">
-                <h2 class="match-title">Mocne Chłopy vs FC Dynamo Wrocław</h2>
-                <div class="match-info">
-                    📅 Wtorek, 7 Kwietnia, 19:00
-                </div>
-                <div class="match-info">
-                    📍 Boisko nr 1
-                </div>
-            </div>
-        </div>
+    <script>
+        const translations = {
+            pl: { cal_title: "Kalendarz", sport: "Piłka Nożna", liga: "Czwarta Liga", pitch: "Boisko nr" },
+            en: { cal_title: "Calendar", sport: "Football", liga: "Fourth League", pitch: "Pitch no." },
+            ru: { cal_title: "Календарь", sport: "Футбол", liga: "Четвертая Лига", pitch: "Поле №" },
+            es: { cal_title: "Calendario", sport: "Fútbol", liga: "Cuarta Liga", pitch: "Campo nº" }
+        };
 
-        <div class="match-card">
-            <div class="card-header">Piłka Nożna • Czwarta Liga</div>
-            <div class="card-body">
-                <h2 class="match-title">FC Dynamo Wrocław vs Klimech PRO</h2>
-                <div class="match-info">
-                    📅 Poniedziałek, 13 Kwietnia, 20:00
-                </div>
-                <div class="match-info">
-                    📍 Boisko nr 3
-                </div>
-            </div>
-        </div>
+        const matches = [
+            { date: new Date('2026-04-02T20:00:00'), home: "FC Dynamo Wrocław", away: "NDR", venue: "3" },
+            { date: new Date('2026-04-07T19:00:00'), home: "Mocne Chłopy", away: "FC Dynamo Wrocław", venue: "1" },
+            { date: new Date('2026-04-13T20:00:00'), home: "FC Dynamo Wrocław", away: "Klimech PRO", venue: "3" },
+            { date: new Date('2026-04-21T21:00:00'), home: "RunnersHeads", away: "FC Dynamo Wrocław", venue: "1" }
+        ];
 
-        <div class="match-card">
-            <div class="card-header">Piłka Nożna • Czwarta Liga</div>
-            <div class="card-body">
-                <h2 class="match-title">RunnersHeads vs FC Dynamo Wrocław</h2>
-                <div class="match-info">
-                    📅 Niedziela, 21 Kwietnia, 21:00
-                </div>
-                <div class="match-info">
-                    📍 Boisko nr 1
-                </div>
-            </div>
-        </div>
-    </main>
+        let currentLang = 'pl';
 
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-content');
+            const now = new Date();
+            const t = translations[currentLang];
+            
+            // Filtrujemy: tylko mecze, których data jest większa niż "teraz"
+            const upcoming = matches.filter(m => m.date > now);
+            
+            grid.innerHTML = upcoming.map(m => `
+                <div class="match-card">
+                    <div class="card-header">${t.sport} • ${t.liga}</div>
+                    <div class="card-body">
+                        <h2 class="match-title">${m.home} vs ${m.away}</h2>
+                        <div class="match-info">📅 ${m.date.toLocaleDateString(currentLang == 'en' ? 'en-GB' : 'pl-PL', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}</div>
+                        <div class="match-info">📍 ${t.pitch} ${m.venue}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeLang(lang, label, flag) {
+            currentLang = lang;
+            document.getElementById('active-lang').innerHTML = `<img src="https://flagcdn.com/w20/${flag}.png" width="20"> ${label}`;
+            document.querySelectorAll('[data-key]').forEach(el => {
+                el.innerText = translations[lang][el.getAttribute('data-key')];
+            });
+            renderCalendar();
+        }
+
+        window.onload = renderCalendar;
+    </script>
 </body>
 </html>
