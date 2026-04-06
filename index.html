@@ -6,14 +6,16 @@
     <title>Dynamo Wrocław | Oficjalna Strona</title>
     <style>
         :root {
-            --club-green: #00ff00;
-            --club-black: #0b0b0b;
-            --glass: rgba(255, 255, 255, 0.05);
+            --club-blue: #0055ff; /* Klasyczny niebieski */
+            --club-white: #ffffff;
+            --club-black: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
         body {
             margin: 0;
-            background: radial-gradient(circle at top, #1a1a1a 0%, var(--club-black) 100%);
+            /* Tło przechodzące z bardzo ciemnego granatu w czerń */
+            background: radial-gradient(circle at top, #001a4d 0%, var(--club-black) 100%);
             color: white;
             font-family: 'Segoe UI', Arial, sans-serif;
             min-height: 100vh;
@@ -24,7 +26,7 @@
             background: var(--glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px 30px;
             display: flex;
             justify-content: space-between;
@@ -40,19 +42,21 @@
             gap: 20px;
         }
 
+        /* LOGO Z BIAŁĄ RAMKĄ (BEZ ZIELONEGO) */
         .club-logo {
-            height: 50px;
-            width: 50px;
+            height: 55px;
+            width: 55px;
             border-radius: 50%;
-            border: 2px solid var(--club-green);
+            border: 2px solid var(--club-white); /* Biała ramka */
             background: white;
             transition: transform 0.3s;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 25px;
             margin: 0;
             padding: 0;
         }
@@ -61,55 +65,65 @@
             text-decoration: none;
             color: rgba(255, 255, 255, 0.8);
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 0.85rem;
             transition: 0.3s;
+            letter-spacing: 1px;
         }
 
         .nav-links a:hover {
-            color: var(--club-green);
+            color: var(--club-blue);
+            border-bottom: 2px solid var(--club-blue);
         }
 
-        /* DROPDOWN JĘZYKÓW */
+        /* DROPDOWN JĘZYKÓW - NIEBIESKI MOTYW */
         .lang-dropdown {
             position: relative;
         }
 
         .lang-btn {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid var(--club-green);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 8px 12px;
+            padding: 8px 15px;
             border-radius: 4px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--club-blue);
+            background: rgba(0, 85, 255, 0.1);
         }
 
         .lang-content {
             display: none;
             position: absolute;
             right: 0;
-            background: #1a1a1a;
-            border: 1px solid var(--club-green);
-            min-width: 150px;
+            background: #111;
+            border: 1px solid var(--club-blue);
+            min-width: 160px;
             border-radius: 4px;
-            margin-top: 5px;
+            margin-top: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
         }
 
         .lang-content a {
             color: white;
-            padding: 10px;
+            padding: 12px;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 0.9rem;
         }
 
         .lang-content a:hover {
-            background: rgba(0, 255, 0, 0.2);
+            background: var(--club-blue);
+            color: white;
         }
 
         .lang-dropdown:hover .lang-content {
@@ -119,30 +133,32 @@
         /* HERO SECTION */
         .hero {
             text-align: center;
-            padding: 150px 20px;
+            padding: 160px 20px;
         }
 
         .hero h1 {
             font-size: clamp(3rem, 10vw, 6rem);
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 8px;
+            color: var(--club-white);
         }
 
         .hero h1 span {
-            color: var(--club-green);
-            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            color: var(--club-blue); /* Niebieskie Dynamo */
+            text-shadow: 0 0 30px rgba(0, 85, 255, 0.3);
         }
 
         .status-tag {
             display: inline-block;
-            margin-top: 20px;
-            padding: 5px 15px;
-            border: 1px solid var(--club-green);
-            color: var(--club-green);
+            margin-top: 25px;
+            padding: 6px 20px;
+            border: 1px solid var(--club-white);
+            color: var(--club-white);
             text-transform: uppercase;
             font-size: 0.8rem;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
+            opacity: 0.7;
         }
     </style>
 </head>
