@@ -7,7 +7,6 @@
     <style>
         body {
             margin: 0;
-            /* Ciemne tło z lekkim gradientem, żeby efekt szkła był lepiej widoczny */
             background: radial-gradient(circle at top, #1a1a1a 0%, #0b0b0b 100%);
             color: white;
             font-family: 'Segoe UI', sans-serif;
@@ -16,37 +15,36 @@
 
         /* NAWIGACJA Z EFEKTEM SZKŁA */
         .club-nav {
-            /* Efekt Glassmorphism */
-            background: rgba(255, 255, 255, 0.05); /* Bardzo delikatne białe tło */
-            backdrop-filter: blur(10px); /* Rozmycie tła pod menu */
-            -webkit-backdrop-filter: blur(10px); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna biała linia zamiast zielonej */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             
-            padding: 10px 40px;
+            padding: 10px 20px; /* Margines od krawędzi bocznych */
             display: flex;
-            justify-content: flex-end; /* Przyciski i logo do prawej */
+            justify-content: flex-end; /* Cała zawartość do prawej */
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* Kontener na przyciski */
+        /* Kontener na przyciski - teraz przed logo */
         .nav-links {
             list-style: none;
             display: flex;
             margin: 0;
             padding: 0;
-            margin-right: 30px;
+            margin-right: 15px; /* Odstęp między przyciskami a logo */
         }
 
         .nav-links li {
-            margin: 0 15px;
+            margin: 0 10px;
         }
 
         .nav-links li a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.8); /* Lekko przezroczysty biały */
+            color: rgba(255, 255, 255, 0.7);
             font-weight: 500;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -55,27 +53,30 @@
         }
 
         .nav-links li a:hover {
-            color: #00ff00; /* Zielony akcent tylko przy najechaniu */
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            color: #00ff00;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
         }
 
-        /* LOGO */
+        /* LOGO NA MAXA PO PRAWEJ */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
         .club-logo {
-            height: 55px;
-            width: 55px;
+            height: 50px;
+            width: 50px;
             border-radius: 50%;
-            /* Delikatna obwódka pasująca do efektu szkła */
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             object-fit: contain;
-            background: rgba(255, 255, 255, 0.1);
+            background: white; /* Logo Dynamo jest ciemne, więc białe tło je wyróżni */
             transition: transform 0.3s ease;
         }
 
         .club-logo:hover {
-            transform: scale(1.1); /* Logo delikatnie rośnie po najechaniu */
+            transform: rotate(10deg) scale(1.1);
         }
 
-        /* TREŚĆ STRONY */
         .hero {
             text-align: center;
             padding: 150px 20px;
@@ -83,14 +84,13 @@
 
         .hero h1 {
             font-size: clamp(2.5rem, 10vw, 5rem);
-            color: white;
             margin: 0;
             letter-spacing: 5px;
             text-transform: uppercase;
         }
 
         .hero span {
-            color: #00ff00; /* Zielone Dynamo */
+            color: #00ff00;
         }
     </style>
 </head>
@@ -105,12 +105,14 @@
             <li><a href="#">Kontakt</a></li>
         </ul>
 
-        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo">
+        <div class="logo-wrapper">
+            <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="club-logo">
+        </div>
     </nav>
 
     <div class="hero">
         <h1><span>DYNAMO</span> WROCŁAW</h1>
-        <p style="color: rgba(255,255,255,0.5); letter-spacing: 2px;">W BUDOWIE</p>
+        <p style="color: rgba(255,255,255,0.4); letter-spacing: 3px; font-size: 0.9rem;">W BUDOWIE</p>
     </div>
 
 </body>
