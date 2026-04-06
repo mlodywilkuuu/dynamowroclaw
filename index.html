@@ -13,101 +13,93 @@
 
         body {
             margin: 0;
-            background-color: #f4f4f4;
+            background-color: #f8f9fb;
             color: var(--rm-navy);
             font-family: 'Segoe UI', sans-serif;
+            background-image: url('https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/header/pattern.png');
         }
 
-        /* --- MENU --- */
+        /* --- NAWIGACJA --- */
         .header-main { 
             background: var(--rm-white); 
             border-bottom: 1px solid #EEE; 
             position: sticky; top: 0; z-index: 1000; 
         }
         .nav-container { 
-            display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; 
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; 
         }
         .nav-left { display: flex; align-items: center; }
         .logo-nav { height: 50px; width: auto; margin-right: 25px; }
-        .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-        .nav-links li { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; cursor: pointer; }
+        .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
+        .nav-links li { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; cursor: pointer; }
 
-        /* JĘZYKI */
-        .lang-container { position: relative; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
+        /* MENU JĘZYKÓW Z FLAGAMI */
+        .lang-container { position: relative; cursor: pointer; }
+        .lang-active { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.8rem; padding: 5px 10px; border-radius: 4px; background: #f4f4f4; }
         .lang-list { 
             display: none; position: absolute; right: 0; top: 100%; 
-            background: white; border: 1px solid #eee; min-width: 120px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            background: white; border: 1px solid #eee; min-width: 150px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;
         }
         .lang-container:hover .lang-list { display: block; }
-        .lang-item { padding: 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .lang-item { padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 600; transition: 0.2s; }
+        .lang-item:hover { background: var(--rm-navy); color: white; }
+        .lang-item img { width: 20px; height: auto; border-radius: 2px; }
 
-        /* --- MATCH CENTRE: EFEKT SZKŁA I GRADIENT NA CAŁEJ STREFIE --- */
-        .match-centre-zone {
-            /* Gradient niebiesko-biały z efektem szkła */
-            background: linear-gradient(135deg, rgba(0, 28, 88, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 25px 0;
+        /* --- MATCH CENTRE: PEŁNY PASEK SZKŁO + GRADIENT --- */
+        .match-centre-bar {
             width: 100%;
+            background: linear-gradient(90deg, rgba(0, 28, 88, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 0;
             display: flex;
+            align-items: center;
+        }
+
+        .mc-wrapper {
+            width: 100%;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* INFO PO LEWEJ */
+        .mc-info-left {
+            border-left: 3px solid var(--rm-gold);
+            padding-left: 15px;
+            flex: 1; /* Spycha środek na miejsce */
+        }
+        .mc-info-left span { display: block; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
+        .mc-comp { font-weight: 800; font-size: 0.85rem; margin-bottom: 2px; }
+        .mc-meta { font-weight: 600; font-size: 0.75rem; opacity: 0.8; }
+
+        /* MECZ NA ŚRODKU */
+        .mc-match-center {
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            color: var(--rm-navy); /* Ciemny tekst dla kontrastu na jasnym fragmencie gradientu */
-        }
-
-        .mc-content-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 50px;
-            width: 95%;
-        }
-
-        /* LEWA STRONA: KRESKA + INFO */
-        .mc-info-block {
-            border-left: 4px solid var(--rm-gold);
-            padding-left: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mc-comp-line {
-            font-weight: 800;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .mc-date-line {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        /* ŚRODEK: MECZ W JEDNEJ LINII */
-        .mc-match-line {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            font-size: 1.6rem;
+            gap: 25px;
+            font-size: 1.5rem;
             font-weight: 800;
             text-transform: uppercase;
+            flex: 2;
         }
-
-        .mc-score-pill {
+        .mc-score {
             background: var(--rm-navy);
             color: white;
-            padding: 6px 25px;
+            padding: 5px 25px;
             border-radius: 4px;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
+        .mc-spacer-right { flex: 1; } /* Równowaga dla lewej strony */
+
         /* --- HERO --- */
-        .hero { padding: 100px 20px; text-align: center; }
-        .hero h1 { font-size: 4.5rem; font-weight: 900; margin: 0; color: var(--rm-navy); }
+        .hero { padding: 120px 20px; text-align: center; }
+        .hero h1 { font-size: 5rem; font-weight: 900; margin: 0; letter-spacing: -2px; }
         .hero h1 span { color: #0055ff; }
     </style>
 </head>
@@ -124,25 +116,37 @@
                     <li>Drużyna</li>
                 </ul>
             </div>
+
             <div class="lang-container">
-                🌐 <span id="current-lang">PL</span>
+                <div class="lang-active" id="active-lang">
+                    <img id="current-flag" src="https://flagcdn.com/w20/pl.png" width="20"> PL
+                </div>
                 <div class="lang-list">
-                    <div class="lang-item" onclick="setLang('pl')">POLSKI</div>
-                    <div class="lang-item" onclick="setLang('en')">ENGLISH</div>
-                    <div class="lang-item" onclick="setLang('ru')">PUSSKIY</div>
+                    <div class="lang-item" onclick="changeLang('pl', 'PL', 'pl')">
+                        <img src="https://flagcdn.com/w20/pl.png"> POLSKI
+                    </div>
+                    <div class="lang-item" onclick="changeLang('en', 'EN', 'gb')">
+                        <img src="https://flagcdn.com/w20/gb.png"> ENGLISH
+                    </div>
+                    <div class="lang-item" onclick="changeLang('ru', 'RU', 'ru')">
+                        <img src="https://flagcdn.com/w20/ru.png"> PUSSKIY
+                    </div>
+                    <div class="lang-item" onclick="changeLang('es', 'ES', 'es')">
+                        <img src="https://flagcdn.com/w20/es.png"> ESPAÑOL
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="match-centre-zone">
-        <div class="mc-content-row" id="mc-data">
+    <div class="match-centre-bar">
+        <div class="mc-wrapper" id="mc-content">
             </div>
     </div>
 
     <section class="hero">
         <h1><span>DYNAMO</span> WROCŁAW</h1>
-        <p style="font-weight: 800; opacity: 0.4; letter-spacing: 4px;">OFFICIAL WEBSITE</p>
+        <p style="font-weight: 800; opacity: 0.4; letter-spacing: 5px;">OFFICIAL WEBSITE</p>
     </section>
 
     <script>
@@ -173,25 +177,30 @@
             const isWithin48h = last && (now - last.date) < (48 * 60 * 60 * 1000);
             const active = isWithin48h ? last : matches.find(m => m.date > now);
             
-            const mc = document.getElementById('mc-data');
+            const mc = document.getElementById('mc-content');
             const dateStr = active.date.toLocaleDateString('pl-PL');
             
             mc.innerHTML = `
-                <div class="mc-info-block">
-                    <div class="mc-comp-line">${active.comp} • ${active.kolejka}</div>
-                    <div class="mc-date-line">${dateStr} • ${active.venue}</div>
+                <div class="mc-info-left">
+                    <span class="mc-comp">${active.comp} • ${active.kolejka}</span>
+                    <span class="mc-meta">${dateStr} • ${active.venue}</span>
                 </div>
                 
-                <div class="mc-match-line">
+                <div class="mc-match-center">
                     <span>${active.home}</span>
-                    <div class="mc-score-pill">${active.score}</div>
+                    <div class="mc-score">${active.score}</div>
                     <span>${active.away}</span>
                 </div>
+
+                <div class="mc-spacer-right"></div>
             `;
         }
 
-        function setLang(l) {
-            document.getElementById('current-lang').innerText = l.toUpperCase();
+        function changeLang(code, label, flag) {
+            document.getElementById('active-lang').innerHTML = `
+                <img src="https://flagcdn.com/w20/${flag}.png" width="20"> ${label}
+            `;
+            // Tutaj możesz dodać logikę zmiany tekstów na stronie
         }
 
         window.onload = renderMatch;
