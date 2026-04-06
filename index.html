@@ -2,16 +2,138 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Dynamo Wrocław</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamo Wrocław | Oficjalna Strona</title>
     <style>
-        body { background: #111; color: #0f0; font-family: sans-serif; text-align: center; padding-top: 100px; }
-        .box { border: 2px solid #0f0; display: inline-block; padding: 20px; border-radius: 10px; }
+        /* Główne ustawienia wyglądu */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0b0b0b; /* Czarne tło */
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* STYLIZACJA MENU (NAWIGACJA) */
+        .club-nav {
+            background-color: #1a1a1a; /* Ciemnoszary pasek */
+            padding: 10px 30px;
+            display: flex;
+            justify-content: flex-end; /* Przesuwa zawartość do prawej strony */
+            align-items: center;
+            border-bottom: 3px solid #00ff00; /* Zielona linia pod menu */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Lista przycisków w menu */
+        .club-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            margin-right: 25px; /* Odstęp między przyciskami a logo */
+        }
+
+        .club-nav ul li {
+            margin: 0 15px;
+        }
+
+        .club-nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        /* Efekt po najechaniu myszką na przycisk */
+        .club-nav ul li a:hover {
+            color: #00ff00;
+        }
+
+        /* Stylizacja logo po prawej stronie */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .club-logo {
+            height: 55px; /* Wysokość logo */
+            width: 55px;
+            border-radius: 50%; /* Zaokrąglenie logo */
+            border: 2px solid #00ff00; /* Zielona obwódka wokół logo */
+            object-fit: cover;
+            background-color: #fff; /* Tło pod logo, jeśli jest przezroczyste */
+        }
+
+        /* SEKCJA GŁÓWNA (HERO) */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem); /* Skaluje się zależnie od ekranu */
+            color: #00ff00; /* Neonowy zielony */
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-top: 10px;
+        }
+
+        /* Responsywność dla telefonów */
+        @media (max-width: 768px) {
+            .club-nav {
+                flex-direction: column-reverse; /* Logo nad przyciskami na telefonie */
+                padding: 15px;
+            }
+            .club-nav ul {
+                margin-right: 0;
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .club-nav ul li {
+                margin: 5px 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="box">
+
+    <nav class="club-nav">
+        <ul>
+            <li><a href="#start">Start</a></li>
+            <li><a href="#terminarz">Terminarz</a></li>
+            <li><a href="#tabela">Tabela</a></li>
+            <li><a href="#druzyna">Drużyna</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+
+        <div class="logo-container">
+            <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo Dynamo Wrocław" class="club-logo">
+        </div>
+    </nav>
+
+    <main class="hero">
         <h1>DYNAMO WROCŁAW</h1>
-        <p>Strona w budowie - hostowana na GitHub Pages</p>
-    </div>
+        <p>Oficjalna strona klubu w budowie</p>
+    </main>
+
 </body>
 </html>
