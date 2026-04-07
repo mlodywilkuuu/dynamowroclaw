@@ -3,15 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>FC Dinamo Wrocław - Official</title>
+    <style>
+        /* --- 1. RESET I ZMIENNE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            overflow: hidden; /* Blokada scrolla podczas ładowania */
+        }
+
+        /* --- 2. EKRAN ŁADOWANIA (LOADER) --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loader-logo {
+            width: 80px;
+            height: auto;
+            animation: pulse-dynamo 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-dynamo {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- 3. PASEK MENU (NAVBAR) --- */
+        header {
+            grid-area: header;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 30px; /* Odstęp między logo a przyciskami */
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: #bbb;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+            background-color: #333;
+        }
+
+        /* --- 4. UKŁAD STRONY (GRID CORE) --- */
+        .grid-container {
+            display: grid;
+            gap: 15px;
+            padding: 15px;
+            height: 100vh;
+            grid-template-areas:
+                "header header header"
+                "nav main aside"
+                "footer footer footer";
+            grid-template-rows: 70px 1fr 50px;
+            grid-template-columns: 200px 1fr 200px;
+            
+            /* Płynne pojawianie się treści */
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .content-visible {
+            opacity: 1;
+        }
+
+        .core-block {
+            background-color: #1e1e1e;
+            border: 1px solid #2d2d2d;
+            border-radius: 8px;
+        }
+
+        nav { grid-area: nav; }
+        main { grid-area: main; background-color: #181818; }
+        aside { grid-area: aside; }
+        footer { grid-area: footer; background-color: #1a1a1a; }
+
+        /* Responsywność */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+                grid-template-rows: 70px 1fr 50px;
+            }
+            nav, aside { display: none; }
+        }
+    </style>
 </head>
 <body>
-    <div class="grid-container">
-        <header class="core-element"></header>
-        <nav class="core-element"></nav>
-        <main class="core-element"></main>
-        <aside class="core-element"></aside>
-        <footer class="core-element"></footer>
+
+    <div id="loader-wrapper">
+        <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="Logo" class="loader-logo">
     </div>
+
+    <div class="grid-container" id="main-content">
+        
+        <header class="core-block">
+            <div class="nav-container">
+                <a href="/">
+                    <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="FC Dinamo" class="nav-logo">
+                </a>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Aktualności</a>
+                    <a href="#" class="nav-link">Tabela</a>
+                    <a href="#" class="nav-link">Kontakt</a>
+                </div>
+            </div>
+        </header>
+
+        <nav class="core-block"></nav>
+        <main class="core-block"></main>
+        <aside class="core-block"></aside>
+        <footer class="core-block"></footer>
+
+    </div>
+
+    <script>
+        // Logika sterująca ekranem ładowania
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("loader-wrapper");
+            const content = document.getElementById("main-content");
+
+            // Czekamy 1.2 sekundy dla efektu "wow"
+            setTimeout(() => {
+                loader.classList.add("loader-hidden");
+                content.classList.add("content-visible");
+                document.body.style.overflow = "auto"; // Odblokowanie scrolla
+            }, 1200);
+        });
+    </script>
+
 </body>
 </html>
