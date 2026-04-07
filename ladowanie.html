@@ -1,0 +1,53 @@
+<style>
+    /* Tło ekranu ładowania */
+    #loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1a1a1a; /* Ciemne, nowoczesne tło */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000; /* Zawsze na samym wierzchu */
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+    }
+
+    /* Styl Twojego Logo */
+    .loader-logo {
+        width: 120px; /* Rozmiar logo na ekranie */
+        height: auto;
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+        animation: dynamo-pulse 2s infinite ease-in-out;
+    }
+
+    /* Animacja pulsowania logo */
+    @keyframes dynamo-pulse {
+        0% { transform: scale(0.9); opacity: 0.6; }
+        50% { transform: scale(1.05); opacity: 1; }
+        100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    /* Klasa ukrywająca (wywoływana przez JS) */
+    .loader-finished {
+        opacity: 0;
+        visibility: hidden;
+    }
+</style>
+
+<div id="loader-wrapper">
+    <img src="FC-Dinamo-Wroclaw-1-32x32.png" alt="FC Dinamo" class="loader-logo">
+</div>
+
+<script>
+    window.addEventListener("load", function() {
+        const loader = document.getElementById("loader-wrapper");
+        
+        // Krótkie opóźnienie (opcjonalne), żeby efekt był widoczny
+        setTimeout(() => {
+            loader.classList.add("loader-finished");
+        }, 1000); 
+    });
+</script>
