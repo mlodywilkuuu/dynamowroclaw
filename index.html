@@ -32,20 +32,75 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         .nav-content-left { display: flex; align-items: center; gap: 40px; }
         .logo-img { height: 65px; width: auto; transition: transform 0.3s; }
-        .logo-img:hover { transform: scale(1.05); }
 
         .nav-links { display: flex; gap: 25px; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; }
-        .nav-links a:hover { opacity: 1; color: #00a2ff; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
 
-        .dropbtn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        /* JĘZYKI - NAPRAWIONE DZIAŁANIE */
+        .lang-dropdown { position: relative; }
+        .dropbtn { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .dropbtn:hover { background: rgba(255, 255, 255, 0.12); }
 
-        /* --- MATCH CENTRE HERO (POPRAWIONY UKŁAD) --- */
+        .dropdown-content { 
+            display: none; /* Ukryte domyślnie */
+            position: absolute; 
+            right: 0; 
+            top: calc(100% + 10px); 
+            background: rgba(10, 21, 37, 0.98); 
+            backdrop-filter: blur(20px);
+            min-width: 150px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            z-index: 3000;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Pokazywanie menu klasą .show lub przez hover */
+        .lang-dropdown:hover .dropdown-content,
+        .dropdown-content.show { 
+            display: block; 
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-content a { 
+            color: white; 
+            padding: 12px 18px; 
+            text-decoration: none; 
+            display: block; 
+            font-size: 13px; 
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .dropdown-content a:hover { 
+            background: rgba(0, 162, 255, 0.25); 
+            color: #00a2ff; 
+            padding-left: 22px;
+        }
+
+        /* --- MATCH CENTRE --- */
         .match-centre-hero {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
@@ -53,32 +108,25 @@
             margin-top: 85px;
             padding: 30px 40px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: grid; /* Użycie siatki dla lepszej kontroli lewo-środek */
+            display: grid; 
             grid-template-columns: 1fr 2fr 1fr; 
             align-items: center;
         }
 
-        /* Lewa strona - informacje pod sobą przy kresce */
         .match-meta {
             display: flex;
             align-items: center;
             gap: 15px;
-            justify-self: start; /* Przyciąganie do lewej krawędzi */
+            justify-self: start; 
+            border-left: 2px solid #00a2ff; /* Kreska po LEWEJ */
+            padding-left: 15px;
         }
 
-        .meta-text {
-            display: flex;
-            flex-direction: column;
-            border-right: 2px solid #00a2ff; /* Kreska po prawej stronie napisów */
-            padding-right: 15px;
-            text-align: right;
-        }
-
+        .meta-text { display: flex; flex-direction: column; text-align: left; }
         .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 2px; }
         .meta-round { font-size: 15px; font-weight: 700; color: #ffffff; }
         .meta-date { font-size: 11px; color: #8899a6; font-family: monospace; }
 
-        /* Środek - Wyśrodkowany zespół i drużyny */
         .match-main-content {
             grid-column: 2;
             display: flex;
@@ -87,15 +135,9 @@
         }
 
         .team-badge-label { 
-            font-size: 10px; 
-            font-weight: 900; 
-            letter-spacing: 5px; 
-            color: #ffffff; 
-            margin-bottom: 12px; 
-            background: rgba(0, 162, 255, 0.2); 
-            padding: 5px 30px; 
-            border-radius: 20px;
-            border: 1px solid rgba(0, 162, 255, 0.3);
+            font-size: 10px; font-weight: 900; letter-spacing: 5px; color: #ffffff; 
+            margin-bottom: 12px; background: rgba(0, 162, 255, 0.2); 
+            padding: 5px 30px; border-radius: 20px; border: 1px solid rgba(0, 162, 255, 0.3);
         }
 
         .main-match-display { display: flex; align-items: center; gap: 40px; }
@@ -104,37 +146,21 @@
         .team-right { text-align: left; }
 
         .score-box { 
-            background: rgba(255, 255, 255, 0.05); 
-            color: white; 
-            padding: 12px 30px; 
-            border-radius: 12px; 
-            font-size: 34px; 
-            font-weight: 900; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 120px; 
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 162, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05); color: white; padding: 12px 30px; 
+            border-radius: 12px; font-size: 34px; font-weight: 900; 
+            border: 1px solid rgba(255, 255, 255, 0.1); min-width: 120px; text-align: center;
         }
 
-        /* --- CONTENT --- */
         .container {
-            width: 90%;
-            max-width: 1400px;
-            margin: 80px auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            width: 90%; max-width: 1400px; margin: 80px auto;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .hero h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -3px; }
+        .hero h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; line-height: 0.9; }
         
         .control-room { 
-            flex: 0.8; 
-            background: rgba(255, 255, 255, 0.03); 
-            padding: 40px; 
-            border-radius: 40px; 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(30px);
+            flex: 0.8; background: rgba(255, 255, 255, 0.03); padding: 40px; 
+            border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(30px);
         }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .stat-card { background: rgba(0, 0, 0, 0.2); padding: 30px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.03); }
@@ -143,8 +169,8 @@
 
         @media (max-width: 1100px) {
             .match-centre-hero { display: flex; flex-direction: column; text-align: center; gap: 30px; }
-            .match-meta { justify-content: center; border-right: none; }
-            .meta-text { border-right: none; border-bottom: 2px solid #00a2ff; padding: 0 0 10px 0; text-align: center; }
+            .match-meta { border-left: none; border-bottom: 2px solid #00a2ff; padding: 0 0 10px 0; justify-content: center; }
+            .meta-text { text-align: center; }
             .container { flex-direction: column; text-align: center; }
             .team-name { width: auto; font-size: 20px; }
         }
@@ -159,22 +185,30 @@
             </a>
             <div class="nav-links">
                 <a href="#">Klub</a>
-                <a href="#">Terminarz</a>
-                <a href="#">Bilety</a>
                 <a href="#">Sklep</a>
             </div>
         </div>
-        <div class="lang-dropdown">
-            <button class="dropbtn"><i class="fas fa-globe" style="color:#00a2ff"></i> PL</button>
+        
+        <div class="lang-dropdown" id="langBox">
+            <button class="dropbtn" id="langBtn">
+                <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang-label">PL</span>
+                <i class="fas fa-chevron-down" style="font-size: 10px; opacity: 0.5;"></i>
+            </button>
+            <div class="dropdown-content" id="langMenu">
+                <a href="#" onclick="setLang('PL')">Polski</a>
+                <a href="#" onclick="setLang('ES')">Español</a>
+                <a href="#" onclick="setLang('RU')">Русский</a>
+                <a href="#" onclick="setLang('UA')">Ukraiński</a>
+            </div>
         </div>
     </nav>
 
     <div class="match-centre-hero">
         <div class="match-meta">
             <div class="meta-text">
-                <span class="meta-league" id="m-league">Czwarta Liga</span>
-                <span class="meta-round" id="m-round">Kolejka 3</span>
-                <span class="meta-date" id="m-date">13/04/2026 | 20:00</span>
+                <span class="meta-league">Czwarta Liga</span>
+                <span class="meta-round">Kolejka 3</span>
+                <span class="meta-date">13/04/2026 | 20:00</span>
             </div>
         </div>
 
@@ -182,17 +216,16 @@
             <div class="team-badge-label">I ZESPÓŁ</div>
             <div class="main-match-display">
                 <span class="team-name team-left">FC Dynamo Wrocław</span>
-                <div id="score-container" class="score-box">VS</div>
-                <span class="team-name team-right" id="opponent-name">Klimek PRO</span>
+                <div class="score-box">VS</div>
+                <span class="team-name team-right">Klimek PRO</span>
             </div>
         </div>
-        
         <div></div>
     </div>
 
     <div class="container">
         <main class="hero">
-            <h1 id="hero-title">Silesian heart,<br>global vision.</h1>
+            <h1>Silesian heart,<br>global vision.</h1>
         </main>
         <aside class="control-room">
             <div class="stats-grid">
@@ -205,24 +238,24 @@
     </div>
 
     <script>
-        // Terminarz z Twojego zdjęcia
-        const schedule = [
-            { date: "2026-04-13T20:00:00", opponent: "Klimek PRO", score: null, league: "Czwarta Liga", round: "Kolejka 3" },
-            { date: "2026-04-21T21:00:00", opponent: "RunnersHood", score: null, league: "Czwarta Liga", round: "Kolejka 4" }
-        ];
+        // Skrypt obsługujący kliknięcie w menu języków
+        const langBtn = document.getElementById('langBtn');
+        const langMenu = document.getElementById('langMenu');
 
-        function updateMatch() {
-            const now = new Date();
-            const match = schedule[0]; // Na razie pierwszy mecz z listy
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+        });
 
-            document.getElementById('opponent-name').innerText = match.opponent;
-            document.getElementById('m-league').innerText = match.league;
-            document.getElementById('m-round').innerText = match.round;
-            document.getElementById('m-date').innerText = new Date(match.date).toLocaleString('pl-PL', {
-                day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-            }).replace(',', ' |');
+        // Zamknij menu, jeśli użytkownik kliknie gdziekolwiek indziej
+        document.addEventListener('click', () => {
+            langMenu.classList.remove('show');
+        });
+
+        function setLang(lang) {
+            document.getElementById('current-lang-label').innerText = lang;
+            langMenu.classList.remove('show');
         }
-        updateMatch();
     </script>
 </body>
 </html>
