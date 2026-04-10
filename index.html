@@ -12,7 +12,6 @@
         }
 
         body {
-            /* Głęboki niebieski gradient */
             background: radial-gradient(circle at top right, #003366, #050b14);
             color: #e0e0e0;
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -20,10 +19,10 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR DOPRACOWANY --- */
         nav {
             width: 100%;
-            padding: 10px 60px;
+            padding: 10px 20px; /* Zmniejszony padding, by było max do lewej/prawej */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -38,18 +37,20 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 20px; /* Mniejszy odstęp od logo */
         }
 
         .logo-img {
-            height: 60px; /* Rozmiar Twojego logo */
+            height: 70px;
             width: auto;
-            border-radius: 8px;
+            /* Usunięcie białego tła (działa na czyste białe tło) */
+            mix-blend-mode: lighten; 
+            display: block;
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 20px;
         }
 
         .nav-links a {
@@ -66,10 +67,10 @@
             color: #00a2ff;
         }
 
-        /* --- DROPDOWN DLA JĘZYKÓW --- */
+        /* --- DROPDOWN JĘZYKÓW (POPRAWIONY) --- */
         .lang-dropdown {
             position: relative;
-            display: inline-block;
+            padding: 10px 0; /* "Most" ułatwiający najechanie myszką */
         }
 
         .dropbtn {
@@ -77,31 +78,31 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
             padding: 8px 15px;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-
-        .dropbtn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            gap: 10px;
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
             right: 0;
-            top: 100%;
+            top: 100%; /* Pojawia się zaraz pod przyciskiem */
             background-color: #0a1525;
             min-width: 180px;
-            box-shadow: 0px 8px 24px rgba(0,0,0,0.5);
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.8);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 10px;
             overflow: hidden;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown-content a {
@@ -110,68 +111,69 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: flex-start;
+            gap: 15px;
             font-size: 14px;
             transition: 0.2s;
         }
 
         .dropdown-content a:hover {
-            background-color: #003366;
+            background-color: #004080;
         }
 
+        /* Aby menu nie znikało za szybko */
         .lang-dropdown:hover .dropdown-content {
             display: block;
         }
 
-        /* --- TREŚĆ GŁÓWNA --- */
+        /* --- TREŚĆ --- */
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 160px auto 50px;
+            width: 95%;
+            max-width: 1400px;
+            margin: 180px auto 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 50px;
+            gap: 40px;
         }
 
         .hero { flex: 1.5; }
 
         h1 {
-            font-size: clamp(40px, 7vw, 90px);
-            line-height: 0.95;
+            font-size: clamp(40px, 8vw, 100px);
+            line-height: 0.9;
             color: #ffffff;
-            letter-spacing: -3px;
+            letter-spacing: -4px;
             font-weight: 800;
             text-transform: uppercase;
         }
 
-        /* --- STATYSTYKI --- */
         .control-room {
             flex: 1;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 40px;
-            border-radius: 32px;
-            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            backdrop-filter: blur(25px);
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 20px;
         }
 
         .stat-card {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 25px 20px;
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
-        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
-        .stat-value { font-size: 34px; font-weight: 700; color: #ffffff; }
+        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
+        .stat-value { font-size: 40px; font-weight: 700; color: #ffffff; }
 
         @media (max-width: 1024px) {
-            nav { padding: 10px 20px; }
             .container { flex-direction: column; text-align: center; }
             .nav-links { display: none; }
         }
@@ -181,8 +183,7 @@
 
     <nav>
         <div class="nav-left">
-            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3.jpg" alt="Logo Dynamo" class="logo-img">
-            
+            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3.jpg" alt="Dynamo Logo" class="logo-img">
             <div class="nav-links">
                 <a href="#">Klub</a>
                 <a href="#">Terminarz</a>
@@ -192,14 +193,12 @@
         </div>
         
         <div class="lang-dropdown">
-            <button class="dropbtn">
-                <span>🇵🇱</span> Język ▼
-            </button>
+            <button class="dropbtn">🌐 Wybierz Język</button>
             <div class="dropdown-content">
-                <a href="#" onclick="alert('Zmieniono na Polski')"><span>🇵🇱</span> Polski</a>
-                <a href="#" onclick="alert('Cambiado a Español')"><span>🇪🇸</span> Hiszpański</a>
-                <a href="#" onclick="alert('Изменено na Русский')"><span>🇷🇺</span> Rosyjski</a>
-                <a href="#" onclick="alert('Змінено на Українську')"><span>🇺🇦</span> Ukraiński</a>
+                <a href="#"><span>🇵🇱</span> Polski</a>
+                <a href="#"><span>🇪🇸</span> Español</a>
+                <a href="#"><span>🇷🇺</span> Русский</a>
+                <a href="#"><span>🇺🇦</span> Українська</a>
             </div>
         </div>
     </nav>
@@ -212,20 +211,20 @@
         <aside class="control-room">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <p class="stat-label">🏃 Zawodnicy</p>
+                    <p class="stat-label">ZAWODNICY</p>
                     <span class="stat-value">24</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">🏆 Miejsce</p>
+                    <p class="stat-label">MIEJSCE</p>
                     <span class="stat-value">1</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">📅 Mecze</p>
+                    <p class="stat-label">MECZE</p>
                     <span class="stat-value">12</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">⚡ Status</p>
-                    <span class="stat-value" style="color: #00a2ff; font-size: 22px;">PRO</span>
+                    <p class="stat-label">STATUS</p>
+                    <span class="stat-value" style="color: #00a2ff; font-size: 24px;">PRIME</span>
                 </div>
             </div>
         </aside>
