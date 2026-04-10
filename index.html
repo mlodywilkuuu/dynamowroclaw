@@ -19,10 +19,10 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVBAR DOPRACOWANY --- */
+        /* --- NAVBAR --- */
         nav {
             width: 100%;
-            padding: 10px 20px; /* Zmniejszony padding, by było max do lewej/prawej */
+            padding: 5px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -37,14 +37,12 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 20px; /* Mniejszy odstęp od logo */
+            gap: 20px;
         }
 
         .logo-img {
-            height: 70px;
+            height: 80px; /* Nieco większe logo */
             width: auto;
-            /* Usunięcie białego tła (działa na czyste białe tło) */
-            mix-blend-mode: lighten; 
             display: block;
         }
 
@@ -60,22 +58,17 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.3s;
         }
 
-        .nav-links a:hover {
-            color: #00a2ff;
-        }
-
-        /* --- DROPDOWN JĘZYKÓW (POPRAWIONY) --- */
+        /* --- DROPDOWN JĘZYKÓW --- */
         .lang-dropdown {
             position: relative;
-            padding: 10px 0; /* "Most" ułatwiający najechanie myszką */
+            padding: 15px 0; /* Większy margines, żeby menu nie znikało */
         }
 
         .dropbtn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 8px 15px;
             border-radius: 10px;
@@ -83,26 +76,24 @@
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
             right: 0;
-            top: 100%; /* Pojawia się zaraz pod przyciskiem */
+            top: 50px;
             background-color: #0a1525;
-            min-width: 180px;
+            min-width: 160px;
             box-shadow: 0px 8px 24px rgba(0,0,0,0.8);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            animation: fadeIn 0.2s ease;
+            z-index: 1001;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
+        .lang-dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .dropdown-content a {
@@ -111,19 +102,19 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
+            gap: 10px;
             font-size: 14px;
-            transition: 0.2s;
         }
 
         .dropdown-content a:hover {
             background-color: #004080;
         }
 
-        /* Aby menu nie znikało za szybko */
-        .lang-dropdown:hover .dropdown-content {
-            display: block;
+        /* Ikony flag (zastępcze obrazy PNG, jeśli emoji u Ciebie nie działają) */
+        .flag-icon {
+            width: 20px;
+            height: 15px;
+            object-fit: cover;
         }
 
         /* --- TREŚĆ --- */
@@ -140,10 +131,10 @@
         .hero { flex: 1.5; }
 
         h1 {
-            font-size: clamp(40px, 8vw, 100px);
+            font-size: clamp(35px, 7vw, 90px);
             line-height: 0.9;
             color: #ffffff;
-            letter-spacing: -4px;
+            letter-spacing: -3px;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -167,14 +158,13 @@
             background: rgba(0, 0, 0, 0.4);
             padding: 30px 20px;
             border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.03);
         }
 
-        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
-        .stat-value { font-size: 40px; font-weight: 700; color: #ffffff; }
+        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; margin-bottom: 10px; }
+        .stat-value { font-size: 36px; font-weight: 700; color: #ffffff; }
 
         @media (max-width: 1024px) {
-            .container { flex-direction: column; text-align: center; }
+            .container { flex-direction: column; text-align: center; margin-top: 120px; }
             .nav-links { display: none; }
         }
     </style>
@@ -183,43 +173,43 @@
 
     <nav>
         <div class="nav-left">
-            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3.jpg" alt="Dynamo Logo" class="logo-img">
+            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Logo" class="logo-img">
             <div class="nav-links">
-                <a href="#">Klub</a>
-                <a href="#">Terminarz</a>
-                <a href="#">Bilety</a>
-                <a href="#">Sklep</a>
+                <a href="#" data-key="nav_club">Klub</a>
+                <a href="#" data-key="nav_schedule">Terminarz</a>
+                <a href="#" data-key="nav_tickets">Bilety</a>
+                <a href="#" data-key="nav_shop">Sklep</a>
             </div>
         </div>
         
         <div class="lang-dropdown">
-            <button class="dropbtn">🌐 Wybierz Język</button>
+            <button class="dropbtn">🌐 <span id="current-lang">Język</span></button>
             <div class="dropdown-content">
-                <a href="#"><span>🇵🇱</span> Polski</a>
-                <a href="#"><span>🇪🇸</span> Español</a>
-                <a href="#"><span>🇷🇺</span> Русский</a>
-                <a href="#"><span>🇺🇦</span> Українська</a>
+                <a href="#" onclick="translatePage('pl')">🇵🇱 Polski</a>
+                <a href="#" onclick="translatePage('es')">🇪🇸 Español</a>
+                <a href="#" onclick="translatePage('ru')">🇷🇺 Русский</a>
+                <a href="#" onclick="translatePage('ua')">🇺🇦 Українська</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
         <main class="hero">
-            <h1>Silesian heart, global vision.</h1>
+            <h1 id="hero-title">Silesian heart, global vision.</h1>
         </main>
 
         <aside class="control-room">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <p class="stat-label">ZAWODNICY</p>
+                    <p class="stat-label" data-key="stat_players">ZAWODNICY</p>
                     <span class="stat-value">24</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">MIEJSCE</p>
+                    <p class="stat-label" data-key="stat_rank">MIEJSCE</p>
                     <span class="stat-value">1</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">MECZE</p>
+                    <p class="stat-label" data-key="stat_matches">MECZE</p>
                     <span class="stat-value">12</span>
                 </div>
                 <div class="stat-card">
@@ -229,6 +219,67 @@
             </div>
         </aside>
     </div>
+
+    <script>
+        // Słownik tłumaczeń
+        const translations = {
+            pl: {
+                nav_club: "Klub",
+                nav_schedule: "Terminarz",
+                nav_tickets: "Bilety",
+                nav_shop: "Sklep",
+                hero_title: "Śląskie serce, globalna wizja.",
+                stat_players: "ZAWODNICY",
+                stat_rank: "MIEJSCE",
+                stat_matches: "MECZE"
+            },
+            es: {
+                nav_club: "Club",
+                nav_schedule: "Calendario",
+                nav_tickets: "Entradas",
+                nav_shop: "Tienda",
+                hero_title: "Corazón silesiano, visión global.",
+                stat_players: "JUGADORES",
+                stat_rank: "POSICIÓN",
+                stat_matches: "PARTIDOS"
+            },
+            ru: {
+                nav_club: "Клуб",
+                nav_schedule: "Расписание",
+                nav_tickets: "Билеты",
+                nav_shop: "Магазин",
+                hero_title: "Силезское сердце, глобальное видение.",
+                stat_players: "ИГРОКИ",
+                stat_rank: "МЕСТО",
+                stat_matches: "МАТЧИ"
+            },
+            ua: {
+                nav_club: "Клуб",
+                nav_schedule: "Розклад",
+                nav_tickets: "Квитки",
+                nav_shop: "Магазин",
+                hero_title: "Сілезьке серце, глобальне бачення.",
+                stat_players: "ГРАВЦІ",
+                stat_rank: "МІСЦЕ",
+                stat_matches: "МАТЧІ"
+            }
+        };
+
+        function translatePage(lang) {
+            // Tłumaczenie nagłówka
+            document.getElementById('hero-title').innerText = translations[lang].hero_title;
+            
+            // Tłumaczenie elementów z atrybutem data-key
+            document.querySelectorAll('[data-key]').forEach(elem => {
+                const key = elem.getAttribute('data-key');
+                elem.innerText = translations[lang][key];
+            });
+
+            // Aktualizacja tekstu przycisku
+            const flags = { pl: '🇵🇱 Polski', es: '🇪🇸 Español', ru: '🇷🇺 Русский', ua: '🇺🇦 Українська' };
+            document.getElementById('current-lang').innerText = flags[lang];
+        }
+    </script>
 
 </body>
 </html>
