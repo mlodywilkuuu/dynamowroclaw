@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamo Wrocław | Official Panel</title>
+    
+    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         * {
             margin: 0;
@@ -40,6 +45,15 @@
             gap: 20px;
         }
 
+        /* LOGO JAKO LINK */
+        .logo-link {
+            display: block;
+            transition: transform 0.2s;
+        }
+        .logo-link:hover {
+            transform: scale(1.05);
+        }
+
         .logo-img {
             height: 80px;
             width: auto;
@@ -60,7 +74,7 @@
             letter-spacing: 1px;
         }
 
-        /* --- DROPDOWN JĘZYKÓW (Zamiast Emoji) --- */
+        /* --- DROPDOWN JĘZYKÓW --- */
         .lang-dropdown {
             position: relative;
             padding: 15px 0;
@@ -105,24 +119,17 @@
             align-items: center;
             gap: 12px;
             font-size: 15px;
-            transition: background 0.2s;
         }
 
         .dropdown-content a:hover {
             background-color: #004080;
         }
 
-        /* Stylizacja kodu języka (np. PL, ES) */
         .lang-code {
             font-size: 11px;
             font-weight: 900;
-            color: #6a7c78;
-            text-transform: uppercase;
-            width: 20px;
-        }
-
-        .lang-dropdown:hover .dropbtn {
-            border-color: #00a2ff;
+            color: #00a2ff;
+            width: 25px;
         }
 
         /* --- TREŚĆ --- */
@@ -181,7 +188,10 @@
 
     <nav>
         <div class="nav-left">
-            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Logo" class="logo-img">
+            <a href="index.html" class="logo-link">
+                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Logo" class="logo-img">
+            </a>
+            
             <div class="nav-links">
                 <a href="#" data-key="nav_club">Klub</a>
                 <a href="#" data-key="nav_schedule">Terminarz</a>
@@ -192,7 +202,7 @@
         
         <div class="lang-dropdown">
             <button class="dropbtn">
-                <span style="color: #00a2ff;">🌐</span> <span id="current-lang">Polski</span>
+                <i class="fas fa-globe" style="color: #00a2ff;"></i> <span id="current-lang">Polski</span>
             </button>
             <div class="dropdown-content">
                 <a href="#" onclick="translatePage('pl')"><span class="lang-code">PL</span> Polski</a>
@@ -233,59 +243,37 @@
     <script>
         const translations = {
             pl: {
-                nav_club: "Klub",
-                nav_schedule: "Terminarz",
-                nav_tickets: "Bilety",
-                nav_shop: "Sklep",
+                nav_club: "Klub", nav_schedule: "Terminarz", nav_tickets: "Bilety", nav_shop: "Sklep",
                 hero_title: "Śląskie serce, globalna wizja.",
-                stat_players: "ZAWODNICY",
-                stat_rank: "MIEJSCE",
-                stat_matches: "MECZE",
+                stat_players: "ZAWODNICY", stat_rank: "MIEJSCE", stat_matches: "MECZE",
                 current: "Polski"
             },
             es: {
-                nav_club: "Club",
-                nav_schedule: "Calendario",
-                nav_tickets: "Entradas",
-                nav_shop: "Tienda",
+                nav_club: "Club", nav_schedule: "Calendario", nav_tickets: "Entradas", nav_shop: "Tienda",
                 hero_title: "Corazón silesiano, visión global.",
-                stat_players: "JUGADORES",
-                stat_rank: "POSICIÓN",
-                stat_matches: "PARTIDOS",
+                stat_players: "JUGADORES", stat_rank: "POSICIÓN", stat_matches: "PARTIDOS",
                 current: "Español"
             },
             ru: {
-                nav_club: "Клуб",
-                nav_schedule: "Расписание",
-                nav_tickets: "Билеты",
-                nav_shop: "Магазин",
+                nav_club: "Клуб", nav_schedule: "Расписание", nav_tickets: "Билеты", nav_shop: "Магазин",
                 hero_title: "Силезское сердце, глобальное видение.",
-                stat_players: "ИГРОКИ",
-                stat_rank: "МЕСТО",
-                stat_matches: "МАТЧИ",
+                stat_players: "ИГРОКИ", stat_rank: "МЕСТО", stat_matches: "МАТЧИ",
                 current: "Русский"
             },
             ua: {
-                nav_club: "Кlub",
-                nav_schedule: "Розклад",
-                nav_tickets: "Квитки",
-                nav_shop: "Магазин",
+                nav_club: "Клуб", nav_schedule: "Розклад", nav_tickets: "Квитки", nav_shop: "Магазиn",
                 hero_title: "Сілезьке серце, глобальне бачення.",
-                stat_players: "ГРАВЦІ",
-                stat_rank: "МІСЦЕ",
-                stat_matches: "МАТЧІ",
+                stat_players: "ГРАВЦІ", stat_rank: "МІСЦЕ", stat_matches: "МАТЧІ",
                 current: "Українська"
             }
         };
 
         function translatePage(lang) {
             document.getElementById('hero-title').innerText = translations[lang].hero_title;
-            
             document.querySelectorAll('[data-key]').forEach(elem => {
                 const key = elem.getAttribute('data-key');
                 elem.innerText = translations[lang][key];
             });
-
             document.getElementById('current-lang').innerText = translations[lang].current;
         }
     </script>
