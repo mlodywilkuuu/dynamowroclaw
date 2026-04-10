@@ -1,76 +1,196 @@
-/* POPRAWKA: Rozwijane menu Klub */
-.dropdown-menu {
-    display: block; /* Używamy opacity zamiast display:none dla płynności */
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(10, 21, 37, 0.98);
-    min-width: 180px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 10px 0;
-    margin-top: 5px; /* Mały odstęp */
-    transition: all 0.3s ease; /* Płynne pojawianie się */
-    transform: translateY(10px);
-}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamo Wrocław | Official Panel</title>
+    
+    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-/* Mostek zapobiegający znikaniu (niewidoczny obszar) */
-.dropdown::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 15px; /* To wypełnia lukę między przyciskiem a menu */
-}
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: radial-gradient(circle at top right, #003366, #050b14);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-.dropdown:hover .dropdown-menu {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0s;
-}
+        /* --- NAVBAR --- */
+        nav {
+            width: 100%;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed; top: 0; z-index: 2000;
+        }
 
-/* Opóźnienie przy znikaniu (daje czas użytkownikowi) */
-.dropdown .dropdown-menu {
-    transition-delay: 0.2s;
-}
+        .nav-content-left { display: flex; align-items: center; gap: 40px; }
+        .logo-img { height: 65px; width: auto; }
 
-/* POPRAWKA: Menu języków */
-.lang-content {
-    display: block;
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background: rgba(10, 21, 37, 0.98);
-    min-width: 160px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin-top: 5px;
-    transition: all 0.3s ease;
-    transform: translateY(10px);
-}
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        
+        /* ROZWIJANE MENU KLUB (POPRAWIONE) */
+        .dropdown { position: relative; display: inline-block; }
+        .drop-link { 
+            color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        .dropdown-menu {
+            display: block; visibility: hidden; opacity: 0;
+            position: absolute; top: 100%; left: 0;
+            background: rgba(10, 21, 37, 0.98); min-width: 180px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 0; margin-top: 5px;
+            transition: all 0.3s ease; transform: translateY(10px);
+            transition-delay: 0.2s; /* Opóźnienie przy zamykaniu */
+        }
 
-.lang-dropdown::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 100%;
-    height: 15px;
-}
+        .dropdown::after { /* Mostek zapobiegający znikaniu */
+            content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px;
+        }
 
-.lang-dropdown:hover .lang-content {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0s;
-}
+        .dropdown:hover .dropdown-menu {
+            visibility: visible; opacity: 1; transform: translateY(0); transition-delay: 0s;
+        }
 
-.lang-dropdown .lang-content {
-    transition-delay: 0.2s;
-}
+        .dropdown-menu a {
+            color: white; padding: 10px 20px; text-decoration: none; display: block;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+        }
+        .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
+
+        /* JĘZYKI (POPRAWIONE) */
+        .lang-dropdown { position: relative; }
+        .lang-btn { 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; 
+            display: flex; align-items: center; gap: 8px; font-size: 13px;
+        }
+
+        .lang-content { 
+            display: block; visibility: hidden; opacity: 0;
+            position: absolute; right: 0; top: 100%; 
+            background: rgba(10, 21, 37, 0.98); min-width: 160px; border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 5px;
+            transition: all 0.3s ease; transform: translateY(10px);
+            transition-delay: 0.2s; /* Opóźnienie */
+        }
+
+        .lang-dropdown::after { /* Mostek */
+            content: ""; position: absolute; top: 100%; right: 0; width: 100%; height: 15px;
+        }
+
+        .lang-dropdown:hover .lang-content {
+            visibility: visible; opacity: 1; transform: translateY(0); transition-delay: 0s;
+        }
+
+        .lang-content a { color: white; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+        .lang-content a:hover { background: rgba(0, 162, 255, 0.2); }
+
+        /* --- MATCH CENTRE --- */
+        .match-centre-hero {
+            width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
+            margin-top: 85px; padding: 30px 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
+        }
+        .match-meta { border-left: 2px solid #00a2ff; padding-left: 15px; }
+        .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 2px; }
+        .score-box { background: rgba(255, 255, 255, 0.05); padding: 12px 30px; border-radius: 12px; font-size: 34px; font-weight: 900; border: 1px solid rgba(255, 255, 255, 0.1); min-width: 120px; text-align: center; }
+        .team-name { font-size: 26px; font-weight: 800; text-transform: uppercase; width: 250px; }
+
+        /* --- NOWA SEKJA POD MATCH CENTER --- */
+        .news-section {
+            width: 90%; max-width: 1400px; margin: 40px auto;
+        }
+        .news-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .news-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px;
+            padding: 25px; transition: 0.4s; cursor: pointer;
+        }
+        .news-card:hover {
+            background: rgba(0, 162, 255, 0.05); border-color: rgba(0, 162, 255, 0.3);
+            transform: translateY(-5px);
+        }
+        .news-tag { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .news-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+        .news-desc { font-size: 13px; color: #8899a6; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content-left">
+            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <span class="drop-link">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <div class="dropdown-menu">
+                        <a href="zespol.html">I Zespół</a>
+                        <a href="#">Zarząd</a>
+                        <a href="#">Historia</a>
+                    </div>
+                </div>
+                <a href="#">Bilety</a>
+                <a href="#">Sklep</a>
+            </div>
+        </div>
+        
+        <div class="lang-dropdown">
+            <button class="lang-btn">
+                <i class="fas fa-globe" style="color:#00a2ff"></i> PL
+            </button>
+            <div class="lang-content">
+                <a href="#"><img src="https://flagcdn.com/w40/pl.png" width="20"> Polski</a>
+                <a href="#"><img src="https://flagcdn.com/w40/ua.png" width="20"> Українська</a>
+                <a href="#"><img src="https://flagcdn.com/w40/es.png" width="20"> Español</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="match-centre-hero">
+        <div class="match-meta">
+            <span class="meta-league">Czwarta Liga</span>
+            <div style="font-size: 15px; font-weight: 700;">Kolejka 3</div>
+            <div style="font-size: 11px; color: #8899a6; font-family: monospace;">13/04/2026 | 20:00</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="score-box">VS</div>
+            <div style="margin-top: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Dynamo Wrocław vs Klimek PRO</div>
+        </div>
+    </div>
+
+    <section class="news-section">
+        <div class="news-grid">
+            <div class="news-card">
+                <span class="news-tag">Klub</span>
+                <h3 class="news-title">Nowy partner techniczny</h3>
+                <p class="news-desc">Dynamo Wrocław ogłasza współpracę z nowym dostawcą sprzętu na sezon 2026/27.</p>
+            </div>
+            <div class="news-card">
+                <span class="news-tag">Mecz</span>
+                <h3 class="news-title">Bilety na Kolejkę 4</h3>
+                <p class="news-desc">Ruszyła sprzedaż wejściówek na domowe starcie z RunnersHood. Nie czekaj!</p>
+            </div>
+            <div class="news-card">
+                <span class="news-tag">Akademia</span>
+                <h3 class="news-title">Nabór do drużyn młodzieżowych</h3>
+                <p class="news-desc">Szukamy młodych talentów. Zapisz swoje dziecko na trening próbny już dziś.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
