@@ -19,141 +19,101 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVBAR W JEDNEJ LINII Z EFEKTEM SZKŁA --- */
+        /* --- NAVBAR --- */
         nav {
             width: 100%;
             padding: 10px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* Efekt szkła */
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             top: 0;
             z-index: 1000;
         }
 
-        .nav-content-left {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .logo-img { 
-            height: 65px; 
-            width: auto; 
-            display: block;
-            transition: transform 0.3s ease;
-        }
+        .nav-content-left { display: flex; align-items: center; gap: 40px; }
+        .logo-img { height: 65px; width: auto; transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
 
-        .nav-links { 
-            display: flex; 
-            gap: 25px; 
-        }
-        
-        .nav-links a { 
-            color: #ffffff; 
-            text-decoration: none; 
-            font-size: 12px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            opacity: 0.8;
-            transition: 0.3s;
-        }
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; color: #00a2ff; }
 
-        /* --- JĘZYKI --- */
-        .lang-dropdown { position: relative; }
-        .dropbtn { 
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            color: white; 
-            padding: 8px 16px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            font-weight: 600;
-        }
-        .dropdown-content { 
-            display: none; 
-            position: absolute; 
-            right: 0; 
-            top: 45px; 
-            background: rgba(10, 21, 37, 0.95); 
-            backdrop-filter: blur(10px);
-            min-width: 160px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .lang-dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 14px; }
-        .dropdown-content a:hover { background: rgba(0, 162, 255, 0.2); }
+        .dropbtn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
 
-        /* --- MATCH CENTRE HERO (SZKŁO) --- */
+        /* --- MATCH CENTRE HERO (POPRAWIONY UKŁAD) --- */
         .match-centre-hero {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(15px);
             margin-top: 85px;
-            padding: 35px 20px;
+            padding: 30px 40px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: center;
+            display: grid; /* Użycie siatki dla lepszej kontroli lewo-środek */
+            grid-template-columns: 1fr 2fr 1fr; 
             align-items: center;
-            gap: 50px;
         }
 
+        /* Lewa strona - informacje pod sobą przy kresce */
         .match-meta {
             display: flex;
             align-items: center;
-            gap: 20px;
-            border-right: 2px solid #00a2ff;
-            padding-right: 30px;
+            gap: 15px;
+            justify-self: start; /* Przyciąganie do lewej krawędzi */
+        }
+
+        .meta-text {
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #00a2ff; /* Kreska po prawej stronie napisów */
+            padding-right: 15px;
             text-align: right;
         }
 
         .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 2px; }
-        .meta-round { font-size: 16px; font-weight: 700; color: #ffffff; margin: 2px 0; }
-        .meta-date { font-size: 12px; color: #8899a6; font-family: monospace; }
+        .meta-round { font-size: 15px; font-weight: 700; color: #ffffff; }
+        .meta-date { font-size: 11px; color: #8899a6; font-family: monospace; }
 
-        .match-main-content { display: flex; flex-direction: column; align-items: center; }
+        /* Środek - Wyśrodkowany zespół i drużyny */
+        .match-main-content {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .team-badge-label { 
             font-size: 10px; 
             font-weight: 900; 
-            letter-spacing: 4px; 
-            color: #00a2ff; 
-            margin-bottom: 15px; 
-            background: rgba(0, 162, 255, 0.1); 
-            padding: 5px 25px; 
+            letter-spacing: 5px; 
+            color: #ffffff; 
+            margin-bottom: 12px; 
+            background: rgba(0, 162, 255, 0.2); 
+            padding: 5px 30px; 
             border-radius: 20px;
-            border: 1px solid rgba(0, 162, 255, 0.2);
+            border: 1px solid rgba(0, 162, 255, 0.3);
         }
 
         .main-match-display { display: flex; align-items: center; gap: 40px; }
-        .team-name { font-size: 28px; font-weight: 800; text-transform: uppercase; width: 280px; letter-spacing: -1px; }
+        .team-name { font-size: 26px; font-weight: 800; text-transform: uppercase; width: 250px; }
         .team-left { text-align: right; }
         .team-right { text-align: left; }
 
         .score-box { 
             background: rgba(255, 255, 255, 0.05); 
             color: white; 
-            padding: 15px 35px; 
-            border-radius: 15px; 
-            font-size: 38px; 
+            padding: 12px 30px; 
+            border-radius: 12px; 
+            font-size: 34px; 
             font-weight: 900; 
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 140px; 
+            min-width: 120px; 
             text-align: center;
-            text-shadow: 0 0 15px rgba(0, 162, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 162, 255, 0.1);
         }
 
         /* --- CONTENT --- */
@@ -164,12 +124,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 60px;
         }
 
-        .hero h1 { font-size: clamp(40px, 8vw, 100px); font-weight: 900; text-transform: uppercase; line-height: 0.85; letter-spacing: -4px; }
+        .hero h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -3px; }
         
-        /* Panel sterowania z efektem szkła */
         .control-room { 
             flex: 0.8; 
             background: rgba(255, 255, 255, 0.03); 
@@ -179,22 +137,14 @@
             backdrop-filter: blur(30px);
         }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .stat-card { 
-            background: rgba(0, 0, 0, 0.2); 
-            padding: 30px; 
-            border-radius: 25px; 
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: 0.3s;
-        }
-        .stat-card:hover { background: rgba(0, 162, 255, 0.1); border-color: rgba(0, 162, 255, 0.3); }
-        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; margin-bottom: 8px; letter-spacing: 1px; }
+        .stat-card { background: rgba(0, 0, 0, 0.2); padding: 30px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.03); }
+        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; }
         .stat-value { font-size: 40px; font-weight: 700; color: #fff; }
 
         @media (max-width: 1100px) {
-            nav { padding: 10px 20px; }
-            .nav-links { display: none; }
-            .match-centre-hero { flex-direction: column; gap: 30px; }
-            .match-meta { border-right: none; border-bottom: 2px solid #00a2ff; padding: 0 0 20px 0; text-align: center; }
+            .match-centre-hero { display: flex; flex-direction: column; text-align: center; gap: 30px; }
+            .match-meta { justify-content: center; border-right: none; }
+            .meta-text { border-right: none; border-bottom: 2px solid #00a2ff; padding: 0 0 10px 0; text-align: center; }
             .container { flex-direction: column; text-align: center; }
             .team-name { width: auto; font-size: 20px; }
         }
@@ -214,18 +164,8 @@
                 <a href="#">Sklep</a>
             </div>
         </div>
-
         <div class="lang-dropdown">
-            <button class="dropbtn">
-                <i class="fas fa-globe" style="color:#00a2ff"></i> 
-                <span id="current-lang">PL</span>
-            </button>
-            <div class="dropdown-content">
-                <a href="#" onclick="changeLang('PL')">Polski</a>
-                <a href="#" onclick="changeLang('ES')">Español</a>
-                <a href="#" onclick="changeLang('RU')">Русский</a>
-                <a href="#" onclick="changeLang('UA')">Українська</a>
-            </div>
+            <button class="dropbtn"><i class="fas fa-globe" style="color:#00a2ff"></i> PL</button>
         </div>
     </nav>
 
@@ -237,6 +177,7 @@
                 <span class="meta-date" id="m-date">13/04/2026 | 20:00</span>
             </div>
         </div>
+
         <div class="match-main-content">
             <div class="team-badge-label">I ZESPÓŁ</div>
             <div class="main-match-display">
@@ -245,6 +186,8 @@
                 <span class="team-name team-right" id="opponent-name">Klimek PRO</span>
             </div>
         </div>
+        
+        <div></div>
     </div>
 
     <div class="container">
@@ -270,38 +213,15 @@
 
         function updateMatch() {
             const now = new Date();
-            let currentMatch = schedule[0];
+            const match = schedule[0]; // Na razie pierwszy mecz z listy
 
-            // Szukamy meczu, który jest najbliżej dzisiejszej daty
-            for (let m of schedule) {
-                const mDate = new Date(m.date);
-                if (mDate > now || (now - mDate) / 36e5 <= 48) {
-                    currentMatch = m;
-                    break;
-                }
-            }
-
-            document.getElementById('opponent-name').innerText = currentMatch.opponent;
-            document.getElementById('m-league').innerText = currentMatch.league;
-            document.getElementById('m-round').innerText = currentMatch.round;
-            document.getElementById('m-date').innerText = new Date(currentMatch.date).toLocaleString('pl-PL', {
+            document.getElementById('opponent-name').innerText = match.opponent;
+            document.getElementById('m-league').innerText = match.league;
+            document.getElementById('m-round').innerText = match.round;
+            document.getElementById('m-date').innerText = new Date(match.date).toLocaleString('pl-PL', {
                 day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
             }).replace(',', ' |');
-            
-            const scoreBox = document.getElementById('score-container');
-            if (currentMatch.score) {
-                scoreBox.innerText = currentMatch.score;
-                scoreBox.style.background = "#00a2ff";
-            } else {
-                scoreBox.innerText = "VS";
-                scoreBox.style.background = "rgba(255,255,255,0.05)";
-            }
         }
-
-        function changeLang(lang) {
-            document.getElementById('current-lang').innerText = lang;
-        }
-
         updateMatch();
     </script>
 </body>
