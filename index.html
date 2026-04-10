@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Official</title>
+    <title>Dynamo Wrocław | Official Panel</title>
+    
+    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background: radial-gradient(circle at top right, #003366, #050b14);
             color: #e0e0e0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* --- NAVBAR --- */
         nav {
             width: 100%;
             padding: 10px 40px;
@@ -54,21 +60,49 @@
         .nav-links a:not(.drop-link) { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; opacity: 0.7; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; color: #00a2ff; }
 
+        /* JĘZYKI PO PRAWEJ */
+        .lang-dropdown { position: relative; }
+        .lang-btn { 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; 
+            display: flex; align-items: center; gap: 8px; font-size: 13px;
+        }
+        .lang-content { 
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: rgba(10, 21, 37, 0.98); min-width: 150px; border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 10px;
+        }
+        .lang-dropdown:hover .lang-content { display: block; }
+        .lang-content a { color: white; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+        .lang-content a:hover { background: rgba(0, 162, 255, 0.2); }
+        .flag-icon { width: 20px; border-radius: 2px; }
+
+        /* --- MATCH CENTRE (POPRZEDNI WYGLĄD) --- */
         .match-centre-hero {
             width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
             margin-top: 85px; padding: 30px 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
         }
-        .match-meta { border-left: 2px solid #00a2ff; padding-left: 15px; }
-        .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; }
-        .score-box { background: rgba(255, 255, 255, 0.05); padding: 12px 30px; border-radius: 12px; font-size: 34px; font-weight: 900; }
+        .match-meta { border-left: 2px solid #00a2ff; padding-left: 15px; display: flex; flex-direction: column; }
+        .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 2px; }
+        .meta-round { font-size: 15px; font-weight: 700; color: #ffffff; }
+        .meta-date { font-size: 11px; color: #8899a6; font-family: monospace; }
+
+        .match-main-content { display: flex; flex-direction: column; align-items: center; }
+        .team-badge-label { font-size: 10px; font-weight: 900; letter-spacing: 5px; color: #ffffff; margin-bottom: 12px; background: rgba(0, 162, 255, 0.2); padding: 5px 30px; border-radius: 20px; border: 1px solid rgba(0, 162, 255, 0.3); }
+        .main-match-display { display: flex; align-items: center; gap: 40px; }
         .team-name { font-size: 26px; font-weight: 800; text-transform: uppercase; width: 250px; }
+        .score-box { background: rgba(255, 255, 255, 0.05); padding: 12px 30px; border-radius: 12px; font-size: 34px; font-weight: 900; border: 1px solid rgba(255, 255, 255, 0.1); min-width: 120px; text-align: center; }
+
+        .container { width: 90%; max-width: 1400px; margin: 80px auto; display: flex; justify-content: space-between; align-items: center; }
+        .hero h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; line-height: 0.9; }
     </style>
 </head>
 <body>
+
     <nav>
         <div class="nav-content-left">
-            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img">
+            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Logo" class="logo-img"></a>
             <div class="nav-links">
                 <div class="dropdown">
                     <span class="drop-link">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
@@ -78,22 +112,52 @@
                         <a href="#">Historia</a>
                     </div>
                 </div>
-                <a href="#">Terminarz</a>
-                <a href="#">Bilety</a>
-                <a href="#">Sklep</a>
+                <a href="#" data-t="nav_tickets">Bilety</a>
+                <a href="#" data-t="nav_shop">Sklep</a>
+                <a href="#" data-t="nav_contact">Kontakt</a>
+            </div>
+        </div>
+        
+        <div class="lang-dropdown">
+            <button class="lang-btn">
+                <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span>
+            </button>
+            <div class="lang-content">
+                <a href="#" onclick="changeLang('PL')"><img src="https://flagcdn.com/w40/pl.png" class="flag-icon"> Polski</a>
+                <a href="#" onclick="changeLang('UA')"><img src="https://flagcdn.com/w40/ua.png" class="flag-icon"> Українська</a>
+                <a href="#" onclick="changeLang('ES')"><img src="https://flagcdn.com/w40/es.png" class="flag-icon"> Español</a>
             </div>
         </div>
     </nav>
 
     <div class="match-centre-hero">
         <div class="match-meta">
-            <span class="meta-league">Czwarta Liga</span>
-            <div style="font-size: 15px; font-weight: 700;">Kolejka 3</div>
+            <span class="meta-league" data-t="m_league">Czwarta Liga</span>
+            <span class="meta-round" data-t="m_round">Kolejka 3</span>
+            <span class="meta-date">13/04/2026 | 20:00</span>
         </div>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <div class="score-box">VS</div>
-            <div style="margin-top: 10px; font-weight: 800;">FC DYNAMO vs KLIMEK PRO</div>
+        <div class="match-main-content">
+            <div class="team-badge-label" data-t="team_label">I ZESPÓŁ</div>
+            <div class="main-match-display">
+                <span class="team-name" style="text-align:right">FC Dynamo Wrocław</span>
+                <div class="score-box">VS</div>
+                <span class="team-name">Klimek PRO</span>
+            </div>
         </div>
+        <div></div>
     </div>
+
+    <div class="container">
+        <main class="hero">
+            <h1 data-t="hero_txt">Silesian heart,<br>global vision.</h1>
+        </main>
+    </div>
+
+    <script>
+        function changeLang(lang) {
+            document.getElementById('current-lang').innerText = lang;
+            // Tutaj można dodać logikę tłumaczenia data-t
+        }
+    </script>
 </body>
 </html>
