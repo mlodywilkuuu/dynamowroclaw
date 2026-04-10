@@ -1,217 +1,163 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Official Panel</title>
-    
-    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    /* --- POWIĘKSZONE MATCH CENTRE --- */
+    .match-centre-hero {
+        width: 100%;
+        background: linear-gradient(90deg, rgba(0, 162, 255, 0.05) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 162, 255, 0.05) 100%);
+        margin-top: 90px;
+        padding: 30px 20px;
+        border-bottom: 1px solid rgba(0, 162, 255, 0.2);
+        display: flex;
+        justify-content: center; /* Wyśrodkowanie całej zawartości */
+        align-items: center;
+        gap: 40px;
+    }
 
-    <style>
-        /* Główne style bez zmian dla spójności */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: radial-gradient(circle at top right, #003366, #050b14);
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-        }
+    /* Lewa kolumna z separatorem | */
+    .match-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border-right: 2px solid #00a2ff; /* Niebieska kreska | */
+        padding-right: 20px;
+        text-align: right;
+    }
 
-        nav {
-            width: 100%;
-            padding: 5px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(15px);
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-        }
+    .meta-text {
+        display: flex;
+        flex-direction: column;
+    }
 
-        .logo-img { height: 80px; width: auto; }
+    .meta-league { font-size: 11px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 1px; }
+    .meta-round { font-size: 14px; font-weight: 700; color: #ffffff; }
+    .meta-date { font-size: 12px; color: #6a7c78; }
 
-        /* --- POWIĘKSZONE MATCH CENTRE --- */
-        .match-centre-hero {
-            width: 100%;
-            background: linear-gradient(90deg, rgba(0, 162, 255, 0.1), rgba(0, 0, 0, 0.4));
-            margin-top: 90px;
-            padding: 25px 50px;
-            border-bottom: 1px solid rgba(0, 162, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+    /* Środkowa sekcja meczu */
+    .match-main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-        .match-status {
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #00a2ff;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
+    .team-badge-label {
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 4px;
+        color: #ffffff;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        background: rgba(0, 162, 255, 0.2);
+        padding: 4px 20px;
+        border-radius: 20px;
+    }
 
-        .main-match-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            margin: 10px 0;
-        }
+    .main-match-display {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
 
-        .team-name {
-            font-size: 24px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
+    .team-name {
+        font-size: 26px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #ffffff;
+        width: 250px;
+    }
 
-        .score-box {
-            background: #00a2ff;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-size: 32px;
-            font-weight: 900;
-            box-shadow: 0 0 20px rgba(0, 162, 255, 0.4);
-        }
+    .team-left { text-align: right; }
+    .team-right { text-align: left; }
 
-        .vs-circle {
-            width: 50px;
-            height: 50px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 14px;
-        }
+    .score-box {
+        background: #00a2ff;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-size: 36px;
+        font-weight: 900;
+        box-shadow: 0 0 30px rgba(0, 162, 255, 0.3);
+        min-width: 120px;
+        text-align: center;
+    }
 
-        .match-info-sub {
-            font-size: 13px;
-            color: #6a7c78;
-            margin-top: 10px;
-        }
+    @media (max-width: 1024px) {
+        .match-centre-hero { flex-direction: column; gap: 20px; }
+        .match-meta { border-right: none; border-bottom: 2px solid #00a2ff; padding-right: 0; padding-bottom: 15px; text-align: center; }
+        .team-name { width: auto; font-size: 20px; }
+    }
+</style>
 
-        /* --- RESZTA STRONY --- */
-        .container {
-            width: 95%;
-            max-width: 1400px;
-            margin: 50px auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .hero h1 { font-size: clamp(35px, 7vw, 90px); font-weight: 800; text-transform: uppercase; }
-
-        .control-room { flex: 1; background: rgba(255, 255, 255, 0.02); padding: 40px; border-radius: 40px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .stat-card { background: rgba(0, 0, 0, 0.4); padding: 30px 20px; border-radius: 25px; }
-        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; }
-        .stat-value { font-size: 36px; font-weight: 700; color: #ffffff; }
-
-        @media (max-width: 1024px) {
-            .container { flex-direction: column; text-align: center; }
-            .main-match-display { gap: 15px; flex-wrap: wrap; }
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <div class="nav-left">
-            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
+<div class="match-centre-hero">
+    <div class="match-meta">
+        <div class="meta-text">
+            <span class="meta-league" id="m-league">Czwarta Liga</span>
+            <span class="meta-round" id="m-round">Kolejka 3</span>
+            <span class="meta-date" id="m-date">13/04/2026 | 20:00</span>
         </div>
-        <div class="lang-dropdown">
-            <button class="dropbtn"><i class="fas fa-globe"></i> Polski</button>
-        </div>
-    </nav>
+    </div>
 
-    <div class="match-centre-hero" id="match-display">
-        <div class="match-status" id="status-text">Ładowanie danych...</div>
+    <div class="match-main-content">
+        <div class="team-badge-label">I ZESPÓŁ</div>
         <div class="main-match-display">
-            <span class="team-name">FC Dynamo Wrocław</span>
+            <span class="team-name team-left">FC Dynamo Wrocław</span>
             <div id="score-container" class="score-box">? : ?</div>
-            <span class="team-name" id="opponent-name">Klimek PRO</span>
-        </div>
-        <div class="match-info-sub" id="match-details">
-            Czwarta Liga | 13/04/2026 20:00 | Boisko nr. 2
+            <span class="team-name team-right" id="opponent-name">Klimek PRO</span>
         </div>
     </div>
+</div>
 
-    <div class="container">
-        <main class="hero">
-            <h1 id="hero-title">Silesian heart, global vision.</h1>
-        </main>
+<script>
+    // Pełny terminarz z Twojego zdjęcia
+    const schedule = [
+        { date: "2026-04-13T20:00:00", opponent: "Klimek PRO", score: "3:1", league: "Czwarta Liga", round: "Kolejka 3" },
+        { date: "2026-04-21T21:00:00", opponent: "RunnersHood", score: null, league: "Czwarta Liga", round: "Kolejka 4" },
+        { date: "2026-04-27T20:00:00", opponent: "FC Outsiders", score: null, league: "Czwarta Liga", round: "Kolejka 5" },
+        { date: "2026-05-07T22:00:00", opponent: "Piorun Zaodrze", score: null, league: "Czwarta Liga", round: "Kolejka 6" }
+    ];
 
-        <aside class="control-room">
-            <div class="stats-grid">
-                <div class="stat-card"><p class="stat-label">ZAWODNICY</p><span class="stat-value">24</span></div>
-                <div class="stat-card"><p class="stat-label">MIEJSCE</p><span class="stat-value">1</span></div>
-                <div class="stat-card"><p class="stat-label">MECZE</p><span class="stat-value">12</span></div>
-                <div class="stat-card"><p class="stat-label">STATUS</p><span class="stat-value" style="color: #00a2ff;">PRIME</span></div>
-            </div>
-        </aside>
-    </div>
+    function updateMatchCentre() {
+        const now = new Date();
+        const scoreContainer = document.getElementById('score-container');
+        const opponentName = document.getElementById('opponent-name');
+        
+        const mLeague = document.getElementById('m-league');
+        const mRound = document.getElementById('m-round');
+        const mDate = document.getElementById('m-date');
 
-    <script>
-        // Logika Match Centre
-        const schedule = [
-            { date: "2026-04-13T20:00:00", opponent: "Klimek PRO", score: "3:1", location: "Boisko nr. 2" },
-            { date: "2026-04-21T21:00:00", opponent: "RunnersHood", score: null, location: "Boisko nr. 1" },
-            { date: "2026-04-27T20:00:00", opponent: "FC Outsiders", score: null, location: "Boisko nr. 1" }
-        ];
+        let activeMatch = null;
 
-        function updateMatchCentre() {
-            const now = new Date();
-            const statusText = document.getElementById('status-text');
-            const scoreContainer = document.getElementById('score-container');
-            const opponentName = document.getElementById('opponent-name');
-            const matchDetails = document.getElementById('match-details');
+        for (let i = 0; i < schedule.length; i++) {
+            const matchDate = new Date(schedule[i].date);
+            const diffHours = (now - matchDate) / (1000 * 60 * 60);
 
-            // Znajdź mecz, który był ostatnio (do 48h wstecz) lub jest następny
-            let activeMatch = null;
-
-            for (let match of schedule) {
-                const matchDate = new Date(match.date);
-                const diffHours = (now - matchDate) / (1000 * 60 * 60);
-
-                // Jeśli mecz był niedawno (mniej niż 48h temu) i ma wynik
-                if (diffHours >= 0 && diffHours <= 48 && match.score) {
-                    activeMatch = { ...match, type: 'RECENT' };
-                    break;
-                }
-                // Jeśli mecz jest w przyszłości
-                if (matchDate > now) {
-                    activeMatch = { ...match, type: 'UPCOMING' };
-                    break;
-                }
+            // Jeśli mecz był niedawno (do 48h)
+            if (diffHours >= 0 && diffHours <= 48) {
+                activeMatch = schedule[i];
+                break;
             }
-
-            if (activeMatch) {
-                opponentName.innerText = activeMatch.opponent;
-                matchDetails.innerText = `Czwarta Liga | ${new Date(activeMatch.date).toLocaleString()} | ${activeMatch.location}`;
-
-                if (activeMatch.type === 'RECENT') {
-                    statusText.innerText = "Ostatni Wynik (48H)";
-                    scoreContainer.innerText = activeMatch.score;
-                    scoreContainer.style.background = "#00a2ff";
-                } else {
-                    statusText.innerText = "Nadchodzący Mecz";
-                    scoreContainer.innerText = "VS";
-                    scoreContainer.style.background = "rgba(255,255,255,0.1)";
-                }
+            // Jeśli to kolejny nadchodzący mecz
+            if (matchDate > now) {
+                activeMatch = schedule[i];
+                break;
             }
         }
 
-        // Uruchom przy starcie
-        updateMatchCentre();
-    </script>
-</body>
-</html>
+        if (activeMatch) {
+            opponentName.innerText = activeMatch.opponent;
+            mLeague.innerText = activeMatch.league;
+            mRound.innerText = activeMatch.round;
+            
+            const d = new Date(activeMatch.date);
+            mDate.innerText = `${d.toLocaleDateString('pl-PL')} | ${d.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'})}`;
+
+            if (activeMatch.score) {
+                scoreContainer.innerText = activeMatch.score;
+                scoreContainer.style.background = "#00a2ff";
+            } else {
+                scoreContainer.innerText = "VS";
+                scoreContainer.style.background = "rgba(255,255,255,0.1)";
+            }
+        }
+    }
+
+    updateMatchCentre();
+</script>
