@@ -1,68 +1,29 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Official Panel</title>
-    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* CSS IDENTYCZNY DLA WSZYSTKICH STRON */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: radial-gradient(circle at top right, #003366, #050b14); color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
-        nav { width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 2000; }
-        .nav-content-left { display: flex; align-items: center; gap: 40px; }
-        .logo-img { height: 65px; width: auto; }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .dropdown { position: relative; display: inline-block; }
-        .drop-link { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; cursor: pointer; padding: 10px; }
-        .dropdown-menu { display: block; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0; background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; transition: all 0.3s ease; transform: translateY(10px); }
-        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
-        .dropdown-menu a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; }
-        .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
-        /* Styl przycisków ze zdjęcia */
-        .btn-clean { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; padding: 10px; }
-        .btn-clean:hover { opacity: 1; color: #00a2ff; }
-        /* Match Center Styles */
-        .match-centre-container { width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); margin-top: 85px; padding: 40px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: center; }
-        .match-wrapper { width: 90%; max-width: 1200px; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; }
-        .score-vs { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 35px; border-radius: 15px; font-size: 32px; font-weight: 900; }
-    </style>
-</head>
-<body>
-    <nav>
+<nav>
         <div class="nav-content-left">
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
             <div class="nav-links">
                 <div class="dropdown">
-                    <span class="drop-link">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <span class="nav-btn">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
                     <div class="dropdown-menu">
                         <a href="zespol.html">I Zespół</a>
                         <a href="historia.html">Historia</a>
                     </div>
                 </div>
-                <a href="#" class="btn-clean">Bilety</a>
-                <a href="#" class="btn-clean">Sklep</a>
+                <a href="#" class="nav-btn">Bilety</a>
+                <a href="#" class="nav-btn">Sklep</a>
+            </div>
+        </div>
+        
+        <div class="dropdown lang-dropdown" style="margin-right: 40px;">
+            <div class="nav-btn" style="display: flex; align-items: center; gap: 8px; opacity: 1;">
+                <i class="fas fa-globe" style="color:#00a2ff"></i> 
+                <span id="current-lang">PL</span>
+            </div>
+            <div class="dropdown-menu" style="right: 0; left: auto; min-width: 140px;">
+                <a href="#" onclick="changeLang('PL')"><img src="https://flagcdn.com/w40/pl.png" width="18" style="margin-right: 10px; vertical-align: middle;"> PL</a>
+                <a href="#" onclick="changeLang('UA')"><img src="https://flagcdn.com/w40/ua.png" width="18" style="margin-right: 10px; vertical-align: middle;"> UA</a>
+                <a href="#" onclick="changeLang('EN')"><img src="https://flagcdn.com/w40/gb.png" width="18" style="margin-right: 10px; vertical-align: middle;"> EN</a>
+                <a href="#" onclick="changeLang('DE')"><img src="https://flagcdn.com/w40/de.png" width="18" style="margin-right: 10px; vertical-align: middle;"> DE</a>
             </div>
         </div>
     </nav>
-
-    <div class="match-centre-container">
-        <div class="match-wrapper">
-            <div style="border-left: 2px solid #00a2ff; padding-left: 20px;">
-                <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;">CZWARTA LIGA</div>
-                <div style="font-size: 18px; font-weight: 700;">Kolejka 3</div>
-                <div style="font-size: 12px; color:#8899a6; margin-top: 5px;">13/04/2026 | 20:00</div>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <div style="display: flex; align-items: center; gap: 30px;">
-                    <span style="font-size: 24px; font-weight: 900; text-align: right; width: 250px;">FC Dynamo Wrocław</span>
-                    <div class="score-vs">VS</div>
-                    <span style="font-size: 24px; font-weight: 900; text-align: left; width: 250px;">Klimek PRO</span>
-                </div>
-            </div>
-            <div></div>
-        </div>
-    </div>
-</body>
-</html>
