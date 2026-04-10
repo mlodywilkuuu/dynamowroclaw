@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Control Room</title>
+    <title>Dynamo Wrocław | Panel Klubu</title>
     <style>
-        /* Cały styl CSS wewnątrz pliku HTML */
         * {
             margin: 0;
             padding: 0;
@@ -15,7 +14,7 @@
         body {
             background: radial-gradient(circle at top right, #0a1f1a, #040d0b);
             color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -79,12 +78,13 @@
         }
 
         h1 {
-            font-size: clamp(45px, 7vw, 90px);
+            font-size: clamp(40px, 6vw, 85px);
             line-height: 0.95;
             color: #ffffff;
-            max-width: 700px;
+            max-width: 750px;
             letter-spacing: -3px;
             font-weight: 800;
+            text-transform: uppercase;
         }
 
         /* PRAWA SEKTCJA */
@@ -95,7 +95,6 @@
             padding: 40px;
             border-radius: 30px;
             backdrop-filter: blur(15px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .section-title {
@@ -145,26 +144,14 @@
             display: block;
         }
 
-        .stat-value.small {
-            font-size: 22px;
+        .stat-value.status {
+            font-size: 20px;
             color: #00ff96;
         }
 
-        /* RESPONSYWNOŚĆ */
         @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
-                text-align: left;
-                margin-top: 50px;
-                margin-bottom: 50px;
-            }
-            .hero {
-                width: 100%;
-            }
-            .control-room {
-                width: 100%;
-                margin-top: 30px;
-            }
+            .container { flex-direction: column; text-align: left; margin-top: 50px; }
+            .hero, .control-room { width: 100%; }
         }
     </style>
 </head>
@@ -173,31 +160,31 @@
     <div class="container">
         <main class="hero">
             <div class="badge">
-                <span class="dot"></span> Dynamo Live
+                <span class="dot"></span> Sezon 2026 w toku
             </div>
             <p class="brand">Dynamo Wrocław</p>
-            <h1>Modern club management with instant squad switching.</h1>
+            <h1>Nowoczesne zarządzanie kadrą i wynikami na żywo.</h1>
         </main>
 
         <aside class="control-room">
-            <p class="section-title">Control Room</p>
+            <p class="section-title">Centrum Dowodzenia</p>
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <p class="stat-label">👥 Listeners</p>
+                    <p class="stat-label">🏃 Zawodnicy</p>
+                    <span class="stat-value">24</span>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">🏆 Miejsce w tabeli</p>
                     <span class="stat-value">1</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">📊 Peak Today</p>
-                    <span class="stat-value">2</span>
+                    <p class="stat-label">📅 Treningi</p>
+                    <span class="stat-value">5</span>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-label">🌐 Channels</p>
-                    <span class="stat-value">1</span>
-                </div>
-                <div class="stat-card">
-                    <p class="stat-label">⚡ Selected</p>
-                    <span class="stat-value small">Club</span>
+                    <p class="stat-label">⚡ Status</p>
+                    <span class="stat-value status">Gotowi do gry</span>
                 </div>
             </div>
         </aside>
