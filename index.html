@@ -4,241 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamo Wrocław | Official Panel</title>
-    
     <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
+        /* CSS IDENTYCZNY DLA WSZYSTKICH STRON */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background: radial-gradient(circle at top right, #003366, #050b14);
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding-bottom: 50px;
-        }
-
-        /* --- NAVBAR --- */
-        nav {
-            width: 100%;
-            padding: 10px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: fixed; top: 0; z-index: 2000;
-        }
-
+        body { background: radial-gradient(circle at top right, #003366, #050b14); color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
+        nav { width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 2000; }
         .nav-content-left { display: flex; align-items: center; gap: 40px; }
         .logo-img { height: 65px; width: auto; }
-
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        
-        /* DROPDOWN KLUB */
         .dropdown { position: relative; display: inline-block; }
         .drop-link { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; cursor: pointer; padding: 10px; }
-        
-        .dropdown-menu {
-            display: block; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0;
-            background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 0; margin-top: 5px; transition: all 0.3s ease; transform: translateY(10px); transition-delay: 0.2s;
-        }
-        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; }
-        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); transition-delay: 0s; }
+        .dropdown-menu { display: block; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0; background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; transition: all 0.3s ease; transform: translateY(10px); }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
         .dropdown-menu a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; }
         .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
-
-        /* JĘZYKI */
-        .lang-dropdown { position: relative; }
-        .lang-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; min-width: 70px; justify-content: center; }
-        .lang-content { display: block; visibility: hidden; opacity: 0; position: absolute; right: 0; top: 100%; background: rgba(10, 21, 37, 0.98); min-width: 150px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 5px; transition: all 0.3s ease; transform: translateY(10px); transition-delay: 0.2s; }
-        .lang-dropdown::after { content: ""; position: absolute; top: 100%; right: 0; width: 100%; height: 20px; }
-        .lang-dropdown:hover .lang-content { visibility: visible; opacity: 1; transform: translateY(0); transition-delay: 0s; }
-        .lang-content a { color: white; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; }
-
-        /* --- NAPRAWIONE MATCH CENTRE --- */
-        .match-centre-container {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(15px);
-            margin-top: 85px;
-            padding: 40px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .match-wrapper {
-            width: 90%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            align-items: center;
-        }
-
-        .match-info-side {
-            border-left: 2px solid #00a2ff;
-            padding-left: 20px;
-        }
-
-        .match-main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .score-display {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .team-text {
-            font-size: 24px;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #fff;
-            width: 250px;
-        }
-
-        .score-vs {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 35px;
-            border-radius: 15px;
-            font-size: 32px;
-            font-weight: 900;
-            color: #fff;
-        }
-
-        /* --- NOWA SEKCJA: KALENDARZ Meczowy --- */
-        .calendar-section {
-            width: 90%; max-width: 1200px; margin: 40px auto;
-        }
-        .calendar-title {
-            font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
-            color: #00a2ff; margin-bottom: 15px; border-left: 2px solid #00a2ff; padding-left: 10px;
-        }
-        .calendar-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-        }
-        .match-card {
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 20px;
-            transition: 0.3s; cursor: pointer;
-        }
-        .match-card:hover { transform: translateY(-3px); background: rgba(0, 162, 255, 0.05); }
-        .mc-meta { font-size: 10px; color: #8899a6; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; }
-        .mc-teams { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 5px; }
-        .mc-data { font-size: 11px; color: #fff; opacity: 0.7; }
-
+        /* Styl przycisków ze zdjęcia */
+        .btn-clean { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; padding: 10px; }
+        .btn-clean:hover { opacity: 1; color: #00a2ff; }
+        /* Match Center Styles */
+        .match-centre-container { width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); margin-top: 85px; padding: 40px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: center; }
+        .match-wrapper { width: 90%; max-width: 1200px; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; }
+        .score-vs { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 35px; border-radius: 15px; font-size: 32px; font-weight: 900; }
     </style>
 </head>
 <body>
-
     <nav>
         <div class="nav-content-left">
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
             <div class="nav-links">
                 <div class="dropdown">
-                    <span class="drop-link" data-t="nav_club">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <span class="drop-link">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
                     <div class="dropdown-menu">
-                        <a href="zespol.html" data-t="nav_team">I Zespół</a>
-                        <a href="#">Zarząd</a>
-                        <a href="#">Historia</a>
+                        <a href="zespol.html">I Zespół</a>
+                        <a href="historia.html">Historia</a>
                     </div>
                 </div>
-                <a href="#" class="drop-link" data-t="nav_tickets">Bilety</a>
-                <a href="#" class="drop-link" data-t="nav_shop">Sklep</a>
-            </div>
-        </div>
-        
-        <div class="lang-dropdown">
-            <button class="lang-btn">
-                <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span>
-            </button>
-            <div class="lang-content">
-                <a onclick="setLang('PL')"><img src="https://flagcdn.com/w40/pl.png" width="18"> PL</a>
-                <a onclick="setLang('UA')"><img src="https://flagcdn.com/w40/ua.png" width="18"> UA</a>
-                <a onclick="setLang('EN')"><img src="https://flagcdn.com/w40/gb.png" width="18"> EN</a>
-                <a onclick="setLang('DE')"><img src="https://flagcdn.com/w40/de.png" width="18"> DE</a>
-                <a onclick="setLang('ES')"><img src="https://flagcdn.com/w40/es.png" width="18"> ES</a>
+                <a href="#" class="btn-clean">Bilety</a>
+                <a href="#" class="btn-clean">Sklep</a>
             </div>
         </div>
     </nav>
 
     <div class="match-centre-container">
         <div class="match-wrapper">
-            <div class="match-info-side">
-                <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;" data-t="m_league">CZWARTA LIGA</div>
-                <div style="font-size: 18px; font-weight: 700;" data-t="m_round">Kolejka 3</div>
+            <div style="border-left: 2px solid #00a2ff; padding-left: 20px;">
+                <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;">CZWARTA LIGA</div>
+                <div style="font-size: 18px; font-weight: 700;">Kolejka 3</div>
                 <div style="font-size: 12px; color:#8899a6; margin-top: 5px;">13/04/2026 | 20:00</div>
             </div>
-
-            <div class="match-main">
-                <div style="font-size: 10px; font-weight: 900; letter-spacing: 4px; opacity: 0.6;">I ZESPÓŁ</div>
-                <div class="score-display">
-                    <span class="team-text" style="text-align: right;">FC Dynamo Wrocław</span>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 30px;">
+                    <span style="font-size: 24px; font-weight: 900; text-align: right; width: 250px;">FC Dynamo Wrocław</span>
                     <div class="score-vs">VS</div>
-                    <span class="team-text" style="text-align: left;">Klimek PRO</span>
+                    <span style="font-size: 24px; font-weight: 900; text-align: left; width: 250px;">Klimek PRO</span>
                 </div>
             </div>
-            
-            <div></div> </div>
-    </div>
-
-    <section class="calendar-section">
-        <h3 class="calendar-title" data-t="cal_title">KALENDARZ Meczowy</h3>
-        <div class="calendar-grid">
-            <div class="match-card">
-                <div class="mc-meta">
-                    <span data-t="m_league_mini">IV LIGA</span>
-                    <span>16/04</span>
-                </div>
-                <div class="mc-teams">Dynamo vs Riders Wrocław</div>
-                <div class="mc-data">Kolejka 4 | 20:30 | Wyjazd</div>
-            </div>
-            <div class="match-card">
-                <div class="mc-meta">
-                    <span data-t="m_league_mini">IV LIGA</span>
-                    <span>20/04</span>
-                </div>
-                <div class="mc-teams">Dynamo vs FC Outsiders</div>
-                <div class="mc-data">Kolejka 5 | 18:00 | Dom</div>
-            </div>
-            <div class="match-card">
-                <div class="mc-meta">
-                    <span data-t="m_league_mini">IV LIGA</span>
-                    <span>27/04</span>
-                </div>
-                <div class="mc-teams">Piorun Zaodrze vs Dynamo</div>
-                <div class="mc-data">Kolejka 6 | 21:00 | Wyjazd</div>
-            </div>
+            <div></div>
         </div>
-    </section>
-
-    <script>
-        const translations = {
-            'PL': { nav_club: 'Klub', nav_team: 'I Zespół', nav_tickets: 'Bilety', nav_shop: 'Sklep', m_league: 'CZWARTA LIGA', m_round: 'Kolejka 3', cal_title: 'KALENDARZ Meczowy', m_league_mini: 'IV LIGA' },
-            'UA': { nav_club: 'Клуб', nav_team: 'I Команда', nav_tickets: 'Квитки', nav_shop: 'Магазин', m_league: 'ЧЕТВЕРТА ЛІГА', m_round: 'Тур 3', cal_title: 'КАЛЕНДАР Матчів', m_league_mini: 'IV ЛІГА' },
-            'EN': { nav_club: 'Club', nav_team: 'First Team', nav_tickets: 'Tickets', nav_shop: 'Shop', m_league: 'FOURTH LEAGUE', m_round: 'Round 3', cal_title: 'MATCH Calendar', m_league_mini: 'IV LEAGUE' },
-            'DE': { nav_club: 'Verein', nav_team: '1. Mannschaft', nav_tickets: 'Tickets', nav_shop: 'Shop', m_league: 'VIERTE LIGA', m_round: 'Spieltag 3', cal_title: 'SPIELPLAN', m_league_mini: 'IV LIGA' },
-            'ES': { nav_club: 'Club', nav_team: 'Primer Equipo', nav_tickets: 'Entradas', nav_shop: 'Tienda', m_league: 'CUARTA LIGA', m_round: 'Jornada 3', cal_title: 'CALENDARIO', m_league_mini: 'IV LIGA' }
-        };
-
-        function setLang(lang) {
-            document.getElementById('current-lang').innerText = lang;
-            document.querySelectorAll('[data-t]').forEach(el => {
-                const key = el.getAttribute('data-t');
-                if (translations[lang][key]) el.innerText = translations[lang][key];
-            });
-        }
-    </script>
+    </div>
 </body>
 </html>
