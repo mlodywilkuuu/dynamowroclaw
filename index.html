@@ -19,10 +19,10 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVBAR: MAX DO LEWEJ --- */
+        /* --- NAVBAR --- */
         nav {
             width: 100%;
-            padding: 10px 20px; /* Mniejszy padding dla efektu "max do lewej" */
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -35,100 +35,49 @@
             z-index: 2000;
         }
 
-        .nav-content-left { 
-            display: flex; 
-            align-items: center; 
-            gap: 30px; 
-            margin-right: auto; /* Pcha wszystko na lewo */
-        }
-
+        .nav-content-left { display: flex; align-items: center; gap: 30px; margin-right: auto; }
         .logo-img { height: 65px; width: auto; transition: transform 0.3s; }
 
         .nav-links { display: flex; gap: 20px; }
         .nav-links a { 
-            color: #fff; 
-            text-decoration: none; 
-            font-size: 11px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            opacity: 0.7; 
-            transition: 0.3s;
-            white-space: nowrap;
+            color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s;
         }
         .nav-links a:hover { opacity: 1; color: #00a2ff; }
 
-        /* JĘZYKI - STABILNE MENU Z FLAGAMI */
-        .lang-dropdown { 
-            position: relative; 
-            padding: 10px 0; /* Strefa bezpieczeństwa, żeby menu nie znikało */
-        }
-        
+        /* JĘZYKI */
+        .lang-dropdown { position: relative; padding: 10px 0; }
         .dropbtn { 
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            color: white; 
-            padding: 8px 14px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-            font-size: 13px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; 
+            display: flex; align-items: center; gap: 8px; font-size: 13px;
         }
 
         .dropdown-content { 
-            display: none; 
-            position: absolute; 
-            right: 0; 
-            top: 100%; 
-            background: rgba(10, 21, 37, 0.98); 
-            backdrop-filter: blur(20px);
-            min-width: 160px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(255, 255, 255, 0.15); 
-            z-index: 3000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            padding: 5px 0;
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: rgba(10, 21, 37, 0.98); backdrop-filter: blur(20px);
+            min-width: 160px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15); 
+            z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Hover na kontenerze lang-dropdown trzyma menu otwarte */
         .lang-dropdown:hover .dropdown-content { display: block; }
-
         .dropdown-content a { 
-            color: white; 
-            padding: 10px 15px; 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            font-size: 13px;
-            transition: 0.2s;
+            color: white; padding: 10px 15px; text-decoration: none; 
+            display: flex; align-items: center; gap: 12px; font-size: 13px; transition: 0.2s;
         }
         .dropdown-content a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
-        
         .flag-icon { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
 
         /* --- MATCH CENTRE --- */
         .match-centre-hero {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(15px);
-            margin-top: 85px;
-            padding: 30px 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: grid; 
-            grid-template-columns: 1fr 2fr 1fr; 
-            align-items: center;
+            width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
+            margin-top: 85px; padding: 30px 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
         }
 
         .match-meta {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            justify-self: start; 
-            border-left: 2px solid #00a2ff;
-            padding-left: 15px;
+            display: flex; align-items: center; gap: 15px; justify-self: start; 
+            border-left: 2px solid #00a2ff; padding-left: 15px;
         }
 
         .meta-text { display: flex; flex-direction: column; }
@@ -136,13 +85,7 @@
         .meta-round { font-size: 15px; font-weight: 700; color: #ffffff; }
         .meta-date { font-size: 11px; color: #8899a6; font-family: monospace; }
 
-        .match-main-content {
-            grid-column: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        .match-main-content { grid-column: 2; display: flex; flex-direction: column; align-items: center; }
         .team-badge-label { 
             font-size: 10px; font-weight: 900; letter-spacing: 5px; color: #ffffff; 
             margin-bottom: 12px; background: rgba(0, 162, 255, 0.2); 
@@ -194,12 +137,12 @@
                 <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Logo" class="logo-img">
             </a>
             <div class="nav-links">
-                <a href="#">Klub</a>
-                <a href="#">Akademia</a>
-                <a href="#">Stadion</a>
-                <a href="#">Bilety</a>
-                <a href="#">Sklep</a>
-                <a href="#">Kontakt</a>
+                <a href="#" data-t="nav_club">Klub</a>
+                <a href="#" data-t="nav_academy">Akademia</a>
+                <a href="#" data-t="nav_stadium">Stadion</a>
+                <a href="#" data-t="nav_tickets">Bilety</a>
+                <a href="#" data-t="nav_shop">Sklep</a>
+                <a href="#" data-t="nav_contact">Kontakt</a>
             </div>
         </div>
         
@@ -208,10 +151,10 @@
                 <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang-label">PL</span>
             </button>
             <div class="dropdown-content">
-                <a href="#" onclick="setLang('PL')"><img src="https://flagcdn.com/w40/pl.png" class="flag-icon"> Polski</a>
-                <a href="#" onclick="setLang('UA')"><img src="https://flagcdn.com/w40/ua.png" class="flag-icon"> Українська</a>
-                <a href="#" onclick="setLang('ES')"><img src="https://flagcdn.com/w40/es.png" class="flag-icon"> Español</a>
-                <a href="#" onclick="setLang('RU')"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon"> Русский</a>
+                <a href="#" onclick="translatePage('PL')"><img src="https://flagcdn.com/w40/pl.png" class="flag-icon"> Polski</a>
+                <a href="#" onclick="translatePage('UA')"><img src="https://flagcdn.com/w40/ua.png" class="flag-icon"> Українська</a>
+                <a href="#" onclick="translatePage('ES')"><img src="https://flagcdn.com/w40/es.png" class="flag-icon"> Español</a>
+                <a href="#" onclick="translatePage('RU')"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon"> Русский</a>
             </div>
         </div>
     </nav>
@@ -219,14 +162,14 @@
     <div class="match-centre-hero">
         <div class="match-meta">
             <div class="meta-text">
-                <span class="meta-league">Czwarta Liga</span>
-                <span class="meta-round">Kolejka 3</span>
+                <span class="meta-league" data-t="m_league">Czwarta Liga</span>
+                <span class="meta-round" data-t="m_round">Kolejka 3</span>
                 <span class="meta-date">13/04/2026 | 20:00</span>
             </div>
         </div>
 
         <div class="match-main-content">
-            <div class="team-badge-label">I ZESPÓŁ</div>
+            <div class="team-badge-label" data-t="team_label">I ZESPÓŁ</div>
             <div class="main-match-display">
                 <span class="team-name team-left">FC Dynamo Wrocław</span>
                 <div class="score-box">VS</div>
@@ -238,21 +181,54 @@
 
     <div class="container">
         <main class="hero">
-            <h1>Silesian heart,<br>global vision.</h1>
+            <h1 id="hero-title" data-t="hero_txt">Silesian heart,<br>global vision.</h1>
         </main>
         <aside class="control-room">
             <div class="stats-grid">
-                <div class="stat-card"><p class="stat-label">ZAWODNICY</p><span class="stat-value">24</span></div>
-                <div class="stat-card"><p class="stat-label">MIEJSCE</p><span class="stat-value">1</span></div>
-                <div class="stat-card"><p class="stat-label">MECZE</p><span class="stat-value">12</span></div>
+                <div class="stat-card"><p class="stat-label" data-t="s_players">ZAWODNICY</p><span class="stat-value">24</span></div>
+                <div class="stat-card"><p class="stat-label" data-t="s_place">MIEJSCE</p><span class="stat-value">1</span></div>
+                <div class="stat-card"><p class="stat-label" data-t="s_matches">MECZE</p><span class="stat-value">12</span></div>
                 <div class="stat-card"><p class="stat-label">STATUS</p><span class="stat-value" style="color:#00a2ff">PRIME</span></div>
             </div>
         </aside>
     </div>
 
     <script>
-        function setLang(lang) {
+        const translations = {
+            'PL': {
+                nav_club: 'Klub', nav_academy: 'Akademia', nav_stadium: 'Stadion', nav_tickets: 'Bilety', nav_shop: 'Sklep', nav_contact: 'Kontakt',
+                m_league: 'Czwarta Liga', m_round: 'Kolejka 3', team_label: 'I ZESPÓŁ',
+                hero_txt: 'Silesian heart,<br>global vision.', s_players: 'ZAWODNICY', s_place: 'MIEJSCE', s_matches: 'MECZE'
+            },
+            'UA': {
+                nav_club: 'Клуб', nav_academy: 'Академія', nav_stadium: 'Стадіон', nav_tickets: 'Квитки', nav_shop: 'Магазин', nav_contact: 'Контакт',
+                m_league: 'Четверта Ліга', m_round: 'Тур 3', team_label: 'I КОМАНДА',
+                hero_txt: 'Сілезьке серце,<br>глобальне бачення.', s_players: 'ГРАВЦІ', s_place: 'МІСЦЕ', s_matches: 'МАТЧІ'
+            },
+            'ES': {
+                nav_club: 'Club', nav_academy: 'Academia', nav_stadium: 'Estadio', nav_tickets: 'Entradas', nav_shop: 'Tienda', nav_contact: 'Contacto',
+                m_league: 'Cuarta Liga', m_round: 'Jornada 3', team_label: 'I EQUIPO',
+                hero_txt: 'Corazón silesiano,<br>visión global.', s_players: 'JUGADORES', s_place: 'POSICIÓN', s_matches: 'PARTIDOS'
+            },
+            'RU': {
+                nav_club: 'Клуб', nav_academy: 'Академия', nav_stadium: 'Стадион', nav_tickets: 'Билеты', nav_shop: 'Магазин', nav_contact: 'Контакт',
+                m_league: 'Четвертая Лига', m_round: 'Тур 3', team_label: 'I СОСТАВ',
+                hero_txt: 'Силезское сердце,<br>глобальное видение.', s_players: 'ИГРОКИ', s_place: 'МЕСТО', s_matches: 'МАТЧИ'
+            }
+        };
+
+        function translatePage(lang) {
+            // Zmiana etykiety w przycisku
             document.getElementById('current-lang-label').innerText = lang;
+            
+            // Tłumaczenie elementów z atrybutem data-t
+            const elements = document.querySelectorAll('[data-t]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
         }
     </script>
 </body>
