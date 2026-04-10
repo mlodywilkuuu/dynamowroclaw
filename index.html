@@ -19,10 +19,10 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR: MAX DO LEWEJ --- */
         nav {
             width: 100%;
-            padding: 10px 40px;
+            padding: 10px 20px; /* Mniejszy padding dla efektu "max do lewej" */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -35,70 +35,79 @@
             z-index: 2000;
         }
 
-        .nav-content-left { display: flex; align-items: center; gap: 40px; }
+        .nav-content-left { 
+            display: flex; 
+            align-items: center; 
+            gap: 30px; 
+            margin-right: auto; /* Pcha wszystko na lewo */
+        }
+
         .logo-img { height: 65px; width: auto; transition: transform 0.3s; }
 
-        .nav-links { display: flex; gap: 25px; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { 
+            color: #fff; 
+            text-decoration: none; 
+            font-size: 11px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            opacity: 0.7; 
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover { opacity: 1; color: #00a2ff; }
 
-        /* JĘZYKI - NAPRAWIONE DZIAŁANIE */
-        .lang-dropdown { position: relative; }
+        /* JĘZYKI - STABILNE MENU Z FLAGAMI */
+        .lang-dropdown { 
+            position: relative; 
+            padding: 10px 0; /* Strefa bezpieczeństwa, żeby menu nie znikało */
+        }
+        
         .dropbtn { 
             background: rgba(255, 255, 255, 0.05); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             color: white; 
-            padding: 8px 16px; 
+            padding: 8px 14px; 
             border-radius: 8px; 
             cursor: pointer; 
             display: flex; 
             align-items: center; 
-            gap: 10px;
-            font-size: 14px;
-            transition: 0.3s;
+            gap: 8px;
+            font-size: 13px;
         }
-        .dropbtn:hover { background: rgba(255, 255, 255, 0.12); }
 
         .dropdown-content { 
-            display: none; /* Ukryte domyślnie */
+            display: none; 
             position: absolute; 
             right: 0; 
-            top: calc(100% + 10px); 
+            top: 100%; 
             background: rgba(10, 21, 37, 0.98); 
             backdrop-filter: blur(20px);
-            min-width: 150px; 
+            min-width: 160px; 
             border-radius: 12px; 
             border: 1px solid rgba(255, 255, 255, 0.15); 
             z-index: 3000;
-            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 5px 0;
         }
 
-        /* Pokazywanie menu klasą .show lub przez hover */
-        .lang-dropdown:hover .dropdown-content,
-        .dropdown-content.show { 
-            display: block; 
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Hover na kontenerze lang-dropdown trzyma menu otwarte */
+        .lang-dropdown:hover .dropdown-content { display: block; }
 
         .dropdown-content a { 
             color: white; 
-            padding: 12px 18px; 
+            padding: 10px 15px; 
             text-decoration: none; 
-            display: block; 
-            font-size: 13px; 
-            font-weight: 500;
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-size: 13px;
             transition: 0.2s;
         }
-        .dropdown-content a:hover { 
-            background: rgba(0, 162, 255, 0.25); 
-            color: #00a2ff; 
-            padding-left: 22px;
-        }
+        .dropdown-content a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
+        
+        .flag-icon { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
 
         /* --- MATCH CENTRE --- */
         .match-centre-hero {
@@ -118,11 +127,11 @@
             align-items: center;
             gap: 15px;
             justify-self: start; 
-            border-left: 2px solid #00a2ff; /* Kreska po LEWEJ */
+            border-left: 2px solid #00a2ff;
             padding-left: 15px;
         }
 
-        .meta-text { display: flex; flex-direction: column; text-align: left; }
+        .meta-text { display: flex; flex-direction: column; }
         .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 2px; }
         .meta-round { font-size: 15px; font-weight: 700; color: #ffffff; }
         .meta-date { font-size: 11px; color: #8899a6; font-family: monospace; }
@@ -151,6 +160,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1); min-width: 120px; text-align: center;
         }
 
+        /* --- CONTENT --- */
         .container {
             width: 90%; max-width: 1400px; margin: 80px auto;
             display: flex; justify-content: space-between; align-items: center;
@@ -168,9 +178,9 @@
         .stat-value { font-size: 40px; font-weight: 700; color: #fff; }
 
         @media (max-width: 1100px) {
+            .nav-links { display: none; }
             .match-centre-hero { display: flex; flex-direction: column; text-align: center; gap: 30px; }
             .match-meta { border-left: none; border-bottom: 2px solid #00a2ff; padding: 0 0 10px 0; justify-content: center; }
-            .meta-text { text-align: center; }
             .container { flex-direction: column; text-align: center; }
             .team-name { width: auto; font-size: 20px; }
         }
@@ -185,20 +195,23 @@
             </a>
             <div class="nav-links">
                 <a href="#">Klub</a>
+                <a href="#">Akademia</a>
+                <a href="#">Stadion</a>
+                <a href="#">Bilety</a>
                 <a href="#">Sklep</a>
+                <a href="#">Kontakt</a>
             </div>
         </div>
         
-        <div class="lang-dropdown" id="langBox">
-            <button class="dropbtn" id="langBtn">
+        <div class="lang-dropdown">
+            <button class="dropbtn">
                 <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang-label">PL</span>
-                <i class="fas fa-chevron-down" style="font-size: 10px; opacity: 0.5;"></i>
             </button>
-            <div class="dropdown-content" id="langMenu">
-                <a href="#" onclick="setLang('PL')">Polski</a>
-                <a href="#" onclick="setLang('ES')">Español</a>
-                <a href="#" onclick="setLang('RU')">Русский</a>
-                <a href="#" onclick="setLang('UA')">Ukraiński</a>
+            <div class="dropdown-content">
+                <a href="#" onclick="setLang('PL')"><img src="https://flagcdn.com/w40/pl.png" class="flag-icon"> Polski</a>
+                <a href="#" onclick="setLang('UA')"><img src="https://flagcdn.com/w40/ua.png" class="flag-icon"> Українська</a>
+                <a href="#" onclick="setLang('ES')"><img src="https://flagcdn.com/w40/es.png" class="flag-icon"> Español</a>
+                <a href="#" onclick="setLang('RU')"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon"> Русский</a>
             </div>
         </div>
     </nav>
@@ -238,23 +251,8 @@
     </div>
 
     <script>
-        // Skrypt obsługujący kliknięcie w menu języków
-        const langBtn = document.getElementById('langBtn');
-        const langMenu = document.getElementById('langMenu');
-
-        langBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langMenu.classList.toggle('show');
-        });
-
-        // Zamknij menu, jeśli użytkownik kliknie gdziekolwiek indziej
-        document.addEventListener('click', () => {
-            langMenu.classList.remove('show');
-        });
-
         function setLang(lang) {
             document.getElementById('current-lang-label').innerText = lang;
-            langMenu.classList.remove('show');
         }
     </script>
 </body>
