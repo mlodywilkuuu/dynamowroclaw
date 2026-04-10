@@ -1,163 +1,76 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Official Panel</title>
-    
-    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+/* POPRAWKA: Rozwijane menu Klub */
+.dropdown-menu {
+    display: block; /* Używamy opacity zamiast display:none dla płynności */
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(10, 21, 37, 0.98);
+    min-width: 180px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 0;
+    margin-top: 5px; /* Mały odstęp */
+    transition: all 0.3s ease; /* Płynne pojawianie się */
+    transform: translateY(10px);
+}
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background: radial-gradient(circle at top right, #003366, #050b14);
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+/* Mostek zapobiegający znikaniu (niewidoczny obszar) */
+.dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 15px; /* To wypełnia lukę między przyciskiem a menu */
+}
 
-        /* --- NAVBAR --- */
-        nav {
-            width: 100%;
-            padding: 10px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: fixed; top: 0; z-index: 2000;
-        }
+.dropdown:hover .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
 
-        .nav-content-left { display: flex; align-items: center; gap: 40px; }
-        .logo-img { height: 65px; width: auto; }
+/* Opóźnienie przy znikaniu (daje czas użytkownikowi) */
+.dropdown .dropdown-menu {
+    transition-delay: 0.2s;
+}
 
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        
-        /* ROZWIJANE MENU KLUB */
-        .dropdown { position: relative; display: inline-block; }
-        .drop-link { 
-            color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s;
-            cursor: pointer;
-        }
-        .dropdown-menu {
-            display: none; position: absolute; top: 100%; left: 0;
-            background: rgba(10, 21, 37, 0.95); min-width: 160px;
-            border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 0; margin-top: 10px;
-        }
-        .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-menu a {
-            color: white; padding: 10px 20px; text-decoration: none; display: block;
-            font-size: 11px; font-weight: 600; text-transform: uppercase;
-        }
-        .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
+/* POPRAWKA: Menu języków */
+.lang-content {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: rgba(10, 21, 37, 0.98);
+    min-width: 160px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 5px;
+    transition: all 0.3s ease;
+    transform: translateY(10px);
+}
 
-        .nav-links a:not(.drop-link) { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; opacity: 0.7; transition: 0.3s; }
-        .nav-links a:hover { opacity: 1; color: #00a2ff; }
+.lang-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    height: 15px;
+}
 
-        /* JĘZYKI PO PRAWEJ */
-        .lang-dropdown { position: relative; }
-        .lang-btn { 
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
-            color: white; padding: 8px 14px; border-radius: 8px; cursor: pointer; 
-            display: flex; align-items: center; gap: 8px; font-size: 13px;
-        }
-        .lang-content { 
-            display: none; position: absolute; right: 0; top: 100%; 
-            background: rgba(10, 21, 37, 0.98); min-width: 150px; border-radius: 12px; 
-            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 10px;
-        }
-        .lang-dropdown:hover .lang-content { display: block; }
-        .lang-content a { color: white; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 13px; }
-        .lang-content a:hover { background: rgba(0, 162, 255, 0.2); }
-        .flag-icon { width: 20px; border-radius: 2px; }
+.lang-dropdown:hover .lang-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
 
-        /* --- MATCH CENTRE (POPRZEDNI WYGLĄD) --- */
-        .match-centre-hero {
-            width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
-            margin-top: 85px; padding: 30px 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
-        }
-        .match-meta { border-left: 2px solid #00a2ff; padding-left: 15px; display: flex; flex-direction: column; }
-        .meta-league { font-size: 10px; font-weight: 900; color: #00a2ff; text-transform: uppercase; letter-spacing: 2px; }
-        .meta-round { font-size: 15px; font-weight: 700; color: #ffffff; }
-        .meta-date { font-size: 11px; color: #8899a6; font-family: monospace; }
-
-        .match-main-content { display: flex; flex-direction: column; align-items: center; }
-        .team-badge-label { font-size: 10px; font-weight: 900; letter-spacing: 5px; color: #ffffff; margin-bottom: 12px; background: rgba(0, 162, 255, 0.2); padding: 5px 30px; border-radius: 20px; border: 1px solid rgba(0, 162, 255, 0.3); }
-        .main-match-display { display: flex; align-items: center; gap: 40px; }
-        .team-name { font-size: 26px; font-weight: 800; text-transform: uppercase; width: 250px; }
-        .score-box { background: rgba(255, 255, 255, 0.05); padding: 12px 30px; border-radius: 12px; font-size: 34px; font-weight: 900; border: 1px solid rgba(255, 255, 255, 0.1); min-width: 120px; text-align: center; }
-
-        .container { width: 90%; max-width: 1400px; margin: 80px auto; display: flex; justify-content: space-between; align-items: center; }
-        .hero h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; line-height: 0.9; }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <div class="nav-content-left">
-            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Logo" class="logo-img"></a>
-            <div class="nav-links">
-                <div class="dropdown">
-                    <span class="drop-link">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
-                    <div class="dropdown-menu">
-                        <a href="zespol.html">I Zespół</a>
-                        <a href="#">Zarząd</a>
-                        <a href="#">Historia</a>
-                    </div>
-                </div>
-                <a href="#" data-t="nav_tickets">Bilety</a>
-                <a href="#" data-t="nav_shop">Sklep</a>
-                <a href="#" data-t="nav_contact">Kontakt</a>
-            </div>
-        </div>
-        
-        <div class="lang-dropdown">
-            <button class="lang-btn">
-                <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span>
-            </button>
-            <div class="lang-content">
-                <a href="#" onclick="changeLang('PL')"><img src="https://flagcdn.com/w40/pl.png" class="flag-icon"> Polski</a>
-                <a href="#" onclick="changeLang('UA')"><img src="https://flagcdn.com/w40/ua.png" class="flag-icon"> Українська</a>
-                <a href="#" onclick="changeLang('ES')"><img src="https://flagcdn.com/w40/es.png" class="flag-icon"> Español</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="match-centre-hero">
-        <div class="match-meta">
-            <span class="meta-league" data-t="m_league">Czwarta Liga</span>
-            <span class="meta-round" data-t="m_round">Kolejka 3</span>
-            <span class="meta-date">13/04/2026 | 20:00</span>
-        </div>
-        <div class="match-main-content">
-            <div class="team-badge-label" data-t="team_label">I ZESPÓŁ</div>
-            <div class="main-match-display">
-                <span class="team-name" style="text-align:right">FC Dynamo Wrocław</span>
-                <div class="score-box">VS</div>
-                <span class="team-name">Klimek PRO</span>
-            </div>
-        </div>
-        <div></div>
-    </div>
-
-    <div class="container">
-        <main class="hero">
-            <h1 data-t="hero_txt">Silesian heart,<br>global vision.</h1>
-        </main>
-    </div>
-
-    <script>
-        function changeLang(lang) {
-            document.getElementById('current-lang').innerText = lang;
-            // Tutaj można dodać logikę tłumaczenia data-t
-        }
-    </script>
-</body>
-</html>
+.lang-dropdown .lang-content {
+    transition-delay: 0.2s;
+}
