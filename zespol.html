@@ -43,6 +43,7 @@
         }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
 
+        /* DROPDOWN KLUB */
         .dropdown { position: relative; display: inline-block; }
         .dropdown-menu {
             display: block; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0;
@@ -50,20 +51,34 @@
             border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; 
             transition: all 0.3s ease; transform: translateY(10px);
         }
-        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; }
+        /* Mostek */
+        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
         .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
         .dropdown-menu a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; }
         .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
 
+        /* JĘZYKI PO PRAWEJ */
+        .lang-dropdown { position: relative; margin-right: 20px; }
+        .lang-content {
+            display: block; visibility: hidden; opacity: 0; position: absolute; right: 0; top: 100%;
+            background: rgba(10, 21, 37, 0.98); min-width: 160px; border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 5px;
+            transition: all 0.3s ease; transform: translateY(10px);
+        }
+        .lang-dropdown::after { content: ""; position: absolute; top: 100%; right: 0; width: 100%; height: 15px; }
+        .lang-dropdown:hover .lang-content { visibility: visible; opacity: 1; transform: translateY(0); }
+        .lang-content a { color: white; padding: 10px 20px; text-decoration: none; display: flex; align-items: center; font-size: 12px; font-weight: 600; }
+        .lang-flag { width: 18px; margin-right: 12px; border-radius: 2px; }
+
         /* --- NAGŁÓWEK --- */
-        .team-header { text-align: center; margin-bottom: 50px; }
+        .team-header { text-align: center; margin: 40px 0 60px 0; }
         .team-header h1 { font-size: 36px; text-transform: uppercase; letter-spacing: 3px; color: #fff; }
         .team-header span { color: #00a2ff; font-size: 14px; font-weight: 900; letter-spacing: 5px; }
 
-        /* --- KAFELKI ZAWODNIKÓW --- */
+        /* --- KAFELKI ZAWODNIKÓW BEZ ZDJĘĆ --- */
         .team-grid {
             width: 90%; max-width: 1400px; margin: 0 auto 100px auto;
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;
         }
 
         .player-card {
@@ -72,11 +87,11 @@
             border-radius: 15px;
             position: relative;
             transition: 0.3s ease-in-out;
-            padding: 30px 20px;
+            padding: 40px 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            min-height: 180px;
+            min-height: 160px;
             overflow: hidden;
         }
 
@@ -84,18 +99,20 @@
             transform: translateY(-5px);
             border-color: #00a2ff;
             background: rgba(0, 162, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
+        /* Numer w tle */
         .player-card-number {
-            position: absolute; top: 15px; right: 15px;
-            font-size: 72px; font-weight: 900; color: rgba(0, 162, 255, 0.06);
+            position: absolute; top: 10px; right: 15px;
+            font-size: 80px; font-weight: 900; color: rgba(0, 162, 255, 0.05);
             font-style: italic; line-height: 1; z-index: 1;
         }
 
         .player-card-info { position: relative; z-index: 2; }
-        .player-card-name { font-size: 20px; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; }
-        .player-card-pos { font-size: 11px; color: #8899a6; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-        .player-card-flag { width: 30px; border-radius: 3px; }
+        .player-card-name { font-size: 22px; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .player-card-pos { font-size: 11px; color: #8899a6; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+        .player-card-flag { width: 32px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.1); }
 
     </style>
 </head>
@@ -114,6 +131,18 @@
                 </div>
                 <a href="#" class="nav-btn">Bilety</a>
                 <a href="#" class="nav-btn">Sklep</a>
+            </div>
+        </div>
+
+        <div class="lang-dropdown">
+            <div class="nav-btn" style="display: flex; align-items: center; gap: 8px; opacity: 1;">
+                <i class="fas fa-globe" style="color:#00a2ff"></i> PL
+            </div>
+            <div class="lang-content">
+                <a href="#"><img src="https://flagcdn.com/w40/pl.png" class="lang-flag"> PL</a>
+                <a href="#"><img src="https://flagcdn.com/w40/ua.png" class="lang-flag"> UA</a>
+                <a href="#"><img src="https://flagcdn.com/w40/gb.png" class="lang-flag"> EN</a>
+                <a href="#"><img src="https://flagcdn.com/w40/de.png" class="lang-flag"> DE</a>
             </div>
         </div>
     </nav>
@@ -170,6 +199,14 @@
         </div>
 
         <div class="player-card">
-            <div class="player-card-number">17</div>
+            <div class="player-card-number">99</div>
             <div class="player-card-info">
-                <div class="player-card-name">Beniamin Muzychuk</div>
+                <div class="player-card-name">Andrii Chivka</div>
+                <div class="player-card-pos">Zawodnik</div>
+                <img src="https://flagcdn.com/w40/ua.png" class="player-card-flag">
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
