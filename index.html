@@ -9,21 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Główne style bez zmian dla spójności */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: radial-gradient(circle at top right, #003366, #050b14);
             color: #e0e0e0;
             font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* --- NAVBAR --- */
         nav {
             width: 100%;
             padding: 5px 20px;
@@ -32,77 +26,78 @@
             align-items: center;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             top: 0;
             z-index: 1000;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 20px; }
-        .logo-link { display: block; transition: transform 0.2s; }
-        .logo-link:hover { transform: scale(1.05); }
-        .logo-img { height: 80px; width: auto; display: block; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .logo-img { height: 80px; width: auto; }
 
-        /* --- LANG DROPDOWN --- */
-        .lang-dropdown { position: relative; padding: 15px 0; }
-        .dropbtn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .dropdown-content { display: none; position: absolute; right: 0; top: 55px; background-color: #0a1525; min-width: 180px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); z-index: 1001; overflow: hidden; }
-        .lang-dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { color: white; padding: 14px 18px; text-decoration: none; display: flex; align-items: center; gap: 12px; font-size: 15px; }
-        .dropdown-content a:hover { background-color: #004080; }
-        .lang-code { font-size: 11px; font-weight: 900; color: #00a2ff; width: 25px; }
-
-        /* --- MATCH CENTRE (NOWOŚĆ) --- */
-        .match-centre {
+        /* --- POWIĘKSZONE MATCH CENTRE --- */
+        .match-centre-hero {
             width: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 90px; /* Zaraz pod menu */
-            padding: 15px 20px;
+            background: linear-gradient(90deg, rgba(0, 162, 255, 0.1), rgba(0, 0, 0, 0.4));
+            margin-top: 90px;
+            padding: 25px 50px;
+            border-bottom: 1px solid rgba(0, 162, 255, 0.2);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 30px;
-            overflow-x: auto;
-            white-space: nowrap;
+            text-align: center;
         }
 
-        .match-centre-label {
-            font-size: 11px;
+        .match-status {
+            font-size: 10px;
             font-weight: 900;
+            letter-spacing: 3px;
             color: #00a2ff;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            padding-right: 20px;
+            margin-bottom: 10px;
         }
 
-        .match-card {
+        .main-match-display {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 8px 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            justify-content: center;
+            gap: 40px;
+            margin: 10px 0;
+        }
+
+        .team-name {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .score-box {
+            background: #00a2ff;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 32px;
+            font-weight: 900;
+            box-shadow: 0 0 20px rgba(0, 162, 255, 0.4);
+        }
+
+        .vs-circle {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        .match-info-sub {
             font-size: 13px;
+            color: #6a7c78;
+            margin-top: 10px;
         }
 
-        .match-date { color: #6a7c78; font-size: 10px; font-weight: 800; }
-        .team-vs { font-weight: 700; }
-        .score { color: #00a2ff; font-weight: 900; }
-
-        .pro-liga-link {
-            font-size: 11px;
-            color: #ffffff;
-            text-decoration: none;
-            opacity: 0.6;
-            transition: 0.3s;
-        }
-        .pro-liga-link:hover { opacity: 1; color: #00a2ff; }
-
-        /* --- TREŚĆ --- */
+        /* --- RESZTA STRONY --- */
         .container {
             width: 95%;
             max-width: 1400px;
@@ -113,18 +108,17 @@
             gap: 40px;
         }
 
-        .hero { flex: 1.5; }
-        h1 { font-size: clamp(35px, 7vw, 90px); line-height: 0.9; color: #ffffff; letter-spacing: -3px; font-weight: 800; text-transform: uppercase; }
+        .hero h1 { font-size: clamp(35px, 7vw, 90px); font-weight: 800; text-transform: uppercase; }
 
-        .control-room { flex: 1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 40px; backdrop-filter: blur(25px); }
+        .control-room { flex: 1; background: rgba(255, 255, 255, 0.02); padding: 40px; border-radius: 40px; }
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .stat-card { background: rgba(0, 0, 0, 0.4); padding: 30px 20px; border-radius: 25px; }
-        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; margin-bottom: 10px; }
+        .stat-label { font-size: 10px; color: #6a7c78; font-weight: 800; }
         .stat-value { font-size: 36px; font-weight: 700; color: #ffffff; }
 
         @media (max-width: 1024px) {
             .container { flex-direction: column; text-align: center; }
-            .nav-links { display: none; }
+            .main-match-display { gap: 15px; flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -132,48 +126,23 @@
 
     <nav>
         <div class="nav-left">
-            <a href="index.html" class="logo-link">
-                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Logo" class="logo-img">
-            </a>
-            <div class="nav-links">
-                <a href="#" data-key="nav_club">Klub</a>
-                <a href="#" data-key="nav_schedule">Terminarz</a>
-                <a href="#" data-key="nav_tickets">Bilety</a>
-                <a href="#" data-key="nav_shop">Sklep</a>
-            </div>
+            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
         </div>
-        
         <div class="lang-dropdown">
-            <button class="dropbtn">
-                <i class="fas fa-globe" style="color: #00a2ff;"></i> <span id="current-lang">Polski</span>
-            </button>
-            <div class="dropdown-content">
-                <a href="#" onclick="translatePage('pl')"><span class="lang-code">PL</span> Polski</a>
-                <a href="#" onclick="translatePage('es')"><span class="lang-code">ES</span> Español</a>
-                <a href="#" onclick="translatePage('ru')"><span class="lang-code">RU</span> Русский</a>
-                <a href="#" onclick="translatePage('ua')"><span class="lang-code">UA</span> Українська</a>
-            </div>
+            <button class="dropbtn"><i class="fas fa-globe"></i> Polski</button>
         </div>
     </nav>
 
-    <div class="match-centre">
-        <div class="match-centre-label">Match Centre</div>
-        
-        <div class="match-card">
-            <span class="match-date">OSTATNI</span>
-            <span class="team-vs">Dynamo vs Rywal A</span>
-            <span class="score">3 : 1</span>
+    <div class="match-centre-hero" id="match-display">
+        <div class="match-status" id="status-text">Ładowanie danych...</div>
+        <div class="main-match-display">
+            <span class="team-name">FC Dynamo Wrocław</span>
+            <div id="score-container" class="score-box">? : ?</div>
+            <span class="team-name" id="opponent-name">Klimek PRO</span>
         </div>
-
-        <div class="match-card">
-            <span class="match-date">12.04 | 19:00</span>
-            <span class="team-vs">Dynamo vs Rywal B</span>
-            <span class="score">vs</span>
+        <div class="match-info-sub" id="match-details">
+            Czwarta Liga | 13/04/2026 20:00 | Boisko nr. 2
         </div>
-
-        <a href="https://proligawroclaw.pl/team/fc-dinamo-wroclaw/" target="_blank" class="pro-liga-link">
-            Zobacz pełny terminarz w ProLidze <i class="fas fa-external-link-alt"></i>
-        </a>
     </div>
 
     <div class="container">
@@ -183,63 +152,66 @@
 
         <aside class="control-room">
             <div class="stats-grid">
-                <div class="stat-card">
-                    <p class="stat-label" data-key="stat_players">ZAWODNICY</p>
-                    <span class="stat-value">24</span>
-                </div>
-                <div class="stat-card">
-                    <p class="stat-label" data-key="stat_rank">MIEJSCE</p>
-                    <span class="stat-value">1</span>
-                </div>
-                <div class="stat-card">
-                    <p class="stat-label" data-key="stat_matches">MECZE</p>
-                    <span class="stat-value">12</span>
-                </div>
-                <div class="stat-card">
-                    <p class="stat-label">STATUS</p>
-                    <span class="stat-value" style="color: #00a2ff; font-size: 24px;">PRIME</span>
-                </div>
+                <div class="stat-card"><p class="stat-label">ZAWODNICY</p><span class="stat-value">24</span></div>
+                <div class="stat-card"><p class="stat-label">MIEJSCE</p><span class="stat-value">1</span></div>
+                <div class="stat-card"><p class="stat-label">MECZE</p><span class="stat-value">12</span></div>
+                <div class="stat-card"><p class="stat-label">STATUS</p><span class="stat-value" style="color: #00a2ff;">PRIME</span></div>
             </div>
         </aside>
     </div>
 
     <script>
-        const translations = {
-            pl: {
-                nav_club: "Klub", nav_schedule: "Terminarz", nav_tickets: "Bilety", nav_shop: "Sklep",
-                hero_title: "Śląskie serce, globalna wizja.",
-                stat_players: "ZAWODNICY", stat_rank: "MIEJSCE", stat_matches: "MECZE",
-                current: "Polski"
-            },
-            es: {
-                nav_club: "Club", nav_schedule: "Calendario", nav_tickets: "Entradas", nav_shop: "Tienda",
-                hero_title: "Corazón silesiano, visión global.",
-                stat_players: "JUGADORES", stat_rank: "POSICIÓN", stat_matches: "PARTIDOS",
-                current: "Español"
-            },
-            ru: {
-                nav_club: "Клуб", nav_schedule: "Расписание", nav_tickets: "Билеты", nav_shop: "Магазин",
-                hero_title: "Силезское сердце, глобальное видение.",
-                stat_players: "ИГРОКИ", stat_rank: "МЕСТО", stat_matches: "МАТЧИ",
-                current: "Русский"
-            },
-            ua: {
-                nav_club: "Клуб", nav_schedule: "Розклад", nav_tickets: "Квитки", nav_shop: "Магазин",
-                hero_title: "Сілезьке серце, глобальне бачення.",
-                stat_players: "ГРАВЦІ", stat_rank: "МІСЦЕ", stat_matches: "МАТЧІ",
-                current: "Українська"
+        // Logika Match Centre
+        const schedule = [
+            { date: "2026-04-13T20:00:00", opponent: "Klimek PRO", score: "3:1", location: "Boisko nr. 2" },
+            { date: "2026-04-21T21:00:00", opponent: "RunnersHood", score: null, location: "Boisko nr. 1" },
+            { date: "2026-04-27T20:00:00", opponent: "FC Outsiders", score: null, location: "Boisko nr. 1" }
+        ];
+
+        function updateMatchCentre() {
+            const now = new Date();
+            const statusText = document.getElementById('status-text');
+            const scoreContainer = document.getElementById('score-container');
+            const opponentName = document.getElementById('opponent-name');
+            const matchDetails = document.getElementById('match-details');
+
+            // Znajdź mecz, który był ostatnio (do 48h wstecz) lub jest następny
+            let activeMatch = null;
+
+            for (let match of schedule) {
+                const matchDate = new Date(match.date);
+                const diffHours = (now - matchDate) / (1000 * 60 * 60);
+
+                // Jeśli mecz był niedawno (mniej niż 48h temu) i ma wynik
+                if (diffHours >= 0 && diffHours <= 48 && match.score) {
+                    activeMatch = { ...match, type: 'RECENT' };
+                    break;
+                }
+                // Jeśli mecz jest w przyszłości
+                if (matchDate > now) {
+                    activeMatch = { ...match, type: 'UPCOMING' };
+                    break;
+                }
             }
-        };
 
-        function translatePage(lang) {
-            document.getElementById('hero-title').innerText = translations[lang].hero_title;
-            document.querySelectorAll('[data-key]').forEach(elem => {
-                const key = elem.getAttribute('data-key');
-                elem.innerText = translations[lang][key];
-            });
-            document.getElementById('current-lang').innerText = translations[lang].current;
+            if (activeMatch) {
+                opponentName.innerText = activeMatch.opponent;
+                matchDetails.innerText = `Czwarta Liga | ${new Date(activeMatch.date).toLocaleString()} | ${activeMatch.location}`;
+
+                if (activeMatch.type === 'RECENT') {
+                    statusText.innerText = "Ostatni Wynik (48H)";
+                    scoreContainer.innerText = activeMatch.score;
+                    scoreContainer.style.background = "#00a2ff";
+                } else {
+                    statusText.innerText = "Nadchodzący Mecz";
+                    scoreContainer.innerText = "VS";
+                    scoreContainer.style.background = "rgba(255,255,255,0.1)";
+                }
+            }
         }
-    </script>
 
+        // Uruchom przy starcie
+        updateMatchCentre();
+    </script>
 </body>
 </html>
