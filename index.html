@@ -41,7 +41,7 @@
         }
 
         .logo-img {
-            height: 80px; /* Nieco większe logo */
+            height: 80px;
             width: auto;
             display: block;
         }
@@ -60,10 +60,10 @@
             letter-spacing: 1px;
         }
 
-        /* --- DROPDOWN JĘZYKÓW --- */
+        /* --- DROPDOWN JĘZYKÓW (Zamiast Emoji) --- */
         .lang-dropdown {
             position: relative;
-            padding: 15px 0; /* Większy margines, żeby menu nie znikało */
+            padding: 15px 0;
         }
 
         .dropbtn {
@@ -76,20 +76,21 @@
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
             right: 0;
-            top: 50px;
+            top: 55px;
             background-color: #0a1525;
-            min-width: 160px;
+            min-width: 180px;
             box-shadow: 0px 8px 24px rgba(0,0,0,0.8);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1001;
+            overflow: hidden;
         }
 
         .lang-dropdown:hover .dropdown-content {
@@ -98,23 +99,30 @@
 
         .dropdown-content a {
             color: white;
-            padding: 12px 16px;
+            padding: 14px 18px;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 14px;
+            gap: 12px;
+            font-size: 15px;
+            transition: background 0.2s;
         }
 
         .dropdown-content a:hover {
             background-color: #004080;
         }
 
-        /* Ikony flag (zastępcze obrazy PNG, jeśli emoji u Ciebie nie działają) */
-        .flag-icon {
+        /* Stylizacja kodu języka (np. PL, ES) */
+        .lang-code {
+            font-size: 11px;
+            font-weight: 900;
+            color: #6a7c78;
+            text-transform: uppercase;
             width: 20px;
-            height: 15px;
-            object-fit: cover;
+        }
+
+        .lang-dropdown:hover .dropbtn {
+            border-color: #00a2ff;
         }
 
         /* --- TREŚĆ --- */
@@ -183,12 +191,14 @@
         </div>
         
         <div class="lang-dropdown">
-            <button class="dropbtn">🌐 <span id="current-lang">Język</span></button>
+            <button class="dropbtn">
+                <span style="color: #00a2ff;">🌐</span> <span id="current-lang">Polski</span>
+            </button>
             <div class="dropdown-content">
-                <a href="#" onclick="translatePage('pl')">🇵🇱 Polski</a>
-                <a href="#" onclick="translatePage('es')">🇪🇸 Español</a>
-                <a href="#" onclick="translatePage('ru')">🇷🇺 Русский</a>
-                <a href="#" onclick="translatePage('ua')">🇺🇦 Українська</a>
+                <a href="#" onclick="translatePage('pl')"><span class="lang-code">PL</span> Polski</a>
+                <a href="#" onclick="translatePage('es')"><span class="lang-code">ES</span> Español</a>
+                <a href="#" onclick="translatePage('ru')"><span class="lang-code">RU</span> Русский</a>
+                <a href="#" onclick="translatePage('ua')"><span class="lang-code">UA</span> Українська</a>
             </div>
         </div>
     </nav>
@@ -221,7 +231,6 @@
     </div>
 
     <script>
-        // Słownik tłumaczeń
         const translations = {
             pl: {
                 nav_club: "Klub",
@@ -231,7 +240,8 @@
                 hero_title: "Śląskie serce, globalna wizja.",
                 stat_players: "ZAWODNICY",
                 stat_rank: "MIEJSCE",
-                stat_matches: "MECZE"
+                stat_matches: "MECZE",
+                current: "Polski"
             },
             es: {
                 nav_club: "Club",
@@ -241,7 +251,8 @@
                 hero_title: "Corazón silesiano, visión global.",
                 stat_players: "JUGADORES",
                 stat_rank: "POSICIÓN",
-                stat_matches: "PARTIDOS"
+                stat_matches: "PARTIDOS",
+                current: "Español"
             },
             ru: {
                 nav_club: "Клуб",
@@ -251,33 +262,31 @@
                 hero_title: "Силезское сердце, глобальное видение.",
                 stat_players: "ИГРОКИ",
                 stat_rank: "МЕСТО",
-                stat_matches: "МАТЧИ"
+                stat_matches: "МАТЧИ",
+                current: "Русский"
             },
             ua: {
-                nav_club: "Клуб",
+                nav_club: "Кlub",
                 nav_schedule: "Розклад",
                 nav_tickets: "Квитки",
                 nav_shop: "Магазин",
                 hero_title: "Сілезьке серце, глобальне бачення.",
                 stat_players: "ГРАВЦІ",
                 stat_rank: "МІСЦЕ",
-                stat_matches: "МАТЧІ"
+                stat_matches: "МАТЧІ",
+                current: "Українська"
             }
         };
 
         function translatePage(lang) {
-            // Tłumaczenie nagłówka
             document.getElementById('hero-title').innerText = translations[lang].hero_title;
             
-            // Tłumaczenie elementów z atrybutem data-key
             document.querySelectorAll('[data-key]').forEach(elem => {
                 const key = elem.getAttribute('data-key');
                 elem.innerText = translations[lang][key];
             });
 
-            // Aktualizacja tekstu przycisku
-            const flags = { pl: '🇵🇱 Polski', es: '🇪🇸 Español', ru: '🇷🇺 Русский', ua: '🇺🇦 Українська' };
-            document.getElementById('current-lang').innerText = flags[lang];
+            document.getElementById('current-lang').innerText = translations[lang].current;
         }
     </script>
 
