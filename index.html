@@ -33,7 +33,6 @@
 
         .nav-content-left { display: flex; align-items: center; gap: 40px; }
         .logo-img { height: 65px; width: auto; }
-
         .nav-links { display: flex; gap: 20px; align-items: center; }
         
         .nav-btn { 
@@ -50,37 +49,21 @@
         }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
 
-        /* DROPDOWN KLUB */
+        /* DROPDOWN */
         .dropdown { position: relative; display: inline-block; }
-        
         .dropdown-menu {
             display: block; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0;
             background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; 
             border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; 
             transition: all 0.3s ease; transform: translateY(10px);
         }
-        
-        .dropdown::after { 
-            content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; 
-        }
-        
-        .dropdown:hover .dropdown-menu { 
-            visibility: visible; opacity: 1; transform: translateY(0); 
-            transition-delay: 0s; 
-        }
-        .dropdown .dropdown-menu { transition-delay: 0.2s; }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
 
-        .dropdown-menu a { 
-            color: white; padding: 12px 20px; text-decoration: none; 
-            display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; 
-        }
-        .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
-
-        /* --- NOWA SEKCJA PARTNERA --- */
+        /* --- NAV RIGHT: PARTNER, INSTA, LANG --- */
         .nav-right-container {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 25px;
         }
 
         .partner-section {
@@ -91,68 +74,25 @@
             border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .partner-text {
-            text-align: right;
-            text-transform: uppercase;
-            line-height: 1;
-        }
+        .partner-text { text-align: right; text-transform: uppercase; line-height: 1.1; }
+        .partner-text .official { display: block; font-size: 8px; font-weight: 400; letter-spacing: 2px; color: #8899a6; }
+        .partner-text .partner-label { display: block; font-size: 10px; font-weight: 800; color: #fff; }
+        .partner-logo { height: 35px; width: auto; }
 
-        .partner-text .official {
-            display: block;
-            font-size: 9px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            color: #8899a6;
-        }
+        .insta-link { color: #fff; font-size: 18px; transition: 0.3s; opacity: 0.8; }
+        .insta-link:hover { color: #00a2ff; opacity: 1; }
 
-        .partner-text .partner-label {
-            display: block;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #fff;
-            margin-top: 2px;
-        }
-
-        .partner-logo {
-            height: 40px;
-            width: auto;
-        }
-
-        /* --- MENU JĘZYKÓW --- */
-        .lang-dropdown { position: relative; }
-        
+        .lang-dropdown { position: relative; cursor: pointer; }
         .lang-content {
             display: block; visibility: hidden; opacity: 0; position: absolute; right: 0; top: 100%;
-            background: rgba(10, 21, 37, 0.98); min-width: 160px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 5px;
-            transition: all 0.3s ease; transform: translateY(10px);
+            background: rgba(10, 21, 37, 0.98); min-width: 140px; border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 5px; transition: 0.3s;
         }
+        .lang-dropdown:hover .lang-content { visibility: visible; opacity: 1; transform: translateY(0); }
+        .lang-content a { color: white; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; font-size: 11px; }
 
-        .lang-dropdown::after { 
-            content: ""; position: absolute; top: 100%; right: 0; width: 100%; height: 15px; 
-        }
-
-        .lang-dropdown:hover .lang-content {
-            visibility: visible; opacity: 1; transform: translateY(0);
-            transition-delay: 0s;
-        }
-        .lang-dropdown .lang-content { transition-delay: 0.2s; }
-
-        .lang-content a {
-            color: white; padding: 10px 20px; text-decoration: none; display: flex; 
-            align-items: center; font-size: 12px; font-weight: 600;
-        }
-        .lang-content a:hover { background: rgba(255, 255, 255, 0.05); color: #00a2ff; }
-        .lang-flag { width: 18px; margin-right: 12px; border-radius: 2px; }
-
-        /* --- MATCH CENTRE & FOTO --- */
-        .main-content {
-            margin-top: 85px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        /* --- CONTENT --- */
+        .main-content { margin-top: 85px; display: flex; flex-direction: column; align-items: center; }
 
         .match-centre-container {
             width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
@@ -160,29 +100,24 @@
             display: flex; justify-content: center;
         }
 
-        .match-wrapper {
-            width: 90%; max-width: 1200px; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
-        }
+        .match-wrapper { width: 90%; max-width: 1200px; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; }
+        .score-vs { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 35px; border-radius: 15px; font-size: 32px; font-weight: 900; }
 
-        .score-vs {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 35px; border-radius: 15px; font-size: 32px; font-weight: 900;
-        }
-
-        /* STYL DLA ZDJĘCIA POD MATCH CENTRE */
+        /* DOPASOWANE ZDJĘCIE POD MATCH CENTRE */
         .match-photo-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .match-photo {
             width: 100%;
             height: auto;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            display: block;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -193,14 +128,14 @@
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
             <div class="nav-links">
                 <div class="dropdown">
-                    <span class="nav-btn">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <span class="nav-btn" data-t="nav-club">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
                     <div class="dropdown-menu">
-                        <a href="zespol.html">I Zespół</a>
-                        <a href="historia.html">Historia</a>
+                        <a href="zespol.html" data-t="nav-team">I Zespół</a>
+                        <a href="historia.html" data-t="nav-history">Historia</a>
                     </div>
                 </div>
-                <a href="#" class="nav-btn">Bilety</a>
-                <a href="#" class="nav-btn">Kontakt</a>
+                <a href="#" class="nav-btn" data-t="nav-tickets">Bilety</a>
+                <a href="#" class="nav-btn" data-t="nav-contact">Kontakt</a>
             </div>
         </div>
         
@@ -213,15 +148,18 @@
                 <img src="657223629_1253635633558394_588577037858878449_n-removebg-preview.png" class="partner-logo">
             </div>
 
+            <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="insta-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+
             <div class="lang-dropdown">
                 <div class="nav-btn" style="display: flex; align-items: center; gap: 8px; opacity: 1;">
-                    <i class="fas fa-globe" style="color:#00a2ff"></i> PL
+                    <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="cur-lang">PL</span>
                 </div>
                 <div class="lang-content">
-                    <a href="#"><img src="https://flagcdn.com/w40/pl.png" class="lang-flag"> PL</a>
-                    <a href="#"><img src="https://flagcdn.com/w40/ua.png" class="lang-flag"> UA</a>
-                    <a href="#"><img src="https://flagcdn.com/w40/gb.png" class="lang-flag"> EN</a>
-                    <a href="#"><img src="https://flagcdn.com/w40/de.png" class="lang-flag"> DE</a>
+                    <a onclick="doTrans('PL', 'pl')">PL</a>
+                    <a onclick="doTrans('UA', 'ua')">UA</a>
+                    <a onclick="doTrans('EN', 'gb')">EN</a>
                 </div>
             </div>
         </div>
@@ -231,19 +169,18 @@
         <div class="match-centre-container">
             <div class="match-wrapper">
                 <div style="border-left: 2px solid #00a2ff; padding-left: 20px;">
-                    <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;">CZWARTA LIGA</div>
-                    <div style="font-size: 18px; font-weight: 700;">Kolejka 3</div>
-                    <div style="font-size: 12px; color:#8899a6; margin-top: 5px;">13/04/2026 | 20:00</div>
+                    <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;">PRO LIGA</div>
+                    <div style="font-size: 18px; font-weight: 700;">Kolejka 1</div>
+                    <div style="font-size: 12px; color:#8899a6; margin-top: 5px;">02/04/2026 | 20:00</div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
                     <div style="display: flex; align-items: center; gap: 30px;">
                         <span style="font-size: 24px; font-weight: 900; text-align: right; width: 250px;">FC Dynamo Wrocław</span>
                         <div class="score-vs">VS</div>
-                        <span style="font-size: 24px; font-weight: 900; text-align: left; width: 250px;">Klimek PRO</span>
+                        <span style="font-size: 24px; font-weight: 900; text-align: left; width: 250px;">Rywal</span>
                     </div>
                 </div>
-                
                 <div></div>
             </div>
         </div>
@@ -253,5 +190,26 @@
         </div>
     </div>
 
+    <script>
+        const langData = {
+            'PL': { 'nav-club': 'Klub', 'nav-team': 'I Zespół', 'nav-history': 'Historia', 'nav-tickets': 'Bilety', 'nav-contact': 'Kontakt' },
+            'UA': { 'nav-club': 'Клуб', 'nav-team': 'I Команда', 'nav-history': 'Історія', 'nav-tickets': 'Квитки', 'nav-contact': 'Контакт' },
+            'EN': { 'nav-club': 'Club', 'nav-team': 'First Team', 'nav-history': 'History', 'nav-tickets': 'Tickets', 'nav-contact': 'Contact' }
+        };
+
+        function doTrans(lang, code) {
+            document.getElementById('cur-lang').innerText = lang;
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (langData[lang][key]) {
+                    if (el.querySelector('i')) {
+                        el.innerHTML = langData[lang][key] + ' <i class="fas fa-chevron-down" style="font-size: 8px;"></i>';
+                    } else {
+                        el.innerText = langData[lang][key];
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
