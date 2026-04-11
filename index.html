@@ -36,16 +36,9 @@
         .nav-links { display: flex; gap: 20px; align-items: center; }
         
         .nav-btn { 
-            color: #fff; 
-            text-decoration: none; 
-            font-size: 12px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            opacity: 0.7; 
-            transition: 0.3s; 
-            cursor: pointer; 
-            padding: 10px; 
+            color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; 
+            cursor: pointer; padding: 10px; 
         }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
 
@@ -61,31 +54,10 @@
 
         /* NAV RIGHT */
         .nav-right-container { display: flex; align-items: center; gap: 25px; }
-
-        .partner-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding-right: 20px;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .partner-text { text-align: right; text-transform: uppercase; line-height: 1.1; }
-        .partner-text .official { display: block; font-size: 8px; font-weight: 400; letter-spacing: 2px; color: #8899a6; }
-        .partner-text .partner-label { display: block; font-size: 10px; font-weight: 800; color: #fff; }
+        .partner-section { display: flex; align-items: center; gap: 12px; padding-right: 20px; border-right: 1px solid rgba(255, 255, 255, 0.1); }
         .partner-logo { height: 35px; width: auto; }
-
         .insta-link { color: #fff; font-size: 18px; transition: 0.3s; opacity: 0.8; }
         .insta-link:hover { color: #00a2ff; opacity: 1; }
-
-        .lang-dropdown { position: relative; cursor: pointer; }
-        .lang-content {
-            display: block; visibility: hidden; opacity: 0; position: absolute; right: 0; top: 100%;
-            background: rgba(10, 21, 37, 0.98); min-width: 140px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 5px; transition: 0.3s;
-        }
-        .lang-dropdown:hover .lang-content { visibility: visible; opacity: 1; transform: translateY(0); }
-        .lang-content a { color: white; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; font-size: 11px; }
 
         /* --- CONTENT --- */
         .main-content { margin-top: 85px; display: flex; flex-direction: column; align-items: center; }
@@ -96,58 +68,44 @@
             display: flex; justify-content: center;
         }
 
-        /* NAPRAWA MATCH CENTRE */
         .match-wrapper { 
-            width: 95%; 
-            max-width: 1000px; 
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center; 
-            gap: 20px;
+            width: 95%; max-width: 1100px; display: flex; 
+            justify-content: space-between; align-items: center; gap: 20px;
         }
 
-        .match-info-box { border-left: 2px solid #00a2ff; padding-left: 15px; min-width: 150px; }
-        .league-name { font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px; }
+        .match-info-box { border-left: 2px solid #00a2ff; padding-left: 15px; }
+        .league-name { font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px; text-transform: uppercase; }
         .match-round { font-size: 16px; font-weight: 700; }
         .match-date { font-size: 11px; color:#8899a6; margin-top: 3px; }
 
-        .match-teams-display { display: flex; align-items: center; gap: 20px; flex-grow: 1; justify-content: center; }
-        .team-name { font-size: 20px; font-weight: 900; width: 220px; }
+        .match-teams-display { display: flex; align-items: center; gap: 30px; flex-grow: 1; justify-content: center; }
+        .team-name { font-size: 22px; font-weight: 900; width: 250px; text-transform: uppercase; }
         .score-vs { 
-            background: rgba(0, 162, 255, 0.1); 
-            border: 1px solid rgba(0, 162, 255, 0.3); 
-            padding: 10px 25px; 
-            border-radius: 12px; 
-            font-size: 24px; 
-            font-weight: 900; 
-            color: #00a2ff;
+            background: rgba(0, 162, 255, 0.15); border: 1px solid rgba(0, 162, 255, 0.4); 
+            padding: 12px 28px; border-radius: 12px; font-size: 26px; font-weight: 900; color: #00a2ff;
         }
 
-        /* ZMNIEJSZONE ZDJĘCIE (SZEROKOŚĆ I DŁUGOŚĆ) */
+        /* --- DOPASOWANIE ZDJĘCIA NA SZEROKOŚĆ --- */
         .match-photo-container {
-            width: 80%; /* Zmniejszona szerokość */
-            max-width: 800px; 
-            max-height: 450px; /* Ograniczona wysokość */
-            margin: 25px auto;
+            width: 100%; /* Pełna szerokość kontenera */
+            max-width: 1200px; 
+            margin: 0 auto;
             overflow: hidden;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .match-photo {
             width: 100%;
-            height: 100%;
+            height: auto;
             display: block;
-            object-fit: cover; /* Zachowuje proporcje przy mniejszym rozmiarze */
+            object-fit: cover;
         }
 
         @media (max-width: 768px) {
             .match-wrapper { flex-direction: column; text-align: center; }
             .match-info-box { border-left: none; border-bottom: 2px solid #00a2ff; padding: 0 0 10px 0; }
-            .match-teams-display { flex-direction: column; gap: 10px; }
-            .team-name { width: auto; }
-            .match-photo-container { width: 95%; }
+            .match-teams-display { flex-direction: column; gap: 15px; }
+            .team-name { width: auto; font-size: 18px; }
         }
     </style>
 </head>
@@ -158,40 +116,25 @@
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
             <div class="nav-links">
                 <div class="dropdown">
-                    <span class="nav-btn" data-t="nav-club">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <span class="nav-btn">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
                     <div class="dropdown-menu">
-                        <a href="zespol.html" data-t="nav-team">I Zespół</a>
-                        <a href="historia.html" data-t="nav-history">Historia</a>
+                        <a href="zespol.html" class="nav-btn">I Zespół</a>
+                        <a href="historia.html" class="nav-btn">Historia</a>
                     </div>
                 </div>
-                <a href="#" class="nav-btn" data-t="nav-tickets">Bilety</a>
-                <a href="#" class="nav-btn" data-t="nav-contact">Kontakt</a>
+                <a href="#" class="nav-btn">Bilety</a>
+                <a href="#" class="nav-btn">Kontakt</a>
             </div>
         </div>
         
         <div class="nav-right-container">
             <div class="partner-section">
-                <div class="partner-text">
-                    <span class="official">Oficjalny</span>
-                    <span class="partner-label">Partner</span>
-                </div>
                 <img src="657223629_1253635633558394_588577037858878449_n-removebg-preview.png" class="partner-logo">
             </div>
-
             <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="insta-link">
                 <i class="fab fa-instagram"></i>
             </a>
-
-            <div class="lang-dropdown">
-                <div class="nav-btn" style="display: flex; align-items: center; gap: 8px; opacity: 1;">
-                    <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="cur-lang">PL</span>
-                </div>
-                <div class="lang-content">
-                    <a onclick="doTrans('PL', 'pl')">PL</a>
-                    <a onclick="doTrans('UA', 'ua')">UA</a>
-                    <a onclick="doTrans('EN', 'gb')">EN</a>
-                </div>
-            </div>
+            <div class="nav-btn" style="opacity: 1;"><i class="fas fa-globe" style="color:#00a2ff"></i> PL</div>
         </div>
     </nav>
 
@@ -199,45 +142,28 @@
         <div class="match-centre-container">
             <div class="match-wrapper">
                 <div class="match-info-box">
-                    <div class="league-name">PRO LIGA</div>
-                    <div class="match-round">Kolejka 1</div>
-                    <div class="match-date">02/04/2026 | 20:00</div>
+                    <div class="league-name">Czwarta Liga</div>
+                    <div class="match-round">Kolejka 3</div>
+                    <div class="match-date">13/04/2026 | 20:00</div>
                 </div>
 
                 <div class="match-teams-display">
-                    <span class="team-name" style="text-align: right;">FC Dynamo Wrocław</span>
+                    <span class="team-name" style="text-align: right;">FC Dinamo Wrocław</span>
                     <div class="score-vs">VS</div>
-                    <span class="team-name" style="text-align: left;">Rywal</span>
+                    <span class="team-name" style="text-align: left;">Klimek PRO</span>
                 </div>
                 
-                <div style="min-width: 150px;"></div> </div>
+                <div style="min-width: 150px; text-align: right;">
+                    <div style="font-size: 10px; color:#00a2ff; font-weight: 700;">LOKALIZACJA</div>
+                    <div style="font-size: 12px;">Boisko nr. 2</div>
+                </div>
+            </div>
         </div>
 
         <div class="match-photo-container">
-            <img src="658155111_122283653516242616_1155403226176925021_n.jpg" class="match-photo" alt="Match Photo">
+            <img src="658155111_122283653516242616_1155403226176925021_n.jpg" class="match-photo" alt="FC Dinamo Wrocław">
         </div>
     </div>
 
-    <script>
-        const langData = {
-            'PL': { 'nav-club': 'Klub', 'nav-team': 'I Zespół', 'nav-history': 'Historia', 'nav-tickets': 'Bilety', 'nav-contact': 'Kontakt' },
-            'UA': { 'nav-club': 'Клуб', 'nav-team': 'I Команда', 'nav-history': 'Історія', 'nav-tickets': 'Квитки', 'nav-contact': 'Контакт' },
-            'EN': { 'nav-club': 'Club', 'nav-team': 'First Team', 'nav-history': 'History', 'nav-tickets': 'Tickets', 'nav-contact': 'Contact' }
-        };
-
-        function doTrans(lang, code) {
-            document.getElementById('cur-lang').innerText = lang;
-            document.querySelectorAll('[data-t]').forEach(el => {
-                const key = el.getAttribute('data-t');
-                if (langData[lang][key]) {
-                    if (el.querySelector('i')) {
-                        el.innerHTML = langData[lang][key] + ' <i class="fas fa-chevron-down" style="font-size: 8px;"></i>';
-                    } else {
-                        el.innerText = langData[lang][key];
-                    }
-                }
-            });
-        }
-    </script>
 </body>
 </html>
