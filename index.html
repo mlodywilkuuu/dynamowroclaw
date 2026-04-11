@@ -60,7 +60,6 @@
             transition: all 0.3s ease; transform: translateY(10px);
         }
         
-        /* Mostek zapobiegający znikaniu */
         .dropdown::after { 
             content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; 
         }
@@ -77,8 +76,51 @@
         }
         .dropdown-menu a:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
 
-        /* --- MENU JĘZYKÓW (PO PRAWEJ) --- */
-        .lang-dropdown { position: relative; margin-right: 20px; }
+        /* --- NOWA SEKCJA PARTNERA --- */
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .partner-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-right: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .partner-text {
+            text-align: right;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .partner-text .official {
+            display: block;
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #8899a6;
+        }
+
+        .partner-text .partner-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .partner-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        /* --- MENU JĘZYKÓW --- */
+        .lang-dropdown { position: relative; }
         
         .lang-content {
             display: block; visibility: hidden; opacity: 0; position: absolute; right: 0; top: 100%;
@@ -104,10 +146,17 @@
         .lang-content a:hover { background: rgba(255, 255, 255, 0.05); color: #00a2ff; }
         .lang-flag { width: 18px; margin-right: 12px; border-radius: 2px; }
 
-        /* --- MATCH CENTRE --- */
+        /* --- MATCH CENTRE & FOTO --- */
+        .main-content {
+            margin-top: 85px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .match-centre-container {
             width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
-            margin-top: 85px; padding: 40px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; justify-content: center;
         }
 
@@ -118,6 +167,22 @@
         .score-vs {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 15px 35px; border-radius: 15px; font-size: 32px; font-weight: 900;
+        }
+
+        /* STYL DLA ZDJĘCIA POD MATCH CENTRE */
+        .match-photo-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .match-photo {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
     </style>
 </head>
@@ -135,40 +200,56 @@
                     </div>
                 </div>
                 <a href="#" class="nav-btn">Bilety</a>
-                <a href="#" class="nav-btn">Sklep</a>
+                <a href="#" class="nav-btn">Kontakt</a>
             </div>
         </div>
         
-        <div class="lang-dropdown">
-            <div class="nav-btn" style="display: flex; align-items: center; gap: 8px; opacity: 1;">
-                <i class="fas fa-globe" style="color:#00a2ff"></i> PL
+        <div class="nav-right-container">
+            <div class="partner-section">
+                <div class="partner-text">
+                    <span class="official">Oficjalny</span>
+                    <span class="partner-label">Partner</span>
+                </div>
+                <img src="657223629_1253635633558394_588577037858878449_n-removebg-preview.png" class="partner-logo">
             </div>
-            <div class="lang-content">
-                <a href="#"><img src="https://flagcdn.com/w40/pl.png" class="lang-flag"> PL</a>
-                <a href="#"><img src="https://flagcdn.com/w40/ua.png" class="lang-flag"> UA</a>
-                <a href="#"><img src="https://flagcdn.com/w40/gb.png" class="lang-flag"> EN</a>
-                <a href="#"><img src="https://flagcdn.com/w40/de.png" class="lang-flag"> DE</a>
+
+            <div class="lang-dropdown">
+                <div class="nav-btn" style="display: flex; align-items: center; gap: 8px; opacity: 1;">
+                    <i class="fas fa-globe" style="color:#00a2ff"></i> PL
+                </div>
+                <div class="lang-content">
+                    <a href="#"><img src="https://flagcdn.com/w40/pl.png" class="lang-flag"> PL</a>
+                    <a href="#"><img src="https://flagcdn.com/w40/ua.png" class="lang-flag"> UA</a>
+                    <a href="#"><img src="https://flagcdn.com/w40/gb.png" class="lang-flag"> EN</a>
+                    <a href="#"><img src="https://flagcdn.com/w40/de.png" class="lang-flag"> DE</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="match-centre-container">
-        <div class="match-wrapper">
-            <div style="border-left: 2px solid #00a2ff; padding-left: 20px;">
-                <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;">CZWARTA LIGA</div>
-                <div style="font-size: 18px; font-weight: 700;">Kolejka 3</div>
-                <div style="font-size: 12px; color:#8899a6; margin-top: 5px;">13/04/2026 | 20:00</div>
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <div style="display: flex; align-items: center; gap: 30px;">
-                    <span style="font-size: 24px; font-weight: 900; text-align: right; width: 250px;">FC Dynamo Wrocław</span>
-                    <div class="score-vs">VS</div>
-                    <span style="font-size: 24px; font-weight: 900; text-align: left; width: 250px;">Klimek PRO</span>
+    <div class="main-content">
+        <div class="match-centre-container">
+            <div class="match-wrapper">
+                <div style="border-left: 2px solid #00a2ff; padding-left: 20px;">
+                    <div style="font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px;">CZWARTA LIGA</div>
+                    <div style="font-size: 18px; font-weight: 700;">Kolejka 3</div>
+                    <div style="font-size: 12px; color:#8899a6; margin-top: 5px;">13/04/2026 | 20:00</div>
                 </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                    <div style="display: flex; align-items: center; gap: 30px;">
+                        <span style="font-size: 24px; font-weight: 900; text-align: right; width: 250px;">FC Dynamo Wrocław</span>
+                        <div class="score-vs">VS</div>
+                        <span style="font-size: 24px; font-weight: 900; text-align: left; width: 250px;">Klimek PRO</span>
+                    </div>
+                </div>
+                
+                <div></div>
             </div>
-            
-            <div></div>
+        </div>
+
+        <div class="match-photo-container">
+            <img src="658155111_122283653516242616_1155403226176925021_n.jpg" class="match-photo">
         </div>
     </div>
 
