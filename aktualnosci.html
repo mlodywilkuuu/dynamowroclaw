@@ -38,23 +38,59 @@
         .lang-option:hover { color: #00a2ff; }
 
         /* --- UKŁAD TREŚCI --- */
-        .main-content { margin-top: 85px; width: 100%; }
-        .list-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .main-content { margin-top: 100px; width: 100%; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
 
-        /* --- ADMIN PANEL (PRZYCISK EMOJI) --- */
-        .admin-controls { display: flex; justify-content: flex-end; margin-top: 20px; margin-bottom: 20px; }
-        .btn-add-emoji { font-size: 24px; cursor: pointer; background: none; border: none; opacity: 0.5; transition: 0.3s; }
-        .btn-add-emoji:hover { opacity: 1; transform: scale(1.2); }
+        /* --- ADMIN PANEL --- */
+        .admin-controls { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .btn-add-emoji { font-size: 28px; cursor: pointer; background: none; border: none; opacity: 0.4; transition: 0.3s; padding: 10px; }
+        .btn-add-emoji:hover { opacity: 1; transform: scale(1.1); }
 
-        #admin-panel { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; display: none; backdrop-filter: blur(20px); }
+        #admin-panel { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; display: none; backdrop-filter: blur(20px); }
         .admin-input { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-family: inherit; }
+
+        /* --- SIATKA KAFELKOWA (GRID) --- */
+        .news-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 60px;
+        }
+
+        .news-card { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover { 
+            transform: translateY(-10px); 
+            border-color: #00a2ff;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content { padding: 25px; flex-grow: 1; }
+        .card-date { font-size: 11px; font-weight: 800; color: #00a2ff; margin-bottom: 10px; text-transform: uppercase; }
+        .card-title { font-size: 22px; font-weight: 900; text-transform: uppercase; line-height: 1.1; color: #fff; }
 
         /* --- WIDOK ARTYKUŁU --- */
         #article-view { display: none; width: 100%; min-height: 100vh; background: #050b14; }
         .hero-banner { width: 100%; height: 550px; background-size: cover; background-position: center; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
         .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.3) 100%); z-index: 1; }
         .hero-content { position: relative; z-index: 2; width: 100%; }
-        .article-title { font-size: clamp(40px, 6vw, 85px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -3px; margin-bottom: 20px; color: #fff; font-style: italic; }
+        .article-title-main { font-size: clamp(35px, 5vw, 75px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -2px; margin-bottom: 20px; color: #fff; }
 
         .meta-glass-tag { display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #fff; }
         .meta-glass-tag span { color: #00a2ff; margin-left: 5px; }
@@ -65,11 +101,7 @@
         .author-date-sub { font-size: 13px; opacity: 0.5; }
 
         .content-body { padding: 60px 10%; font-size: 20px; line-height: 1.8; color: rgba(255,255,255,0.8); white-space: pre-wrap; max-width: 1000px; }
-        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; transition: 0.3s; }
-        .back-nav:hover { color: #fff; }
-
-        .news-card { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 25px 0; cursor: pointer; transition: 0.3s; }
-        .news-card:hover { padding-left: 10px; background: rgba(255,255,255,0.05); }
+        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -103,8 +135,7 @@
     </nav>
 
     <div class="main-content">
-        
-        <div id="list-view" class="list-container">
+        <div id="list-view" class="container">
             <div class="admin-controls">
                 <button class="btn-add-emoji" onclick="checkPass()">➕</button>
             </div>
@@ -113,17 +144,16 @@
                 <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
                 <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia tła (URL)">
                 <textarea id="post-content" class="admin-input" rows="8" placeholder="Treść artykułu..."></textarea>
-                <button class="nav-btn" style="background:#00a2ff; border:none; border-radius: 6px;" onclick="savePost()">Opublikuj</button>
+                <button class="nav-btn" style="background:#00a2ff; border:none; border-radius: 6px; padding: 12px 25px;" onclick="savePost()">Opublikuj</button>
             </div>
 
-            <div id="news-list"></div>
+            <div id="news-grid" class="news-grid"></div>
         </div>
 
         <div id="article-view">
             <div class="back-nav" id="back-txt" onclick="showList()"><i class="fas fa-chevron-left"></i> WRÓĆ DO LISTY</div>
             <div id="dynamic-content"></div>
         </div>
-
     </div>
 
     <script>
@@ -148,17 +178,12 @@
 
         function updatePageTexts() {
             const t = translations[currentL];
-            // Menu
             document.getElementById('nav-club').innerHTML = `${t.club} <i class="fas fa-chevron-down" style="font-size: 8px;"></i>`;
             document.getElementById('nav-team').innerText = t.team;
             document.getElementById('nav-history').innerText = t.history;
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-contact').innerText = t.contact;
-            
-            // Artykuł
             if (document.getElementById('back-txt')) document.getElementById('back-txt').innerHTML = `<i class="fas fa-chevron-left"></i> ${t.back}`;
-            const pubTag = document.querySelector('.meta-glass-tag');
-            if (pubTag) pubTag.innerHTML = `${t.pub} <span>${t.cat}</span>`;
         }
 
         function checkPass() {
@@ -170,18 +195,20 @@
             const img = document.getElementById('post-image').value || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2000';
             const c = document.getElementById('post-content').value;
             if(!t || !c) return;
-
             posts.unshift({ id: Date.now(), title: t, content: c, image: img, date: new Date().toLocaleDateString('pl-PL') });
             localStorage.setItem('dynamo_posts', JSON.stringify(posts));
             location.reload();
         }
 
         function renderList() {
-            const list = document.getElementById('news-list');
-            list.innerHTML = posts.map(p => `
+            const grid = document.getElementById('news-grid');
+            grid.innerHTML = posts.map(p => `
                 <div class="news-card" onclick="openArticle(${p.id})">
-                    <div style="font-size:11px; font-weight:bold; color:#00a2ff; margin-bottom:5px;">${p.date}</div>
-                    <h2 style="text-transform:uppercase; font-size:28px; font-weight:900;">${p.title}</h2>
+                    <div class="card-image" style="background-image: url('${p.image}')"></div>
+                    <div class="card-content">
+                        <div class="card-date">${p.date}</div>
+                        <div class="card-title">${p.title}</div>
+                    </div>
                 </div>
             `).join('');
         }
@@ -195,9 +222,8 @@
             document.getElementById('dynamic-content').innerHTML = `
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
-                        <h1 class="article-title">${p.title}</h1>
+                        <h1 class="article-title-main">${p.title}</h1>
                         <div class="meta-glass-tag">${t.pub} <span>${t.cat}</span></div>
-                        
                         <div class="author-info-row">
                             <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-small">
                             <div class="author-text-data">
