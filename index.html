@@ -9,6 +9,64 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
 
+        /* --- EKRAN ŁADOWANIA (PRELOADER) --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050b14;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loader-content { text-align: center; }
+
+        .loader-logo {
+            width: 150px;
+            height: auto;
+            animation: pulse 2s infinite ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #00a2ff;
+            position: absolute;
+            animation: loading 2.5s forwards cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .preloader-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
         /* --- NAVBAR --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
@@ -66,6 +124,15 @@
     </style>
 </head>
 <body>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="loader-logo" alt="Dynamo Wrocław">
+            <div class="loader-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
 
     <nav>
         <div class="nav-left">
@@ -139,11 +206,21 @@
                 <button class="scroll-btn" onclick="scrollCarousel(1)"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
-        <div id="news-carousel" class="carousel-container">
-            </div>
+        <div id="news-carousel" class="carousel-container"></div>
     </section>
 
     <script>
+        // LOGIKA EKRANU ŁADOWANIA
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('preloader-hidden');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 800);
+            }, 2000); 
+        });
+
         const translations = {
             'PL': { nav_news: 'Aktualności', nav_team: 'Zespół', hero_sub: 'Oficjalny serwis', match_center_title: 'Match Center', schedule: 'Terminarz', next_match: 'NASTĘPNY', latest_news: 'Najnowsze Artykuły' },
             'EN': { nav_news: 'News', nav_team: 'Team', hero_sub: 'Official Service', match_center_title: 'Match Center', schedule: 'Schedule', next_match: 'NEXT MATCH', latest_news: 'Latest News' },
@@ -166,11 +243,8 @@
         function loadHomeNews() {
             const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
             const container = document.getElementById('news-carousel');
-            
             const now = new Date();
 
-            // 1. Filtrujemy tylko opublikowane (data <= teraz)
-            // 2. Sortujemy od najnowszych
             const publishedPosts = posts.filter(p => {
                 const postDate = new Date(p.date);
                 return postDate <= now;
@@ -182,7 +256,6 @@
             }
 
             container.innerHTML = publishedPosts.slice(0, 6).map(p => {
-                // FORMATOWANIE DATY I GODZINY
                 const d = new Date(p.date);
                 const day = String(d.getDate()).padStart(2, '0');
                 const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -208,9 +281,7 @@
             }).join('');
         }
 
-        // Sprawdzaj dostępność zaplanowanych postów co 30 sekund
         setInterval(loadHomeNews, 30000);
-
         window.onload = loadHomeNews;
         
         window.onclick = (e) => { 
