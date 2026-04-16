@@ -3,145 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aktualności | Dynamo Wrocław</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Dynamo Wrocław X KEEZA | Oficjalne Ogłoszenie</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; }
-
-        /* --- NAPRAWIONY NAVBAR --- */
-        nav {
-            width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
-            background: #0a1525; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-            position: fixed; top: 0; left: 0; z-index: 99999;
+        :root {
+            --bg-color: #0c121e; /* Ciemne tło ze screena Epic */
+            --card-bg: #141b2a;
+            --text-primary: #ffffff;
+            --text-secondary: #aaaaaa;
+            --accent-blue: #007bff; /* Kolor przycisków/linków Epic */
+            --hover-blue: #0056b3;
+            --badge-staff: #7e57c2; /* Fioletowy badge Staff */
+            --badge-dev: #fdd835;   /* Żółty badge Developer */
+            --badge-owner: #78909c; /* Szary badge Owner */
         }
-        .nav-left { display: flex; align-items: center; gap: 25px; }
-        .logo-img { height: 60px; width: auto; }
-        .nav-links { display: flex; gap: 15px; }
-        .nav-link { color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
-        .nav-link:hover { color: #00a2ff; }
-        .admin-btn { color: #00a2ff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #00a2ff; padding: 8px 15px; border-radius: 4px; transition: 0.3s; }
-        .admin-btn:hover { background: #00a2ff; color: #fff; }
 
-        /* --- NAGŁÓWEK --- */
-        .header-section { padding: 150px 10% 50px; background: linear-gradient(to bottom, #0a1525, #050b14); }
-        .header-section h1 { font-size: 42px; text-transform: uppercase; font-style: italic; font-weight: 900; }
-        .header-section span { color: #00a2ff; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
 
-        /* --- GRID ARTYKUŁÓW --- */
-        .container { padding: 40px 10%; min-height: 70vh; }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
-        
-        .article-card { background: #0a1525; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; display: flex; flex-direction: column; }
-        .article-card:hover { transform: translateY(-5px); border-color: #00a2ff; }
-        
-        .article-img { width: 100%; height: 220px; background-size: cover; background-position: center; background-color: #1a2635; }
-        .article-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
-        .article-date { color: #00a2ff; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
-        .article-title { font-size: 22px; margin-bottom: 15px; font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 1.2; }
-        .article-excerpt { font-size: 14px; opacity: 0.6; line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
 
-        .btn-more { background: none; border: none; color: #fff; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: auto; }
-        .btn-more:hover { color: #00a2ff; }
+        /* Główny kontener artykułu */
+        .article-container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 960px; /* Standardowa szerokość Epic */
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
 
-        /* --- MODAL (Pełna treść) --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,11,20,0.98); z-index: 100000; overflow-y: auto; padding: 80px 20px; }
-        .modal-content { max-width: 800px; margin: 0 auto; line-height: 1.8; }
-        .modal-close { position: fixed; top: 25px; right: 35px; font-size: 40px; color: #00a2ff; cursor: pointer; z-index: 100001; }
-        
-        footer { padding: 60px 10%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.3; font-size: 12px; }
+        /* Sekcja Hero z dużym zdjęciem i tytułem */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)), 
+                              url('https://proligawroclaw.pl/wp-content/uploads/2023/10/DJI_0442-scaled.jpg'); /* Zdjęcie boiska */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+        }
+
+        /* Opcje menu (...) w rogu */
+        .options-dots {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Wielki Tytuł w stylu Epic */
+        .main-title {
+            font-size: 48px;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-style: italic; /* Przechylenie ze screena */
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        /* Pasek meta pod tytułem */
+        .meta-bar {
+            background-color: #1a2335;
+            padding: 15px 40px;
+            border-bottom: 1px solid #2a354a;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* Małe herby w pasku meta */
+        .mini-logo {
+            height: 18px;
+            width: auto;
+        }
+
+        /* Niebieski link Community Rules */
+        .rules-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Główna treść posta */
+        .post-body {
+            padding: 40px;
+        }
+
+        /* Sekcja autora */
+        .author-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* Twój herb jako avatar */
+        .author-avatar {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-blue);
+            padding: 2px;
+            background: white;
+        }
+
+        /* Nazwa i od kiedy */
+        .author-info-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .author-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .post-time {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Odznaki (Badges) w stylu Epic */
+        .badges-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 3px;
+            color: #000; /* Czarny tekst na jasnym tle */
+        }
+
+        .badge-staff { background-color: var(--badge-staff); color: white; }
+        .badge-dev { background-color: var(--badge-dev); }
+        .badge-owner { background-color: var(--badge-owner); }
+
+        /* Styl tekstu artykułu */
+        .article-content {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 15px;
+        }
+
+        .article-content a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-left">
-            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Główna</a>
-                <a href="zespol.html" class="nav-link">Zespół</a>
-            </div>
+    <div class="article-container">
+        <div class="hero-section">
+            <button class="options-dots">···</button>
+            <h1 class="main-title">DYNAMO WROCŁAW X KEEZA</h1>
         </div>
-        <div>
-            <a href="admin-panel.html" class="admin-btn"><i class="fas fa-plus"></i> Nowy Post</a>
+
+        <div class="meta-bar">
+            <span>Opublikowano w</span>
+            <a href="#" class="meta-item">
+                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Logo" class="mini-logo">
+                Dynamo Wrocław
+            </a>
+            <span>w</span>
+            <a href="#" class="meta-item">
+                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Logo" class="mini-logo">
+                Ogłoszenia Klubowe
+            </a>
+            <span>•</span>
+            <a href="#" class="rules-link">Regulamin Społeczności</a>
         </div>
-    </nav>
 
-    <div class="header-section">
-        <p style="color:#00a2ff; font-weight:800; text-transform:uppercase; letter-spacing:2px; font-size:12px; margin-bottom:10px;">FC Dynamo Wrocław</p>
-        <h1>Aktualności <span>Klubowe</span></h1>
-    </div>
-
-    <div class="container">
-        <div id="news-grid" class="news-grid">
-            </div>
-    </div>
-
-    <div id="articleModal" class="modal">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <div id="modalBody" class="modal-content"></div>
-    </div>
-
-    <footer>&copy; 2026 FC Dynamo Wrocław.</footer>
-
-    <script>
-        function loadArticles() {
-            const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-            const grid = document.getElementById('news-grid');
-
-            if (posts.length === 0) {
-                grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; opacity:0.3; padding:50px;">Brak artykułów do wyświetlenia.</p>';
-                return;
-            }
-
-            grid.innerHTML = posts.map((post, index) => `
-                <div class="article-card">
-                    <div class="article-img" style="background-image: url('${post.image}')"></div>
-                    <div class="article-body">
-                        <span class="article-date">${post.date}</span>
-                        <h2 class="article-title">${post.title}</h2>
-                        <div class="article-excerpt">${post.content}</div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto;">
-                            <button class="btn-more" onclick="openModal(${index})">Czytaj więcej <i class="fas fa-arrow-right"></i></button>
-                            <button onclick="deletePost(${index})" style="background:none; border:none; color:red; opacity:0.3; cursor:pointer;"><i class="fas fa-trash"></i></button>
-                        </div>
+        <div class="post-body">
+            <div class="author-section">
+                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" alt="Dynamo Avatar" class="author-avatar">
+                <div class="author-info-text">
+                    <div class="author-name">Dynamo Wrocław</div>
+                    <div class="post-time">1 godz. temu</div>
+                    <div class="badges-row">
+                        <span class="badge badge-staff">Staff</span>
+                        <span class="badge badge-dev">Developer</span>
+                        <span class="badge badge-owner">Zarząd</span>
                     </div>
                 </div>
-            `).join('');
-        }
+            </div>
 
-        function openModal(index) {
-            const posts = JSON.parse(localStorage.getItem('dynamo_posts'));
-            const post = posts[index];
-            const body = document.getElementById('modalBody');
-            
-            body.innerHTML = `
-                <img src="${post.image}" style="width:100%; border-radius:15px; margin-bottom:30px; max-height:450px; object-fit:cover;">
-                <p style="color:#00a2ff; font-weight:800; text-transform:uppercase; margin-bottom:10px;">${post.date}</p>
-                <h1 style="font-size:36px; text-transform:uppercase; font-style:italic; margin-bottom:25px;">${post.title}</h1>
-                <div style="font-size:18px; color:rgba(255,255,255,0.8);">${post.content}</div>
-            `;
-            
-            document.getElementById('articleModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
+            <div class="article-content">
+                <p>Witajcie w Społeczności Dynamo Wrocław!</p>
+                
+                <p>Z wielką dumą ogłaszamy nawiązanie strategicznego partnerstwa technicznego z marką <a href="#">KEEZA</a>. Jako lider w produkcji personalizowanej odzieży sportowej w Polsce, KEEZA dostarczy naszym zawodnikom najwyższej jakości stroje meczowe i treningowe na nadchodzący sezon.</p>
+                
+                <p>KEEZA słynie z dbałości o detale, unikalnego designu i wsparcia dla klubów na każdym szczeblu rozgrywkowym. Jesteśmy przekonani, że ta współpraca pomoże nam wyglądać profesjonalnie i czuć się komfortowo w drodze po kolejne zwycięstwa.</p>
+                
+                <p>Nowe komplety meczowe, zaprojektowane specjalnie dla Dynamo, zostaną zaprezentowane już wkrótce. Będą one dostępne również w sprzedaży dla naszych najwierniejszych kibiców.</p>
+                
+                <p>W razie pytań dotyczących nowych strojów lub współpracy, zapraszamy do dyskusji w wątku <a href="#">Pytania i Odpowiedzi</a>.</p>
+                
+                <p>Do zobaczenia na boisku!</p>
+            </div>
+        </div>
+    </div>
 
-        function closeModal() {
-            document.getElementById('articleModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function deletePost(index) {
-            if(confirm("Czy na pewno usunąć ten artykuł?")) {
-                let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
-                posts.splice(index, 1);
-                localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-                loadArticles();
-            }
-        }
-
-        window.onload = loadArticles;
-        window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
-    </script>
 </body>
 </html>
