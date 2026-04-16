@@ -8,7 +8,7 @@
     <style>
         :root { --bg-color: #050b14; --epic-card: #1c1c1c; --accent-blue: #007bff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg-color); color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        body { background: var(--bg-color); color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden; }
 
         /* NAWIGACJA */
         nav {
@@ -19,41 +19,38 @@
         .nav-left { display: flex; align-items: center; gap: 30px; }
         .logo-img { height: 55px; width: auto; }
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-item { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .nav-item:hover { color: var(--accent-blue); }
+        .nav-item { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
         /* MENU JĘZYKOWE */
         .lang-dropdown { position: relative; display: inline-block; margin-right: 15px; }
         .lang-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; font-size: 10px; font-weight: 800; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
-        .lang-content { display: none; position: absolute; background: #141b2a; min-width: 100px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); z-index: 1; border-radius: 4px; top: 100%; }
-        .lang-content a { color: white; padding: 10px 12px; text-decoration: none; display: block; font-size: 10px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .lang-content { display: none; position: absolute; background: #141b2a; min-width: 100px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); z-index: 1; border-radius: 4px; top: 100%; right: 0; }
+        .lang-content a { color: white; padding: 10px 12px; text-decoration: none; display: block; font-size: 10px; font-weight: 800; }
         .lang-content a:hover { background: var(--accent-blue); }
         .lang-dropdown:hover .lang-content { display: block; }
 
-        .btn-new-post { background: transparent; color: #fff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 10px 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
-        .btn-new-post:hover { background: #fff; color: #0a1525; }
+        .btn-new-post { background: transparent; color: #fff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 10px 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }
 
         .header-section { padding: 150px 10% 50px; background: linear-gradient(to bottom, #0a1525, #050b14); }
         .header-section h1 { font-size: 42px; text-transform: uppercase; font-style: italic; font-weight: 900; }
 
-        .container { padding: 40px 10%; }
+        .container { padding: 40px 10%; min-height: 600px; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .article-card { background: var(--epic-card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
+        
+        .article-card { background: var(--epic-card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
         .article-card:hover { border-color: var(--accent-blue); transform: translateY(-5px); }
-        .article-img { width: 100%; height: 220px; background-size: cover; background-position: center; }
+        .article-img { width: 100%; height: 220px; background-size: cover; background-position: center; background-color: #111; }
         .article-info { padding: 20px; }
-        .article-title-small { font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
+        .article-title-small { font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; color: #fff; }
 
         /* MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); z-index: 1000000; overflow-y: auto; padding: 40px 10px; }
-        .modal-close { position: fixed; top: 25px; right: 25px; font-size: 35px; color: #fff; cursor: pointer; }
-        .epic-article { background: #141b2a; max-width: 900px; margin: 0 auto; border-radius: 4px; overflow: hidden; }
-        .epic-hero { position: relative; height: 450px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; }
-        .epic-hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, rgba(20,27,42,1)); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000000; overflow-y: auto; }
+        .modal-close { position: fixed; top: 25px; right: 35px; font-size: 40px; color: #fff; cursor: pointer; z-index: 1000001; }
+        .epic-article { background: #141b2a; max-width: 900px; margin: 40px auto; border-radius: 8px; overflow: hidden; position: relative; }
+        .epic-hero { height: 450px; background-size: cover; background-position: center; position: relative; display: flex; align-items: flex-end; padding: 40px; }
+        .epic-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, #141b2a); }
         .hero-content { position: relative; z-index: 2; }
-        .epic-hero-title { font-size: 48px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 1; }
-        .epic-body { padding: 40px; }
-        .epic-content { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.9); }
+        .epic-body { padding: 40px; color: #ccc; line-height: 1.8; font-size: 16px; }
     </style>
 </head>
 <body>
@@ -69,7 +66,7 @@
         </div>
         <div style="display: flex; align-items: center;">
             <div class="lang-dropdown">
-                <button class="lang-btn"><i class="fas fa-globe"></i> PL <i class="fas fa-chevron-down" style="font-size: 8px;"></i></button>
+                <button class="lang-btn"><i class="fas fa-globe"></i> Język <i class="fas fa-chevron-down"></i></button>
                 <div class="lang-content">
                     <a href="#">POLSKI</a>
                     <a href="#">UKRAINIAN</a>
@@ -97,27 +94,28 @@
         function protectedAccess() {
             const pass = prompt("Hasło administratora:");
             if(pass === "admin123") window.location.href = "admin-panel.html";
-            else if(pass) alert("Brak dostępu.");
         }
 
         function loadNews() {
-            let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+            const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
             const grid = document.getElementById('news-grid');
             const now = new Date().getTime();
 
-            // Filtrowanie postów, które już powinny być widoczne i sortowanie
-            let visiblePosts = posts
+            // 1. Filtrowanie: pokaż tylko te, których data już nadeszła
+            // 2. Sortowanie: od najnowszych
+            const visiblePosts = posts
                 .filter(p => new Date(p.date).getTime() <= now)
                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+            console.log("Widoczne posty:", visiblePosts.length); // Sprawdź w konsoli (F12) ile widzi postów
+
             if (visiblePosts.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.3; padding: 100px;">Czekamy na nowe wiadomości...</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.3; padding: 100px;">Brak opublikowanych aktualności.</p>';
                 return;
             }
 
-            // Używamy p.id zamiast indeksu pętli, aby uniknąć znikania artykułów
-            grid.innerHTML = visiblePosts.map(p => `
-                <div class="article-card" onclick="openModal('${p.id}')">
+            grid.innerHTML = visiblePosts.map((p, index) => `
+                <div class="article-card" onclick="openModal('${p.id || index}')">
                     <div class="article-img" style="background-image: url('${p.image}')"></div>
                     <div class="article-info">
                         <h2 class="article-title-small">${p.title}</h2>
@@ -127,28 +125,40 @@
             `).join('');
         }
 
-        function openModal(postId) {
-            let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-            const p = posts.find(item => item.id == postId);
-            if(!p) return;
+        function openModal(id) {
+            const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+            // Szukamy po ID, a jeśli go nie ma (stare posty), to po indeksie
+            const p = posts.find((item, index) => (item.id == id || index == id));
+            
+            if(!p) {
+                alert("Nie znaleziono treści artykułu.");
+                return;
+            }
 
             document.getElementById('modalBody').innerHTML = `
                 <div class="epic-article">
                     <div class="epic-hero" style="background-image: url('${p.image}')">
                         <div class="hero-content">
-                            <h1 class="epic-hero-title">${p.title}</h1>
+                            <h1 style="font-size: 40px; text-transform: uppercase; font-style: italic; font-weight: 900;">${p.title}</h1>
                         </div>
                     </div>
                     <div class="epic-body">
-                        <div style="margin-bottom:20px; font-size:12px; opacity:0.5; font-weight:bold;">${p.date.replace('T', ' ')}</div>
-                        <div class="epic-content">${p.content}</div>
+                        <div style="margin-bottom: 20px; font-size: 12px; opacity: 0.5; font-weight: bold;">
+                            DATA PUBLIKACJI: ${p.date.replace('T', ' ')}
+                        </div>
+                        <div class="main-text">${p.content}</div>
                     </div>
                 </div>`;
+            
             document.getElementById('epicModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() { document.getElementById('epicModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function closeModal() {
+            document.getElementById('epicModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
         window.onload = loadNews;
         window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
     </script>
