@@ -7,25 +7,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #050b14; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        body { background: #050b14; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
 
-        /* --- NAVBAR: LOGO PO LEWEJ, PRZYCISKI PO PRAWEJ --- */
+        /* --- NAVBAR: PRZYCISKI OBOK LOGO --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: rgba(10, 21, 37, 0.95); backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 9999;
         }
-        .nav-left { flex-shrink: 0; }
+        .nav-left { display: flex; align-items: center; gap: 20px; }
         .logo-img { height: 60px; width: auto; display: block; }
+        .nav-links { display: flex; gap: 10px; }
         
-        .nav-right { display: flex; gap: 15px; align-items: center; }
+        .nav-right { display: flex; align-items: center; }
         .nav-btn { color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 10px; transition: 0.3s; }
         .nav-btn:hover { color: #00a2ff; }
 
         /* --- MENU JĘZYKÓW --- */
         .lang-container { position: relative; z-index: 10001; }
         .lang-menu { 
-            display: none; position: absolute; right: 0; top: 100%; 
+            display: none; position: absolute; right: 0; top: 120%; 
             background: #0a1525; border: 1px solid rgba(255,255,255,0.2); 
             border-radius: 8px; min-width: 150px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
@@ -33,24 +34,29 @@
         .lang-option { padding: 12px 20px; cursor: pointer; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
         .lang-option:hover { background: #00a2ff; }
 
+        /* --- EDYTOR I PASEK FORMATOWANIA --- */
+        #admin-panel { max-width: 800px; margin: 120px auto 40px; padding: 25px; background: rgba(255,255,255,0.03); border-radius: 12px; display: none; }
+        .toolbar { background: #162130; padding: 10px; border-radius: 8px 8px 0 0; display: flex; gap: 8px; border: 1px solid #333; }
+        .tool-btn { background: #253447; border: 1px solid #444; color: #fff; cursor: pointer; padding: 6px 12px; border-radius: 4px; font-size: 12px; }
+        .tool-btn:hover { background: #00a2ff; }
+        .admin-input { width: 100%; padding: 15px; background: #0a1525; border: 1px solid #333; color: #fff; border-radius: 8px; margin-bottom: 10px; font-family: inherit; }
+        #post-content { height: 250px; border-radius: 0 0 8px 8px; }
+
         /* --- ARTICLE VIEW --- */
         #article-view { display: none; min-height: 100vh; background: #050b14; }
         .hero-banner { width: 100%; height: 500px; background-size: cover; background-position: center; position: relative; display: flex; align-items: flex-end; padding: 60px 10%; }
         .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 5%, transparent 100%); }
         .hero-content { position: relative; z-index: 2; width: 100%; }
-        
-        .article-title-main { font-size: clamp(30px, 6vw, 60px); font-weight: 900; text-transform: uppercase; font-style: italic; color: #fff; line-height: 1; margin-top: 15px; }
-        .badge-news { display: inline-block; padding: 5px 15px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: 1px solid #00a2ff; color: #00a2ff; }
+        .article-title-main { font-size: clamp(30px, 6vw, 60px); font-weight: 900; text-transform: uppercase; font-style: italic; color: #fff; line-height: 1; }
+        .badge-news { display: inline-block; padding: 5px 15px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: 1px solid #00a2ff; color: #00a2ff; margin-bottom: 15px; }
 
-        .content-body { padding: 20px 10% 80px; font-size: 18px; line-height: 1.8; max-width: 1000px; color: #ccc; }
-        
-        /* Wyżej przesunięte dane autora */
-        .author-box { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; margin-top: -30px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
+        .content-body { padding: 40px 10% 80px; font-size: 18px; line-height: 1.8; max-width: 1000px; color: #ccc; }
+        .author-box { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; margin-top: -40px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         .author-img { height: 45px; border-radius: 50%; border: 1px solid #00a2ff; padding: 3px; }
 
         .back-nav { padding: 110px 10% 10px; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 11px; display: inline-block; }
 
-        /* LISTA / GRID */
+        /* GRID */
         #list-view { margin-top: 120px; padding: 0 10%; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
         .news-card { background: #0a1525; border-radius: 12px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; transition: 0.3s; }
@@ -63,17 +69,18 @@
     <nav>
         <div class="nav-left">
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
+            <div class="nav-links">
+                <a href="aktualnosci.html" class="nav-btn" id="nav-news">Aktualności</a>
+                <a href="zespol.html" class="nav-btn" id="nav-team">Zespół</a>
+            </div>
         </div>
         <div class="nav-right">
-            <a href="aktualnosci.html" class="nav-btn" id="nav-news">Aktualności</a>
-            <a href="zespol.html" class="nav-btn" id="nav-team">Zespół</a>
             <div class="lang-container">
                 <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span></div>
                 <div id="lang-menu" class="lang-menu">
                     <div class="lang-option" onclick="selectLang('PL')">🇵🇱 PL</div>
                     <div class="lang-option" onclick="selectLang('EN')">🇬🇧 EN</div>
                     <div class="lang-option" onclick="selectLang('UA')">🇺🇦 UA</div>
-                    <div class="lang-option" onclick="selectLang('DE')">🇩🇪 DE</div>
                 </div>
             </div>
         </div>
@@ -82,7 +89,22 @@
     <div id="list-view">
         <div style="display:flex; justify-content:space-between; align-items:center">
             <h1 id="page-title">Aktualności</h1>
+            <button class="nav-btn" onclick="checkPass()" style="background:#00a2ff; border-radius:5px">➕ DODAJ WPIS</button>
         </div>
+
+        <div id="admin-panel">
+            <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
+            <input type="text" id="post-img" class="admin-input" placeholder="URL zdjęcia">
+            <div class="toolbar">
+                <button class="tool-btn" onclick="format('bold')">B</button>
+                <button class="tool-btn" onclick="format('italic')">I</button>
+                <button class="tool-btn" onclick="format('h1')">H1</button>
+                <button class="tool-btn" onclick="format('link')"><i class="fas fa-link"></i></button>
+            </div>
+            <textarea id="post-content" class="admin-input" placeholder="Treść artykułu..."></textarea>
+            <button class="nav-btn" style="background:#00a2ff; width:100%; border-radius:8px" onclick="savePost()">OPUBLIKUJ</button>
+        </div>
+
         <div id="news-grid" class="news-grid"></div>
     </div>
 
@@ -92,27 +114,28 @@
     </div>
 
     <script>
-        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [
-            {
-                id: 1,
-                date: "16.04.2026",
-                image: "https://via.placeholder.com/1200x500",
-                translations: {
-                    PL: { title: "RAPORT MECZOWY: OPERACJA RUNNERSHOOD ROZPOCZĘTA!", content: "Sztab szkoleniowy i zawodnicy Dynamo Wrocław zakończyli przygotowania..." },
-                    EN: { title: "MATCH REPORT: OPERATION RUNNERSHOOD HAS BEGUN!", content: "The coaching staff and players of Dynamo Wrocław have completed preparations..." },
-                    UA: { title: "ЗВІТ ПРО МАТЧ: ОПЕРАЦІЯ RUNNERSHOOD РОЗПОЧАТА!", content: "Тренерський штаб та гравці Динамо Вроцлав завершили підготовку..." }
-                }
-            }
-        ];
-        
+        const PASS = "admin123";
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
         let currentLang = 'PL';
-        let currentActiveId = null;
 
-        const uiTranslations = {
+        const translations = {
             'PL': { news: 'Aktualności', team: 'Zespół', back: '← WRÓĆ DO LISTY', cat: 'AKTUALNOŚCI' },
             'EN': { news: 'News', team: 'Team', back: '← BACK TO LIST', cat: 'NEWS' },
             'UA': { news: 'Новини', team: 'Команда', back: '← НАЗАД', cat: 'НОВИНИ' }
         };
+
+        function format(type) {
+            const area = document.getElementById('post-content');
+            const start = area.selectionStart;
+            const end = area.selectionEnd;
+            const text = area.value.substring(start, end);
+            let ins = "";
+            if(type === 'bold') ins = `**${text}**`;
+            if(type === 'italic') ins = `*${text}*`;
+            if(type === 'h1') ins = `# ${text}`;
+            if(type === 'link') ins = `[${text}](url)`;
+            area.value = area.value.substring(0, start) + ins + area.value.substring(end);
+        }
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
 
@@ -121,24 +144,34 @@
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
             updateUI();
-            if(currentActiveId) openArticle(currentActiveId);
-            renderGrid();
         }
 
         function updateUI() {
-            const t = uiTranslations[currentLang] || uiTranslations['EN'];
+            const t = translations[currentLang];
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-team').innerText = t.team;
             if(document.getElementById('page-title')) document.getElementById('page-title').innerText = t.news;
             if(document.getElementById('back-txt')) document.getElementById('back-txt').innerText = t.back;
         }
 
+        function checkPass() { if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block'; }
+
+        function savePost() {
+            const post = {
+                id: Date.now(),
+                title: document.getElementById('post-title').value,
+                image: document.getElementById('post-img').value || 'https://via.placeholder.com/1200x500',
+                content: document.getElementById('post-content').value,
+                date: new Date().toLocaleDateString()
+            };
+            posts.unshift(post);
+            localStorage.setItem('dynamo_posts', JSON.stringify(posts));
+            location.reload();
+        }
+
         function openArticle(id) {
-            currentActiveId = id;
             const p = posts.find(x => x.id === id);
-            const t = uiTranslations[currentLang] || uiTranslations['EN'];
-            const data = p.translations[currentLang] || p.translations['EN']; // Tłumaczenie treści posta
-            
+            const t = translations[currentLang];
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
             
@@ -146,7 +179,7 @@
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
                         <span class="badge badge-news">${t.cat}</span>
-                        <h1 class="article-title-main">${data.title}</h1>
+                        <h1 class="article-title-main">${p.title}</h1>
                     </div>
                 </div>
                 <div class="content-body">
@@ -154,7 +187,7 @@
                         <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-img">
                         <div><strong style="color:#fff">Dynamo Wrocław</strong><br><small>${p.date}</small></div>
                     </div>
-                    <div id="post-text-content">${data.content.replace(/\n/g, '<br>')}</div>
+                    <div>${p.content.replace(/\n/g, '<br>')}</div>
                 </div>
             `;
             window.scrollTo(0,0);
@@ -162,21 +195,18 @@
 
         function renderGrid() {
             const grid = document.getElementById('news-grid');
-            grid.innerHTML = posts.map(p => {
-                const data = p.translations[currentLang] || p.translations['EN'];
-                return `
+            grid.innerHTML = posts.map(p => `
                 <div class="news-card" onclick="openArticle(${p.id})">
                     <div class="card-img" style="background-image: url('${p.image}')"></div>
                     <div class="card-info" style="padding: 20px;">
                         <small style="color:#00a2ff; font-weight:800">${p.date}</small>
-                        <h3 style="margin-top:10px; text-transform:uppercase; font-style:italic">${data.title}</h3>
+                        <h3 style="margin-top:10px; text-transform:uppercase; font-style:italic">${p.title}</h3>
                     </div>
-                </div>`;
-            }).join('');
+                </div>
+            `).join('');
         }
 
         function showList() { location.reload(); }
-
         renderGrid();
         updateUI();
     </script>
