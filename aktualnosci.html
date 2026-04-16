@@ -7,110 +7,98 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #050b14; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
+        body { background: #050b14; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-        /* --- NAVBAR (Z-INDEX FIX) --- */
+        /* --- NAVBAR --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: rgba(10, 21, 37, 0.95); backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 9999;
         }
-        .nav-content-left { display: flex; align-items: center; gap: 40px; }
-        .logo-img { height: 60px; width: auto; }
-        .nav-links { display: flex; gap: 20px; }
+        .nav-left { display: flex; align-items: center; flex-shrink: 0; min-width: 250px; }
+        .logo-img { height: 60px; width: auto; display: block; }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 10px; transition: 0.3s; }
         .nav-btn:hover { color: #00a2ff; }
 
-        /* --- NAPRAWIONE MENU JĘZYKÓW --- */
-        .lang-container { position: relative; }
+        /* --- LANG MENU --- */
+        .lang-container { position: relative; z-index: 10000; }
         .lang-menu { 
-            display: none; position: absolute; right: 0; top: 120%; 
-            background: #0a1525; border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 8px; min-width: 160px; z-index: 10001;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: #0a1525; border: 1px solid rgba(255,255,255,0.2); 
+            border-radius: 8px; min-width: 150px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         .lang-menu.active { display: block; }
         .lang-option { padding: 12px 20px; cursor: pointer; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
         .lang-option:hover { background: #00a2ff; }
 
-        /* --- ADMIN PANEL & TOOLBAR --- */
-        #admin-panel { max-width: 900px; margin: 120px auto 40px; padding: 25px; background: rgba(255,255,255,0.03); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); display: none; }
-        .toolbar { background: #162130; padding: 10px; border-radius: 8px 8px 0 0; display: flex; gap: 8px; border: 1px solid #333; flex-wrap: wrap; }
-        .tool-btn { background: #253447; border: 1px solid #444; color: #fff; cursor: pointer; padding: 6px 12px; border-radius: 4px; font-size: 12px; transition: 0.2s; }
-        .tool-btn:hover { background: #00a2ff; }
-        .admin-input { width: 100%; padding: 15px; background: #0a1525; border: 1px solid #333; color: #fff; border-radius: 8px; margin-bottom: 10px; font-family: inherit; }
-        #post-content { height: 300px; border-radius: 0 0 8px 8px; }
-
-        /* --- ARTYKUŁ VIEW --- */
-        #article-view { display: none; min-height: 100vh; background: #050b14; padding-bottom: 100px; }
-        .hero-banner { width: 100%; height: 550px; background-size: cover; background-position: center; position: relative; display: flex; align-items: flex-end; padding: 60px 10%; }
+        /* --- ARTICLE VIEW --- */
+        #article-view { display: none; min-height: 100vh; background: #050b14; }
+        .hero-banner { width: 100%; height: 500px; background-size: cover; background-position: center; position: relative; display: flex; align-items: flex-end; padding: 60px 10%; }
         .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 5%, transparent 100%); }
         .hero-content { position: relative; z-index: 2; width: 100%; }
-        .article-title-main { font-size: clamp(30px, 6vw, 65px); font-weight: 900; text-transform: uppercase; font-style: italic; color: #fff; line-height: 0.9; margin-bottom: 20px; }
+        .article-title-main { font-size: clamp(30px, 6vw, 60px); font-weight: 900; text-transform: uppercase; font-style: italic; color: #fff; line-height: 1; margin: 15px 0; }
         
-        .badge-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        .badge { padding: 5px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .badge-row { display: flex; gap: 10px; }
+        .badge { padding: 5px 12px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
         .badge-staff { background: #b084ff; color: #fff; }
-        .badge-news { background: rgba(0, 162, 255, 0.2); color: #00a2ff; border: 1px solid #00a2ff; }
+        .badge-news { border: 1px solid #00a2ff; color: #00a2ff; }
 
         .content-body { padding: 50px 10%; font-size: 19px; line-height: 1.8; max-width: 1000px; color: #ccc; }
-        .back-nav { padding: 110px 10% 20px; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; display: inline-block; }
+        .author-box { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        .author-img { height: 45px; border-radius: 50%; border: 1px solid #00a2ff; padding: 3px; }
 
-        /* --- GRID --- */
+        .back-nav { padding: 110px 10% 20px; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 11px; display: inline-block; }
+
+        /* GRID */
         #list-view { margin-top: 120px; padding: 0 10%; }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
-        .news-card { background: #0a1525; border-radius: 15px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; transition: 0.3s; }
-        .news-card:hover { transform: translateY(-5px); border-color: #00a2ff; }
-        .card-img { height: 200px; background-size: cover; background-position: center; }
-        .card-info { padding: 20px; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .news-card { background: #0a1525; border-radius: 12px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; transition: 0.3s; }
+        .news-card:hover { border-color: #00a2ff; transform: translateY(-3px); }
+        .card-img { height: 180px; background-size: cover; background-position: center; }
+
+        /* ADMIN */
+        #admin-panel { max-width: 800px; margin: 120px auto 40px; padding: 25px; background: rgba(255,255,255,0.03); border-radius: 12px; display: none; }
+        .admin-input { width: 100%; padding: 12px; background: #0a1525; border: 1px solid #333; color: #fff; border-radius: 6px; margin-bottom: 10px; font-family: inherit; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-content-left">
+        <div class="nav-left">
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
-            <div class="nav-links">
-                <a href="aktualnosci.html" class="nav-btn" id="nav-news">Aktualności</a>
-                <a href="zespol.html" class="nav-btn" id="nav-team">Zespół</a>
-            </div>
         </div>
-        <div class="lang-container">
-            <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span></div>
-            <div id="lang-menu" class="lang-menu">
-                <div class="lang-option" onclick="selectLang('PL')">🇵🇱 PL</div>
-                <div class="lang-option" onclick="selectLang('EN')">🇬🇧 EN</div>
-                <div class="lang-option" onclick="selectLang('UA')">🇺🇦 UA</div>
-                <div class="lang-option" onclick="selectLang('DE')">🇩🇪 DE</div>
-                <div class="lang-option" onclick="selectLang('ES')">🇪🇸 ES</div>
+        <div class="nav-links">
+            <a href="aktualnosci.html" class="nav-btn" id="nav-news">Aktualności</a>
+            <a href="zespol.html" class="nav-btn" id="nav-team">Zespół</a>
+            <div class="lang-container">
+                <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span></div>
+                <div id="lang-menu" class="lang-menu">
+                    <div class="lang-option" onclick="selectLang('PL')">🇵🇱 PL</div>
+                    <div class="lang-option" onclick="selectLang('EN')">🇬🇧 EN</div>
+                    <div class="lang-option" onclick="selectLang('UA')">🇺🇦 UA</div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div id="admin-panel">
-        <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
-        <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia (URL)">
-        <div class="toolbar">
-            <button class="tool-btn" onclick="format('bold')">B</button>
-            <button class="tool-btn" onclick="format('italic')">I</button>
-            <button class="tool-btn" onclick="format('h1')">H1</button>
-            <button class="tool-btn" onclick="format('quote')">"</button>
-            <button class="tool-btn" onclick="format('link')">Link</button>
-        </div>
-        <textarea id="post-content" class="admin-input" placeholder="Treść artykułu..."></textarea>
-        <button class="nav-btn" style="background:#00a2ff; padding:15px 30px; border-radius:8px; opacity:1" onclick="savePost()">OPUBLIKUJ</button>
-    </div>
-
     <div id="list-view">
         <div style="display:flex; justify-content:space-between; align-items:center">
             <h1 id="page-title">Aktualności</h1>
-            <button class="nav-btn" onclick="checkPass()">➕ Dodaj wpis</button>
+            <button class="nav-btn" onclick="checkPass()" style="background: #00a2ff; border-radius: 5px;">➕ DODAJ WPIS</button>
+        </div>
+        <div id="admin-panel">
+            <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
+            <input type="text" id="post-img-url" class="admin-input" placeholder="Link do zdjęcia">
+            <textarea id="post-content" class="admin-input" style="height:200px" placeholder="Treść..."></textarea>
+            <button class="nav-btn" style="background:#00a2ff; width:100%" onclick="savePost()">OPUBLIKUJ</button>
         </div>
         <div id="news-grid" class="news-grid"></div>
     </div>
 
     <div id="article-view">
-        <div class="back-nav" id="back-txt" onclick="showList()"></div>
+        <div class="back-nav" id="back-txt" onclick="showList()">← WRÓĆ DO LISTY</div>
         <div id="dynamic-article"></div>
     </div>
 
@@ -118,56 +106,33 @@
         const PASS = "admin123";
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
         let currentLang = 'PL';
+        let activePost = null;
 
         const translations = {
             'PL': { news: 'Aktualności', team: 'Zespół', back: '← WRÓĆ DO LISTY', pub: 'OPUBLIKOWANO W', cat: 'AKTUALNOŚCI' },
             'EN': { news: 'News', team: 'Team', back: '← BACK TO LIST', pub: 'PUBLISHED IN', cat: 'NEWS' },
-            'UA': { news: 'Новини', team: 'Команда', back: '← НАЗАД', pub: 'ОПУБЛІКОВАНО В', cat: 'НОВИНИ' },
-            'DE': { news: 'Nachrichten', team: 'Team', back: '← ZURÜCK', pub: 'VERÖFFENTLICHT IN', cat: 'NEWS' },
-            'ES': { news: 'Noticias', team: 'Equipo', back: '← VOLVER', pub: 'PUBLICADO EN', cat: 'NOTICIAS' }
+            'UA': { news: 'Новини', team: 'Команда', back: '← НАЗАД', pub: 'ОПУБЛІКОВАНО В', cat: 'НОВИНИ' }
         };
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
 
-        function selectLang(l) {
+        async function selectLang(l) {
             currentLang = l;
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
             updateUI();
+            if(activePost) {
+                // Opcjonalne: Tutaj można dodać wywołanie do API tłumacza dla treści p.content
+                renderArticle(activePost); 
+            }
         }
 
-        // KLUCZOWA FUNKCJA: Aktualizuje teksty w całym dokumencie
         function updateUI() {
             const t = translations[currentLang];
-            
-            // Stałe elementy
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-team').innerText = t.team;
             if(document.getElementById('page-title')) document.getElementById('page-title').innerText = t.news;
-
-            // Elementy artykułu (szukane dynamicznie)
-            const backBtn = document.getElementById('back-txt');
-            if(backBtn) backBtn.innerText = t.back;
-
-            const pubLabel = document.getElementById('pub-label');
-            if(pubLabel) pubLabel.innerText = t.pub;
-
-            const catLabel = document.getElementById('cat-label');
-            if(catLabel) catLabel.innerText = t.cat;
-        }
-
-        function format(type) {
-            const area = document.getElementById('post-content');
-            const start = area.selectionStart;
-            const end = area.selectionEnd;
-            const text = area.value.substring(start, end);
-            let ins = "";
-            if(type === 'bold') ins = `**${text}**`;
-            if(type === 'italic') ins = `*${text}*`;
-            if(type === 'h1') ins = `# ${text}`;
-            if(type === 'quote') ins = `> ${text}`;
-            if(type === 'link') ins = `[${text}](url)`;
-            area.value = area.value.substring(0, start) + ins + area.value.substring(end);
+            if(document.getElementById('back-txt')) document.getElementById('back-txt').innerText = t.back;
         }
 
         function checkPass() { if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block'; }
@@ -176,7 +141,7 @@
             const post = {
                 id: Date.now(),
                 title: document.getElementById('post-title').value,
-                image: document.getElementById('post-image').value || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018',
+                image: document.getElementById('post-img-url').value || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018',
                 content: document.getElementById('post-content').value,
                 date: new Date().toLocaleDateString()
             };
@@ -186,33 +151,36 @@
         }
 
         function openArticle(id) {
-            const p = posts.find(x => x.id === id);
+            activePost = posts.find(x => x.id === id);
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
-            
+            renderArticle(activePost);
+            window.scrollTo(0,0);
+        }
+
+        function renderArticle(p) {
+            const t = translations[currentLang];
             document.getElementById('dynamic-article').innerHTML = `
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
                         <div class="badge-row">
                             <span class="badge badge-staff">STAFF</span>
-                            <span class="badge badge-news" id="cat-label"></span>
+                            <span class="badge badge-news">${t.cat}</span>
                         </div>
                         <h1 class="article-title-main">${p.title}</h1>
                         <p style="font-size:12px; font-weight:800; opacity:0.8; text-transform:uppercase">
-                            <span id="pub-label"></span> <span style="color:#00a2ff; margin-left:5px">EPIC GAMES</span>
+                            ${t.pub} <span style="color:#00a2ff; margin-left:5px">${t.cat}</span>
                         </p>
                     </div>
                 </div>
                 <div class="content-body">
-                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:40px; border-bottom:1px solid #222; padding-bottom:20px">
-                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height:45px; border-radius:50%; border:1px solid #00a2ff; padding:3px">
-                        <div><strong style="color:#fff">Dynamo Wrocław Team</strong><br><small>${p.date}</small></div>
+                    <div class="author-box">
+                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-img">
+                        <div><strong style="color:#fff">Dynamo Wrocław</strong><br><small>${p.date}</small></div>
                     </div>
-                    <div>${p.content.replace(/\n/g, '<br>')}</div>
+                    <div id="post-text-content">${p.content.replace(/\n/g, '<br>')}</div>
                 </div>
             `;
-            updateUI(); // Wywołujemy natychmiast po wyrenderowaniu HTML
-            window.scrollTo(0,0);
         }
 
         function renderGrid() {
