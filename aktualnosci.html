@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktualności | Dynamo Wrocław</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- STYLE OGÓLNE I RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at top right, #003366, #050b14);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* Zostawiamy miejsce na fixed navbar */
+            padding-top: 100px; 
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR (wspólny dla całej strony) --- */
+        nav {
+            width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 2000;
+        }
+        .nav-content { display: flex; align-items: center; gap: 20px; }
+        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; opacity: 0.7; transition: 0.3s; padding: 10px; }
+        .nav-btn:hover { opacity: 1; color: #00a2ff; }
+        .admin-toggle-btn { background: none; border: 1px solid #333; color: #333; font-size: 10px; cursor: pointer; padding: 5px; border-radius: 4px; }
+        .admin-toggle-btn:hover { border-color: #555; color: #555; }
+
+        /* --- GŁÓWNY KONTENER TREŚCI --- */
+        .main-container { max-width: 1100px; margin: 0 auto; padding: 20px; position: relative; }
+        
+        /* --- PANEL ADMINISTRATORA (ukryty domyślnie) --- */
+        #admin-panel { background: rgba(0,0,0,0.5); padding: 30px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #444; display: none; z-index: 100; position: relative; }
+        #admin-panel h3 { margin-bottom: 15px; color: #00a2ff; }
+        .admin-input, .admin-textarea { width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; }
+        .admin-textarea { resize: vertical; }
+        .btn-publish { background: #00a2ff; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s; }
+        .btn-publish:hover { background: #0088d6; }
+
+        /* --- WIDOK 1: LISTA ARTYKUŁÓW (Karty) --- */
+        #news-list { display: block; }
+        .news-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 25px; border-radius: 16px; margin-bottom: 25px; cursor: pointer; transition: 0.3s ease; position: relative; overflow: hidden; }
+        .news-card:hover { border-color: #00a2ff; background: rgba(255,255,255,0.06); transform: translateY(-3px); }
+        .news-card-date { color: #00a2ff; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        .news-card-title { font-size: 28px; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
+        .news-card-excerpt { opacity: 0.7; font-size: 16px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- WIDOK 2: SZCZEGÓŁY ARTYKUŁU (Styl Epic Games/Fortnite) --- */
+        #article-view { display: none; }
+        
+        /* Przycisk powrotu */
+        .back-btn { cursor: pointer; color: #00a2ff; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; text-decoration: none; transition: 0.2s; }
+        .back-btn:hover { color: #fff; }
+
+        /* Hero nagłówek z tytułem (Górna ciemna belka) */
+        .article-hero-header { background: rgba(0,0,0,0.6); padding: 60px 40px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .article-main-title { font-size: 64px; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -2px; color: #fff; margin-bottom: 20px; }
+        
+        /* Meta info (Opublikowano w) */
+        .article-meta-info { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.7); font-size: 14px; }
+        .tag-aktualnosci { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.15); }
+
+        /* Główna sekcja treści (Dolna belka z autorem) */
+        .article-content-wrapper { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
+        
+        /* Blok autora */
+        .article-author-block { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .author-logo-img { height: 50px; width: auto; }
+        .author-info-text { display: flex; flex-direction: column; }
+        .author-name { font-size: 18px; font-weight: bold; color: #fff; }
+        .publish-date-inline { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+        /* Właściwa treść artykułu */
+        .article-body-text { font-size: 18px; line-height: 1.8; color: rgba(255,255,255,0.9); white-space: pre-wrap; /* Zachowuje entery */ }
+        .article-body-text a { color: #00a2ff; text-decoration: none; border-bottom: 1px solid rgba(0,162,255,0.3); }
+        .article-body-text a:hover { border-bottom-color: #00a2ff; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content">
+            <a href="index.html">
+                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height:60px;">
+            </a>
+            <a href="index.html" class="nav-btn">Strona Główna</a>
+            <a href="aktualnosci.html" class="nav-btn" style="color:#00a2ff; opacity:1;">Aktualności</a>
+            <a href="#" class="nav-btn">Kontakt</a>
+        </div>
+        <button class="admin-toggle-btn" onclick="toggleAdmin()">ADMIN</button>
+    </nav>
+
+    <div class="main-container">
+
+        <div id="admin-panel">
+            <h3>Nowy Artykuł</h3>
+            <input type="text" id="admin-title" class="admin-input" placeholder="Wpisz wielki tytuł (np. Witamy w Dynamo!)">
+            <textarea id="admin-content" class="admin-textarea" rows="10" placeholder="Wpisz treść artykułu..."></textarea>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn-publish" onclick="saveArticle()">Opublikuj Artykuł</button>
+                <button class="admin-input" style="width:auto; background:none; border:none; color:#777; cursor:pointer;" onclick="clearStorage()">[Wyczyść wszystkie bazy]</button>
+            </div>
+        </div>
+
+        <div id="news-list">
+            </div>
+
+        <div id="article-view">
+            <div class="back-btn" onclick="showList()">
+                <i class="fas fa-arrow-left"></i> Wróć do Aktualności
+            </div>
+
+            <div id="full-article-content"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Pobierz artykuły lub stwórz pustą tablicę
+        let articles = JSON.parse(localStorage.getItem('dynamo_news')) || [];
+
+        // Przełączanie widoczności panelu admina
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Funkcja obliczająca "czas temu" (np. 5 min temu)
+        function timeAgo(dateParam) {
+            const date = typeof dateParam === 'object' ? dateParam : new Date(dateParam);
+            const today = new Date();
+            const seconds = Math.round((today - date) / 1000);
+            const minutes = Math.round(seconds / 60);
+            const hours = Math.round(minutes / 60);
+            const days = Math.round(hours / 24);
+
+            if (seconds < 60) return `przed chwilą`;
+            else if (minutes < 60) return `${minutes} min. temu`;
+            else if (hours < 24) return `${hours} godz. temu`;
+            else return `${days} dni temu`;
+        }
+
+        // Zapisywanie artykułu
+        function saveArticle() {
+            const titleInput = document.getElementById('admin-title').value;
+            const contentInput = document.getElementById('admin-content').value;
+
+            if(!titleInput || !contentInput) {
+                alert("Musisz wpisać tytuł i treść!");
+                return;
+            }
+
+            const newArticle = {
+                id: Date.now(),
+                timestamp: new Date().getTime(), // Dokładny czas do obliczeń
+                displayDate: new Date().toLocaleDateString('pl-PL'), // Data formatu DD.MM.YYYY
+                title: titleInput,
+                content: contentInput
+            };
+
+            // Dodaj na początek tablicy (najnowszy pierwszy)
+            articles.unshift(newArticle);
+            // Zapisz w przeglądarce
+            localStorage.setItem('dynamo_news', JSON.stringify(articles));
+
+            // Wyczyść formularz i przeładuj
+            document.getElementById('admin-title').value = '';
+            document.getElementById('admin-content').value = '';
+            toggleAdmin();
+            renderList();
+        }
+
+        // Widok 1: Renderowanie listy kart
+        function renderList() {
+            const listDiv = document.getElementById('news-list');
+            
+            if(articles.length === 0) {
+                listDiv.innerHTML = '<p style="text-align:center; opacity:0.5; padding:50px;">Brak artykułów. Użyj panelu ADMIN, aby dodać pierwszy!</p>';
+                return;
+            }
+
+            listDiv.innerHTML = articles.map(art => `
+                <div class="news-card" onclick="openArticle(${art.id})">
+                    <div class="news-card-date">${timeAgo(art.timestamp)}</div>
+                    <div class="news-card-title">${art.title}</div>
+                    <p class="news-card-excerpt">${art.content.substring(0, 150)}...</p>
+                </div>
+            `).join('');
+        }
+
+        // Widok 2: Otwieranie artykułu w stylu Epic
+        function openArticle(id) {
+            const art = articles.find(a => a.id === id);
+            
+            // Przełącz widoki
+            document.getElementById('news-list').style.display = 'none';
+            document.getElementById('article-view').style.display = 'block';
+            
+            // Przewiń na górę
+            window.scrollTo(0, 0);
+
+            // Wstaw treść w układzie Epic Games
+            document.getElementById('full-article-content').innerHTML = `
+                <div class="article-hero-header">
+                    <h1 class="article-main-title">${art.title}</h1>
+                    <div class="article-meta-info">
+                        Opublikowano w 
+                        <span class="tag-aktualnosci">
+                            <i class="fas fa-bolt" style="color:#ffd700;"></i> Aktualności
+                        </span>
+                    </div>
+                </div>
+
+                <div class="article-content-wrapper">
+                    <div class="article-author-block">
+                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-img">
+                        <div class="author-info-text">
+                            <span class="author-name">Dynamo Wrocław</span>
+                            <span class="publish-date-inline">${timeAgo(art.timestamp)} (${art.displayDate})</span>
+                        </div>
+                    </div>
+
+                    <div class="article-body-text">${convertLinks(art.content)}</div>
+                </div>
+            `;
+        }
+
+        // Wróć do listy
+        function showList() {
+            document.getElementById('news-list').style.display = 'block';
+            document.getElementById('article-view').style.display = 'none';
+        }
+
+        // (Opcjonalnie) Prosta funkcja zamieniająca tekstowe linki na klikalne
+        function convertLinks(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return text.replace(urlRegex, function(url) {
+                return '<a href="' + url + '" target="_blank">' + url + '</a>';
+            });
+        }
+
+        // Funkcja pomocnicza do czyszczenia danych (dla testów)
+        function clearStorage() {
+            if(confirm("Czy na pewno wyczyścić WSZYSTKIE artykuły z pamięci przeglądarki?")) {
+                localStorage.removeItem('dynamo_news');
+                location.reload();
+            }
+        }
+
+        // Uruchom renderowanie listy na start
+        renderList();
+
+    </script>
+</body>
+</html>
