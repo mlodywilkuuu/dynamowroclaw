@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Strona Główna</title>
+    <title>Dynamo Wrocław | Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- STYLE BAZOWE (Zgodne z aktualnościami) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #050b14;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            overflow-x: hidden;
-        }
+        body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
 
         /* --- NAVBAR --- */
         nav {
@@ -23,97 +17,99 @@
         }
         .nav-content-left { display: flex; align-items: center; gap: 40px; }
         .logo-img { height: 65px; width: auto; }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; cursor: pointer; padding: 10px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; opacity: 0.7; transition: 0.3s; padding: 10px; }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
 
-        /* --- MATCHCENTER --- */
-        .matchcenter-section {
+        /* --- MATCH CENTER (Klasyczny styl) --- */
+        .match-center {
             margin-top: 100px;
-            padding: 40px 10%;
-            text-align: center;
+            padding: 40px 5%;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
         }
-        .match-card {
+
+        .match-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 50px;
+            flex: 1;
+            min-width: 450px;
+            text-align: center;
             backdrop-filter: blur(10px);
         }
-        .team-info img { height: 80px; filter: drop-shadow(0 0 10px rgba(0,162,255,0.2)); }
-        .score { font-size: 48px; font-weight: 900; letter-spacing: 5px; color: #00a2ff; }
 
-        /* --- SLIDER ARTYKUŁÓW --- */
-        .news-slider-container {
-            padding: 60px 0;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
+        .match-label {
+            font-size: 10px;
+            font-weight: 900;
+            color: #00a2ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: block;
         }
-        .section-header {
+
+        .teams-display {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 10%;
-            margin-bottom: 30px;
+            gap: 20px;
         }
-        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+
+        .team { flex: 1; }
+        .team img { height: 80px; object-fit: contain; margin-bottom: 10px; }
+        .team p { font-size: 14px; font-weight: 800; text-transform: uppercase; }
+
+        .score-box { flex: 1; }
+        .score-large { font-size: 50px; font-weight: 900; letter-spacing: 5px; color: #fff; }
+        .vs { font-size: 20px; font-weight: 900; color: rgba(255,255,255,0.2); }
+        .match-date { font-size: 12px; opacity: 0.5; margin-top: 10px; }
+
+        /* --- NEWS SLIDER --- */
+        .news-section { padding: 60px 0; }
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; margin-bottom: 30px;
+        }
+        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; }
         
         .slider-controls { display: flex; gap: 10px; }
         .control-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            width: 45px; height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
         }
         .control-btn:hover { background: #00a2ff; border-color: #00a2ff; }
 
         .news-wrapper {
-            display: flex;
-            gap: 25px;
-            padding: 10px 10%;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            display: flex; gap: 25px; padding: 10px 5%;
+            overflow-x: hidden; scroll-behavior: smooth;
         }
 
         .news-item {
-            min-width: 350px;
-            max-width: 350px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-            overflow: hidden;
-            transition: 0.4s;
-            text-decoration: none;
-            color: inherit;
+            min-width: 380px; background: rgba(255,255,255,0.03);
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; transition: 0.4s; text-decoration: none; color: inherit;
         }
         .news-item:hover { transform: translateY(-10px); border-color: #00a2ff; }
-        
-        .news-item-img {
-            width: 100%; height: 200px;
-            background-size: cover; background-position: center;
-        }
-        .news-item-content { padding: 20px; }
-        .news-item-date { font-size: 10px; color: #00a2ff; font-weight: 800; margin-bottom: 8px; }
-        .news-item-title { font-size: 18px; font-weight: 900; text-transform: uppercase; line-height: 1.2; }
+        .news-img { width: 100%; height: 220px; background-size: cover; background-position: center; }
+        .news-info { padding: 25px; }
+        .news-date { font-size: 11px; color: #00a2ff; font-weight: 800; margin-bottom: 10px; }
+        .news-title { font-size: 20px; font-weight: 900; text-transform: uppercase; line-height: 1.2; }
 
-        /* --- LANG DROPDOWN --- */
+        /* --- JĘZYKI --- */
         .lang-dropdown { position: relative; }
         .lang-menu { 
             display: none; position: absolute; right: 0; top: 100%; 
             background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 8px; min-width: 100px; 
+            border-radius: 8px; min-width: 120px; z-index: 3000;
         }
         .lang-menu.active { display: block; }
-        .lang-option { padding: 10px; cursor: pointer; font-size: 12px; }
-
+        .lang-option { padding: 10px 15px; cursor: pointer; font-size: 12px; transition: 0.2s; }
+        .lang-option:hover { color: #00a2ff; }
     </style>
 </head>
 <body>
@@ -127,81 +123,96 @@
                 <a href="zespol.html" class="nav-btn">Zespół</a>
             </div>
         </div>
-        <div class="nav-right-container">
-            <div class="lang-dropdown">
-                <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span></div>
-                <div id="lang-menu" class="lang-menu">
-                    <div class="lang-option" onclick="selectLang('PL')">PL</div>
-                    <div class="lang-option" onclick="selectLang('UA')">UA</div>
-                    <div class="lang-option" onclick="selectLang('EN')">EN</div>
-                </div>
+        <div class="lang-dropdown">
+            <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span></div>
+            <div id="lang-menu" class="lang-menu">
+                <div class="lang-option" onclick="selectLang('PL')">PL</div>
+                <div class="lang-option" onclick="selectLang('UA')">UA</div>
+                <div class="lang-option" onclick="selectLang('EN')">EN</div>
             </div>
         </div>
     </nav>
 
-    <div class="main-content">
-        <section class="matchcenter-section">
-            <div class="match-card">
-                <div class="team-info">
+    <section class="match-center">
+        <div class="match-box">
+            <span class="match-label">Ostatni Mecz</span>
+            <div class="teams-display">
+                <div class="team">
                     <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
-                    <p style="margin-top:10px; font-weight:800;">DYNAMO WROCŁAW</p>
+                    <p>Dynamo Wrocław</p>
                 </div>
-                <div class="score">3 : 1</div>
-                <div class="team-info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Soccer_ball.svg/1200px-Soccer_ball.svg.png" style="opacity: 0.5;">
-                    <p style="margin-top:10px; font-weight:800;">PRZECIWNIK</p>
+                <div class="score-box">
+                    <div class="score-large">3:1</div>
+                    <div class="match-date">ZAKOŃCZONY</div>
                 </div>
-            </div>
-        </section>
-
-        <section class="news-slider-container">
-            <div class="section-header">
-                <h2 class="section-title" id="txt-latest">Najnowsze Wiadomości</h2>
-                <div class="slider-controls">
-                    <button class="control-btn" onclick="scrollSlider(-380)"><i class="fas fa-chevron-left"></i></button>
-                    <button class="control-btn" onclick="scrollSlider(380)"><i class="fas fa-chevron-right"></i></button>
+                <div class="team">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Soccer_ball.svg/1200px-Soccer_ball.svg.png" style="opacity:0.3">
+                    <p>Przeciwnik</p>
                 </div>
             </div>
+        </div>
 
-            <div class="news-wrapper" id="home-news-wrapper">
+        <div class="match-box">
+            <span class="match-label">Następny Mecz</span>
+            <div class="teams-display">
+                <div class="team">
+                    <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
+                    <p>Dynamo Wrocław</p>
                 </div>
-        </section>
-    </div>
+                <div class="score-box">
+                    <div class="vs">VS</div>
+                    <div class="match-date">24 KWIETNIA, 18:00</div>
+                </div>
+                <div class="team">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Soccer_ball.svg/1200px-Soccer_ball.svg.png" style="opacity:0.3">
+                    <p>Przeciwnik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-section">
+        <div class="section-header">
+            <h2 class="section-title">Aktualności</h2>
+            <div class="slider-controls">
+                <button class="control-btn" onclick="scrollSlider(-405)"><i class="fas fa-chevron-left"></i></button>
+                <button class="control-btn" onclick="scrollSlider(405)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="news-wrapper" id="home-news-wrapper">
+            </div>
+    </section>
 
     <script>
-        // Pobieranie artykułów z localStorage (tych samych co w aktualnosci.html)
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
 
         function renderHomeNews() {
             const wrapper = document.getElementById('home-news-wrapper');
             if(posts.length === 0) {
-                wrapper.innerHTML = "<p style='opacity:0.5'>Brak nowych wiadomości.</p>";
+                wrapper.innerHTML = "<p style='opacity:0.3'>Brak aktualności do wyświetlenia.</p>";
                 return;
             }
-
             wrapper.innerHTML = posts.map(p => `
                 <a href="aktualnosci.html" class="news-item">
-                    <div class="news-item-img" style="background-image: url('${p.image}')"></div>
-                    <div class="news-item-content">
-                        <div class="news-item-date">${p.date}</div>
-                        <div class="news-item-title">${p.title}</div>
+                    <div class="news-img" style="background-image: url('${p.image}')"></div>
+                    <div class="news-info">
+                        <div class="news-date">${p.date}</div>
+                        <div class="news-title">${p.title}</div>
                     </div>
                 </a>
             `).join('');
         }
 
-        function scrollSlider(val) {
-            document.getElementById('home-news-wrapper').scrollBy({ left: val, behavior: 'smooth' });
+        function scrollSlider(v) {
+            document.getElementById('home-news-wrapper').scrollBy({ left: v, behavior: 'smooth' });
         }
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
-        function selectLang(l) { 
+        function selectLang(l) {
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
-            // Tutaj można dodać logikę tłumaczenia dla strony głównej
         }
 
-        // Inicjalizacja
         renderHomeNews();
     </script>
 </body>
