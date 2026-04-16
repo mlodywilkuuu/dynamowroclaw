@@ -13,67 +13,52 @@
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 2000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 9999;
         }
         .nav-content-left { display: flex; align-items: center; gap: 40px; }
         .logo-img { height: 65px; width: auto; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; opacity: 0.7; transition: 0.3s; cursor: pointer; padding: 10px; }
-        .nav-btn:hover { opacity: 1; color: #00a2ff; }
+        
+        /* --- MENU JĘZYKÓW (FIXED Z-INDEX) --- */
+        .lang-container { position: relative; z-index: 10000; }
+        .lang-menu { 
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: #0a1525; border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 8px; min-width: 140px; padding: 5px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .lang-menu.active { display: block; }
+        .lang-option { padding: 10px 20px; cursor: pointer; font-size: 13px; transition: 0.2s; display: flex; gap: 10px; }
+        .lang-option:hover { background: #00a2ff; color: #fff; }
 
-        /* --- PASEK FORMATOWANIA --- */
+        /* --- TOOLBAR --- */
         .toolbar {
-            background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px 8px 0 0;
-            display: flex; gap: 10px; border: 1px solid #444; border-bottom: none;
+            background: #1a2635; padding: 10px; border-radius: 8px 8px 0 0;
+            display: flex; gap: 8px; border: 1px solid #444; flex-wrap: wrap;
         }
         .tool-btn {
-            background: none; border: none; color: white; cursor: pointer; padding: 5px 10px;
-            border-radius: 4px; transition: 0.2s; font-weight: bold;
+            background: #253447; border: 1px solid #444; color: white; cursor: pointer; 
+            padding: 6px 12px; border-radius: 4px; font-size: 12px;
         }
         .tool-btn:hover { background: #00a2ff; }
 
-        /* --- ADMIN PANEL --- */
-        #admin-panel { 
-            background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; 
-            border: 1px solid rgba(255,255,255,0.1); margin: 120px auto 40px; 
-            max-width: 800px; display: none; 
-        }
-        .admin-input { 
-            width: 100%; padding: 12px; margin-bottom: 10px; 
-            background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; 
-        }
-        #post-content { border-radius: 0 0 8px 8px; min-height: 200px; }
-
         /* --- ARTYKUŁ --- */
-        #article-view { display: none; width: 100%; min-height: 100vh; padding-top: 80px; }
+        #article-view { display: none; width: 100%; min-height: 100vh; padding-top: 0; }
         .hero-banner { 
-            width: 100%; height: 500px; background-size: cover; background-position: center; 
+            width: 100%; height: 550px; background-size: cover; background-position: center; 
             position: relative; display: flex; align-items: flex-end; padding: 60px 10%; 
         }
         .hero-banner::after { 
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(to top, #050b14, transparent); 
+            background: linear-gradient(to top, #050b14 5%, transparent 100%); 
         }
-        .hero-content { position: relative; z-index: 2; width: 100%; }
-        .article-title-main { font-size: 60px; font-weight: 900; text-transform: uppercase; line-height: 1; margin-bottom: 20px; }
-        
-        /* Styl Epic/Fortnite dla tagów */
-        .badge-row { display: flex; gap: 10px; margin-top: 15px; }
-        .badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
-        .badge-staff { background: #b084ff; color: #fff; }
-        .badge-dev { background: #d4ff84; color: #000; }
+        .hero-content { position: relative; z-index: 2; }
+        .article-title-main { font-size: clamp(30px, 6vw, 70px); font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -2px; }
 
-        .content-body { padding: 40px 10%; font-size: 18px; line-height: 1.6; max-width: 1100px; }
-        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; }
+        .content-body { padding: 50px 10%; font-size: 19px; line-height: 1.8; max-width: 1000px; color: #ccc; }
+        .back-nav { position: absolute; top: 100px; left: 10%; z-index: 10; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; }
 
-        /* JĘZYKI */
-        .lang-menu { 
-            display: none; position: absolute; right: 40px; top: 70px; 
-            background: #0a1525; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; 
-        }
-        .lang-menu.active { display: block; }
-        .lang-option { padding: 10px 20px; cursor: pointer; font-size: 12px; }
-        .lang-option:hover { color: #00a2ff; }
+        #admin-panel { max-width: 900px; margin: 120px auto 40px; padding: 20px; display: none; }
+        .admin-input { width: 100%; padding: 15px; background: #0a1525; border: 1px solid #444; color: #fff; border-radius: 8px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -86,31 +71,41 @@
                 <a href="zespol.html" class="nav-btn" id="nav-team">I Zespół</a>
             </div>
         </div>
-        <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span></div>
+        <div class="lang-container">
+            <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span> <i class="fas fa-chevron-down" style="font-size:10px"></i></div>
+            <div id="lang-menu" class="lang-menu">
+                <div class="lang-option" onclick="selectLang('PL')"><span>🇵🇱</span> PL</div>
+                <div class="lang-option" onclick="selectLang('EN')"><span>🇬🇧</span> EN</div>
+                <div class="lang-option" onclick="selectLang('UA')"><span>🇺🇦</span> UA</div>
+                <div class="lang-option" onclick="selectLang('DE')"><span>🇩🇪</span> DE</div>
+                <div class="lang-option" onclick="selectLang('ES')"><span>🇪🇸</span> ES</div>
+            </div>
+        </div>
     </nav>
-
-    <div id="lang-menu" class="lang-menu">
-        <div class="lang-option" onclick="selectLang('PL')">PL</div>
-        <div class="lang-option" onclick="selectLang('EN')">EN</div>
-        <div class="lang-option" onclick="selectLang('UA')">UA</div>
-    </div>
 
     <div id="admin-panel">
         <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
-        <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia (URL)">
+        <input type="text" id="post-image" class="admin-input" placeholder="URL zdjęcia (HD)">
         <div class="toolbar">
-            <button class="tool-btn" onclick="format('bold')">B</button>
-            <button class="tool-btn" onclick="format('italic')">I</button>
+            <button class="tool-btn" onclick="format('bold')"><b>B</b></button>
+            <button class="tool-btn" onclick="format('italic')"><i>I</i></button>
             <button class="tool-btn" onclick="format('h1')">H1</button>
+            <button class="tool-btn" onclick="format('h2')">H2</button>
+            <button class="tool-btn" onclick="format('quote')"><i class="fas fa-quote-left"></i></button>
+            <button class="tool-btn" onclick="format('list')"><i class="fas fa-list"></i></button>
             <button class="tool-btn" onclick="format('link')"><i class="fas fa-link"></i></button>
+            <button class="tool-btn" onclick="format('color')"><i class="fas fa-palette"></i></button>
         </div>
-        <textarea id="post-content" class="admin-input" placeholder="Treść..."></textarea>
-        <button class="nav-btn" style="background:#00a2ff; opacity:1; border-radius:8px;" onclick="savePost()">Opublikuj</button>
+        <textarea id="post-content" class="admin-input" style="height:300px; border-radius: 0 0 8px 8px;"></textarea>
+        <button class="nav-btn" style="background:#00a2ff; padding:15px 30px; border-radius:8px; opacity:1" onclick="savePost()">OPUBLIKUJ ARTYKUŁ</button>
     </div>
 
-    <div id="list-view" class="container" style="margin-top:120px; padding: 0 10%;">
-        <button class="nav-btn" onclick="checkPass()">➕ Dodaj wpis</button>
-        <div id="news-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; margin-top:30px;"></div>
+    <div id="list-view" style="margin-top:120px; padding: 0 10%;">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+            <h1 id="page-title">Aktualności</h1>
+            <button class="nav-btn" onclick="checkPass()">➕ Dodaj</button>
+        </div>
+        <div id="news-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap:30px; margin-top:40px;"></div>
     </div>
 
     <div id="article-view">
@@ -121,62 +116,64 @@
     <script>
         const PASS = "admin123";
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        // Usuwanie "test" przy ładowaniu
-        posts = posts.filter(p => p.title.toLowerCase() !== 'test');
-        localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-
         let currentLang = 'PL';
+
         const translations = {
             'PL': { news: 'Aktualności', team: 'Zespół', back: '← WRÓĆ DO LISTY', pub: 'OPUBLIKOWANO W', cat: 'AKTUALNOŚCI' },
             'EN': { news: 'News', team: 'Team', back: '← BACK TO LIST', pub: 'PUBLISHED IN', cat: 'NEWS' },
             'UA': { news: 'Новини', team: 'Команда', back: '← НАЗАД', pub: 'ОПУБЛІКОВАНО В', cat: 'НОВИНИ' }
         };
 
+        function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
+
         function format(type) {
             const area = document.getElementById('post-content');
             const start = area.selectionStart;
             const end = area.selectionEnd;
             const text = area.value.substring(start, end);
-            let inserted = "";
-            if(type === 'bold') inserted = `**${text}**`;
-            if(type === 'italic') inserted = `*${text}*`;
-            if(type === 'h1') inserted = `# ${text}`;
-            if(type === 'link') inserted = `[${text}](url)`;
-            area.value = area.value.substring(0, start) + inserted + area.value.substring(end);
+            let ins = "";
+            if(type === 'bold') ins = `**${text}**`;
+            if(type === 'italic') ins = `*${text}*`;
+            if(type === 'h1') ins = `# ${text}`;
+            if(type === 'h2') ins = `## ${text}`;
+            if(type === 'quote') ins = `> ${text}`;
+            if(type === 'list') ins = `\n* ${text}`;
+            if(type === 'link') ins = `[${text}](url)`;
+            if(type === 'color') ins = `<span style="color:#00a2ff">${text}</span>`;
+            area.value = area.value.substring(0, start) + ins + area.value.substring(end);
         }
 
         function selectLang(l) {
             currentLang = l;
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
-            updateTranslations();
+            updateUI();
         }
 
-        function updateTranslations() {
+        function updateUI() {
             const t = translations[currentLang];
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-team').innerText = t.team;
+            if(document.getElementById('page-title')) document.getElementById('page-title').innerText = t.news;
             
-            // Dynamiczne elementy wewnątrz artykułu
-            const backBtn = document.getElementById('back-txt');
-            if(backBtn) backBtn.innerText = t.back;
+            // Tłumaczenie etykiet w artykule
+            if(document.getElementById('back-txt')) document.getElementById('back-txt').innerText = t.back;
+            if(document.getElementById('pub-label')) document.getElementById('pub-label').innerText = t.pub;
+            if(document.getElementById('cat-label')) document.getElementById('cat-label').innerText = t.cat;
 
-            const pubLabel = document.getElementById('pub-label');
-            if(pubLabel) pubLabel.innerText = t.pub;
-
-            const catLabel = document.getElementById('cat-label');
-            if(catLabel) catLabel.innerText = t.cat;
+            // Logika tłumaczenia TREŚCI (Uproszczona)
+            // W prawdziwym systemie tutaj wywoływałbyś API tłumacza
         }
-
-        function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
 
         function checkPass() { if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block'; }
 
         function savePost() {
+            const title = document.getElementById('post-title').value;
+            if(title.toLowerCase() === 'test') return alert("Tytuł 'test' jest zablokowany.");
             const post = {
                 id: Date.now(),
-                title: document.getElementById('post-title').value,
-                image: document.getElementById('post-image').value,
+                title: title,
+                image: document.getElementById('post-image').value || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018',
                 content: document.getElementById('post-content').value,
                 date: new Date().toLocaleDateString()
             };
@@ -194,44 +191,50 @@
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
                         <h1 class="article-title-main">${p.title}</h1>
-                        <p style="font-size:12px; font-weight:800; opacity:0.8">
-                            <span id="pub-label"></span> <span id="cat-label" style="color:#00a2ff"></span>
+                        <p style="font-size:11px; font-weight:900; letter-spacing:1px; margin-top:10px">
+                            <span id="pub-label">${translations[currentLang].pub}</span> 
+                            <span id="cat-label" style="color:#00a2ff; margin-left:5px">${translations[currentLang].cat}</span>
                         </p>
-                        <div class="badge-row">
-                            <div class="badge badge-staff">STAFF</div>
-                            <div class="badge badge-dev">ADMIN</div>
-                        </div>
                     </div>
                 </div>
                 <div class="content-body">
-                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:30px; opacity:0.6">
-                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height:40px">
-                        <div><strong>Dynamo Wrocław</strong><br><small>${p.date}</small></div>
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:40px">
+                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height:50px; border: 2px solid #00a2ff; border-radius:50%; padding:5px">
+                        <div><strong style="color:#fff">Dynamo Wrocław Team</strong><br><small>${p.date}</small></div>
                     </div>
-                    ${p.content.replace(/\n/g, '<br>')}
+                    <div id="article-text">${parseMarkdown(p.content)}</div>
                 </div>
             `;
-            updateTranslations();
+            updateUI();
             window.scrollTo(0,0);
+        }
+
+        function parseMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+                .replace(/\*(.*?)\*/g, '<i>$1</i>')
+                .replace(/# (.*?)\n/g, '<h1>$1</h1>')
+                .replace(/## (.*?)\n/g, '<h2>$1</h2>')
+                .replace(/> (.*?)\n/g, '<blockquote>$1</blockquote>')
+                .replace(/\n/g, '<br>');
         }
 
         function renderGrid() {
             const grid = document.getElementById('news-grid');
             grid.innerHTML = posts.map(p => `
-                <div onclick="openArticle(${p.id})" style="cursor:pointer; background:rgba(255,255,255,0.03); border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.05)">
-                    <div style="height:180px; background:url('${p.image}') center/cover"></div>
-                    <div style="padding:20px">
+                <div onclick="openArticle(${p.id})" style="cursor:pointer; background:#0a1525; border-radius:15px; overflow:hidden; border:1px solid #1a2635; transition:0.3s" onmouseover="this.style.borderColor='#00a2ff'" onmouseout="this.style.borderColor='#1a2635'">
+                    <div style="height:220px; background:url('${p.image}') center/cover"></div>
+                    <div style="padding:25px">
                         <small style="color:#00a2ff; font-weight:800">${p.date}</small>
-                        <h3 style="margin-top:10px; text-transform:uppercase">${p.title}</h3>
+                        <h3 style="margin-top:10px; text-transform:uppercase; font-style:italic">${p.title}</h3>
                     </div>
                 </div>
             `).join('');
         }
 
         function showList() { location.reload(); }
-
         renderGrid();
-        updateTranslations();
+        updateUI();
     </script>
 </body>
 </html>
