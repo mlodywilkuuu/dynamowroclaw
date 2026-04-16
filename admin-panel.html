@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Managera | Dynamo Wrocław</title>
+    <title>Zaawansowany Panel Managera | Dynamo Wrocław</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; padding-top: 100px; }
 
-        /* --- NAVBAR (Stały) --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: #0a1525; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
@@ -17,137 +16,164 @@
         }
         .logo-img { height: 50px; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
-        /* --- KARTA EDYTORA --- */
         .admin-card { 
             background: #0a1525; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); 
             padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
+        
         h1 { font-size: 28px; text-transform: uppercase; font-style: italic; margin-bottom: 30px; border-left: 4px solid #00a2ff; padding-left: 15px; }
 
         .form-group { margin-bottom: 25px; }
-        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; color: #00a2ff; margin-bottom: 10px; letter-spacing: 1px; }
+        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; color: #00a2ff; margin-bottom: 10px; }
         
         input { 
             width: 100%; background: #050b14; border: 1px solid #1a2635; padding: 15px; 
-            color: #fff; border-radius: 8px; font-size: 16px; outline: none; transition: 0.3s;
+            color: #fff; border-radius: 8px; font-size: 16px; outline: none;
         }
-        input:focus { border-color: #00a2ff; box-shadow: 0 0 10px rgba(0,162,255,0.2); }
 
-        /* --- TOOLBAR --- */
+        /* --- ZAAWANSOWANY TOOLBAR --- */
         .toolbar { 
             background: #162130; padding: 10px; border-radius: 8px 8px 0 0; 
-            display: flex; gap: 8px; border: 1px solid #1a2635; border-bottom: none; 
+            display: flex; flex-wrap: wrap; gap: 5px; border: 1px solid #1a2635; border-bottom: none; 
         }
+        
+        .toolbar-group { display: flex; gap: 5px; border-right: 1px solid #333; padding: 0 10px; margin-bottom: 5px; }
+        .toolbar-group:last-child { border-right: none; }
+
         .tool-btn { 
-            background: #0a1525; border: 1px solid #333; color: #fff; width: 35px; height: 35px; 
+            background: #0a1525; border: 1px solid #333; color: #fff; min-width: 35px; height: 35px; 
             display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; transition: 0.2s;
+            font-size: 14px; padding: 5px;
         }
         .tool-btn:hover { background: #00a2ff; border-color: #00a2ff; }
+        
+        select.tool-btn { padding: 0 5px; width: auto; font-size: 11px; }
+        input[type="color"] { padding: 0; width: 35px; height: 35px; border: none; cursor: pointer; }
 
-        /* --- EDYTOR WIZUALNY --- */
+        /* --- EDYTOR --- */
         .editor { 
-            min-height: 300px; background: #050b14; border: 1px solid #1a2635; padding: 20px; 
+            min-height: 400px; background: #050b14; border: 1px solid #1a2635; padding: 25px; 
             border-radius: 0 0 8px 8px; color: #fff; outline: none; font-size: 16px; line-height: 1.6;
+            overflow-y: auto;
         }
-        .editor:focus { border-color: #00a2ff; }
 
-        /* --- PRZYCISKI --- */
         .btn-row { display: flex; gap: 15px; margin-top: 30px; }
-        .btn-save { 
-            flex: 2; background: #00a2ff; color: #fff; border: none; padding: 18px; 
-            border-radius: 8px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s;
-        }
-        .btn-save:hover { background: #0082cc; transform: translateY(-3px); }
-        .btn-cancel { 
-            flex: 1; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 18px; border-radius: 8px; text-decoration: none; text-align: center; font-size: 14px; opacity: 0.6; transition: 0.3s;
-        }
-        .btn-cancel:hover { opacity: 1; background: rgba(255,255,255,0.05); }
-
+        .btn-save { flex: 2; background: #00a2ff; color: #fff; border: none; padding: 18px; border-radius: 8px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .btn-cancel { flex: 1; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 18px; border-radius: 8px; text-decoration: none; text-align: center; font-size: 14px; opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">
-            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img">
-        </a>
-        <span style="font-size: 10px; font-weight: 800; letter-spacing: 2px; opacity: 0.5;">ADMIN PANEL V1.0</span>
+        <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
+        <span style="font-size: 10px; font-weight: 800; opacity: 0.5;">DYNAMO PRO EDITOR</span>
     </nav>
 
     <div class="container">
         <div class="admin-card">
-            <h1>Dodaj nowy <span style="color:#00a2ff;">artykuł</span></h1>
+            <h1>Panel <span>Publikacji</span></h1>
             
             <div class="form-group">
-                <label>Tytuł publikacji</label>
-                <input type="text" id="postTitle" placeholder="Np. Dynamo Wrocław miażdży rywali w 4 lidze!">
+                <label>Tytuł artykułu</label>
+                <input type="text" id="postTitle" placeholder="Wpisz tytuł...">
             </div>
 
             <div class="form-group">
-                <label>Link do zdjęcia (URL)</label>
-                <input type="text" id="postImage" placeholder="Wklej link do zdjęcia (np. z Facebooka lub Unsplash)">
+                <label>Zdjęcie główne (URL)</label>
+                <input type="text" id="postImage" placeholder="Wklej link do zdjęcia...">
             </div>
 
             <div class="form-group">
-                <label>Treść artykułu</label>
+                <label>Treść i Formatowanie</label>
                 <div class="toolbar">
-                    <button class="tool-btn" title="Pogrubienie" onclick="format('bold')"><i class="fas fa-bold"></i></button>
-                    <button class="tool-btn" title="Kursywa" onclick="format('italic')"><i class="fas fa-italic"></i></button>
-                    <button class="tool-btn" title="Nagłówek" onclick="format('formatBlock', 'h3')"><i class="fas fa-heading"></i></button>
-                    <button class="tool-btn" title="Lista" onclick="format('insertUnorderedList')"><i class="fas fa-list"></i></button>
-                    <button class="tool-btn" title="Wyczyść" onclick="format('removeFormat')"><i class="fas fa-eraser"></i></button>
+                    <div class="toolbar-group">
+                        <button class="tool-btn" onclick="format('bold')" title="Pogrubienie"><i class="fas fa-bold"></i></button>
+                        <button class="tool-btn" onclick="format('italic')" title="Kursywa"><i class="fas fa-italic"></i></button>
+                        <button class="tool-btn" onclick="format('underline')" title="Podkreślenie"><i class="fas fa-underline"></i></button>
+                        <button class="tool-btn" onclick="format('strikeThrough')" title="Przekreślenie"><i class="fas fa-strikethrough"></i></button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <select class="tool-btn" onchange="format('formatBlock', this.value); this.selectedIndex=0;">
+                            <option value="" selected disabled>Styl</option>
+                            <option value="H1">Nagłówek 1</option>
+                            <option value="H2">Nagłówek 2</option>
+                            <option value="H3">Nagłówek 3</option>
+                            <option value="P">Akapit</option>
+                        </select>
+                        <select class="tool-btn" onchange="format('fontSize', this.value); this.selectedIndex=0;">
+                            <option value="" selected disabled>Rozmiar</option>
+                            <option value="1">Bardzo mały</option>
+                            <option value="3">Normalny</option>
+                            <option value="5">Duży</option>
+                            <option value="7">Bardzo duży</option>
+                        </select>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <input type="color" class="tool-btn" onchange="format('foreColor', this.value)" title="Kolor tekstu">
+                        <button class="tool-btn" onclick="format('hiliteColor', '#ffff00')" title="Zakreślacz"><i class="fas fa-highlighter"></i></button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="tool-btn" onclick="format('justifyLeft')"><i class="fas fa-align-left"></i></button>
+                        <button class="tool-btn" onclick="format('justifyCenter')"><i class="fas fa-align-center"></i></button>
+                        <button class="tool-btn" onclick="format('justifyRight')"><i class="fas fa-align-right"></i></button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="tool-btn" onclick="format('insertUnorderedList')"><i class="fas fa-list-ul"></i></button>
+                        <button class="tool-btn" onclick="format('insertOrderedList')"><i class="fas fa-list-ol"></i></button>
+                        <button class="tool-btn" onclick="addLink()"><i class="fas fa-link"></i></button>
+                        <button class="tool-btn" onclick="format('unlink')"><i class="fas fa-unlink"></i></button>
+                        <button class="tool-btn" onclick="format('removeFormat')" title="Wyczyść formatowanie"><i class="fas fa-eraser"></i></button>
+                    </div>
                 </div>
-                <div id="editor" class="editor" contenteditable="true" placeholder="Zacznij pisać tutaj..."></div>
+                <div id="editor" class="editor" contenteditable="true"></div>
             </div>
 
             <div class="btn-row">
                 <a href="aktualnosci.html" class="btn-cancel">Anuluj</a>
-                <button class="btn-save" onclick="savePost()">Opublikuj artykuł</button>
+                <button class="btn-save" onclick="savePost()">Opublikuj Artykuł</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Obsługa formatowania tekstu
         function format(cmd, val = null) {
             document.execCommand(cmd, false, val);
             document.getElementById('editor').focus();
         }
 
-        // Funkcja zapisu
+        function addLink() {
+            const url = prompt("Wpisz adres URL (np. https://google.com):");
+            if(url) format('createLink', url);
+        }
+
         function savePost() {
             const title = document.getElementById('postTitle').value;
             const image = document.getElementById('postImage').value;
             const content = document.getElementById('editor').innerHTML;
 
-            // Walidacja
-            if (!title || content === "" || content === "<br>") {
-                alert("Musisz podać przynajmniej tytuł i treść artykułu!");
+            if (!title || content.trim() === "") {
+                alert("Tytuł i treść nie mogą być puste!");
                 return;
             }
 
-            // Pobieranie obecnych postów
             const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-
-            // Tworzenie nowego obiektu posta
             const newPost = {
                 title: title,
-                image: image || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018', // Domyślne zdjęcie jeśli brak
+                image: image || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018',
                 content: content,
-                date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })
+                date: new Date().toLocaleDateString('pl-PL')
             };
 
-            // Dodawanie na początek listy
             posts.unshift(newPost);
-
-            // Zapis do pamięci przeglądarki
             localStorage.setItem('dynamo_posts', JSON.stringify(posts));
 
-            // Potwierdzenie i powrót
-            alert("Sukces! Artykuł został opublikowany.");
+            alert("Artykuł opublikowany!");
             window.location.href = "aktualnosci.html";
         }
     </script>
