@@ -21,7 +21,7 @@
         .nav-btn { color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 10px; transition: 0.3s; }
         .nav-btn:hover { color: #00a2ff; }
 
-        /* --- LANG MENU --- */
+        /* --- JĘZYKI --- */
         .lang-container { position: relative; }
         .lang-menu { 
             display: none; position: absolute; right: 0; top: 120%; 
@@ -29,7 +29,7 @@
             border-radius: 8px; min-width: 130px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         .lang-menu.active { display: block; }
-        .lang-option { padding: 12px 15px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .lang-option { padding: 12px 15px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 10px; }
         .lang-option:hover { background: #00a2ff; }
 
         /* --- HERO --- */
@@ -44,17 +44,19 @@
         .match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 25px; }
         .match-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 25px; }
         .match-card.next { border: 2px solid #00a2ff; background: #0a1525; }
+        
         .score-row { display: flex; justify-content: space-around; align-items: center; margin: 20px 0; }
-        .score-val { font-size: 32px; font-weight: 900; font-style: italic; }
+        .score-val { font-size: 24px; font-weight: 900; font-style: italic; }
         .mini-logo { height: 45px; width: auto; }
-        .dummy-logo { height: 45px; width: 45px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .dummy-logo { height: 45px; width: 45px; background: #1a2635; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; border: 1px solid rgba(255,255,255,0.2); }
 
-        /* --- NEWS CAROUSEL --- */
+        /* --- ARTYKUŁY --- */
         .carousel-container { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 10px 0; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
-        .news-card-mini { min-width: 300px; background: #0a1525; border-radius: 12px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; }
+        .news-card-mini { min-width: 300px; background: #0a1525; border-radius: 12px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; transition: 0.3s; }
+        .news-card-mini:hover { border-color: #00a2ff; transform: translateY(-5px); }
         .scroll-btn { background: #162130; border: 1px solid #333; color: #fff; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .scroll-btn:hover { background: #00a2ff; }
+        .scroll-btn:hover { background: #00a2ff; border-color: #00a2ff; }
     </style>
 </head>
 <body>
@@ -91,21 +93,40 @@
         <h1 style="font-size: 32px; text-transform: uppercase; font-style: italic;" data-key="schedule">Terminarz</h1>
 
         <div class="match-grid">
-            <div class="match-card">
-                <p style="font-size: 10px; opacity: 0.5;"><span data-key="finished">ZAKOŃCZONY</span> | 12.04.2026</p>
-                <div class="score-row">
-                    <div style="text-align:center;"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="mini-logo"><p style="font-size:10px; font-weight:900;">DYNAMO WROCŁAW</p></div>
-                    <div class="score-val">3 : 1</div>
-                    <div style="text-align:center;"><div class="dummy-logo" style="color:#00a2ff">TRH</div><p style="font-size:10px; font-weight:900;">THE RUNNERSHOOD</p></div>
-                </div>
-            </div>
             <div class="match-card next">
-                <p style="font-size: 10px; color: #00a2ff;"><span data-key="next_match">NASTĘPNY</span> | 19.04.2026 - 18:00</p>
+                <p style="font-size: 10px; font-weight: 800; color: #00a2ff;">
+                    <span data-key="next_match">NASTĘPNY</span> | 21.04.2026 - 21:00
+                </p>
                 <div class="score-row">
-                    <div style="text-align:center;"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="mini-logo"><p style="font-size:10px; font-weight:900;">DYNAMO WROCŁAW</p></div>
-                    <div class="score-val" style="opacity:0.2">VS</div>
-                    <div style="text-align:center;"><div class="dummy-logo">?</div><p style="font-size:10px; font-weight:900;" data-key="opponent">RYWAL B</p></div>
+                    <div style="text-align:center; flex: 1;">
+                        <div class="dummy-logo" style="color:#00a2ff; border-color:#00a2ff; margin: 0 auto;">RH</div>
+                        <p style="font-size:9px; font-weight:900; margin-top:5px;">RUNNERSHOOD</p>
+                    </div>
+                    <div class="score-val" style="opacity:0.3">VS</div>
+                    <div style="text-align:center; flex: 1;">
+                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="mini-logo" style="display:block; margin: 0 auto;">
+                        <p style="font-size:9px; font-weight:900; margin-top:5px;">FC DINAMO</p>
+                    </div>
                 </div>
+                <p style="text-align:center; font-size:9px; font-weight:700; opacity:0.6;">BOISKO NR 1 | CZWARTA LIGA</p>
+            </div>
+
+            <div class="match-card">
+                <p style="font-size: 10px; font-weight: 800; opacity: 0.5;">
+                    KOLEJKA 5 | 27.04.2026 - 20:00
+                </p>
+                <div class="score-row">
+                    <div style="text-align:center; flex: 1;">
+                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="mini-logo" style="display:block; margin: 0 auto;">
+                        <p style="font-size:9px; font-weight:900; margin-top:5px;">FC DINAMO</p>
+                    </div>
+                    <div class="score-val" style="opacity:0.3">VS</div>
+                    <div style="text-align:center; flex: 1;">
+                        <div class="dummy-logo" style="color:#ff4b2b; border-color:#ff4b2b; margin: 0 auto;">FCO</div>
+                        <p style="font-size:9px; font-weight:900; margin-top:5px;">FC OUTSIDERS</p>
+                    </div>
+                </div>
+                <p style="text-align:center; font-size:9px; font-weight:700; opacity:0.6;">BOISKO NR 1 | CZWARTA LIGA</p>
             </div>
         </div>
     </section>
@@ -123,9 +144,9 @@
 
     <script>
         const translations = {
-            'PL': { nav_news: 'Aktualności', nav_team: 'Zespół', hero_sub: 'Oficjalny serwis', match_center_title: 'Match Center', schedule: 'Terminarz', finished: 'ZAKOŃCZONY', next_match: 'NASTĘPNY', opponent: 'RYWAL B', latest_news: 'Najnowsze Artykuły' },
-            'EN': { nav_news: 'News', nav_team: 'Team', hero_sub: 'Official Service', match_center_title: 'Match Center', schedule: 'Schedule', finished: 'FINISHED', next_match: 'NEXT MATCH', opponent: 'OPPONENT B', latest_news: 'Latest News' },
-            'UA': { nav_news: 'Новини', nav_team: 'Команда', hero_sub: 'Офіційний сервіс', match_center_title: 'Матч-центр', schedule: 'Розклад', finished: 'ЗАВЕРШЕНО', next_match: 'НАСТУПНИЙ', opponent: 'СУПЕРНИК Б', latest_news: 'Останні новини' }
+            'PL': { nav_news: 'Aktualności', nav_team: 'Zespół', hero_sub: 'Oficjalny serwis', match_center_title: 'Match Center', schedule: 'Terminarz', next_match: 'NASTĘPNY', latest_news: 'Najnowsze Artykuły' },
+            'EN': { nav_news: 'News', nav_team: 'Team', hero_sub: 'Official Service', match_center_title: 'Match Center', schedule: 'Schedule', next_match: 'NEXT MATCH', latest_news: 'Latest News' },
+            'UA': { nav_news: 'Новини', nav_team: 'Команда', hero_sub: 'Офіційний сервіс', match_center_title: 'Матч-центр', schedule: 'Розклад', next_match: 'НАСТУПНИЙ', latest_news: 'Останні новини' }
         };
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
@@ -137,7 +158,6 @@
                 const key = el.getAttribute('data-key');
                 el.innerText = translations[lang][key];
             });
-            loadHomeNews(); // Przeładowuje newsy (jeśli mają tłumaczenia)
         }
 
         function scrollN(dir) { document.getElementById('news-carousel').scrollLeft += dir * 320; }
@@ -145,7 +165,7 @@
         function loadHomeNews() {
             const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
             const container = document.getElementById('news-carousel');
-            if(posts.length === 0) { container.innerHTML = "<p style='opacity:0.3'>Brak artykułów.</p>"; return; }
+            if(posts.length === 0) { container.innerHTML = "<p style='opacity:0.3; padding: 20px;'>Brak artykułów.</p>"; return; }
             container.innerHTML = posts.map(p => `
                 <div class="news-card-mini" onclick="location.href='aktualnosci.html'">
                     <div style="height:160px; background:url('${p.image}') center/cover"></div>
