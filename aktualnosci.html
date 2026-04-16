@@ -6,10 +6,9 @@
     <title>Aktualności | Dynamo Wrocław</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- STYLE BAZOWE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: radial-gradient(circle at top right, #003366, #050b14);
+            background: #050b14;
             color: #e0e0e0;
             font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
@@ -33,108 +32,89 @@
 
         .nav-right-container { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; min-width: 80px; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; min-width: 80px; z-index: 3000; }
         .lang-menu.active { display: block; }
         .lang-option { padding: 10px; cursor: pointer; font-size: 12px; }
         .lang-option:hover { color: #00a2ff; }
 
         /* --- UKŁAD TREŚCI --- */
         .main-content { margin-top: 85px; width: 100%; }
-
-        /* --- LISTA KART --- */
         .list-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+        /* --- ADMIN PANEL --- */
         .admin-controls { display: flex; justify-content: flex-end; margin-bottom: 20px; }
-        .btn-add-small { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase; backdrop-filter: blur(10px); }
-        
+        .btn-add-small { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase; }
         #admin-panel { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; display: none; backdrop-filter: blur(20px); }
-        .admin-input, .admin-textarea { width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-family: inherit; }
+        .admin-input { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-family: inherit; }
 
-        .news-card { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 30px 0; cursor: pointer; position: relative; transition: 0.3s; }
-        .news-card:hover { background: rgba(255,255,255,0.02); padding-left: 20px; }
-        .btn-delete { position: absolute; right: 0; top: 35px; color: #ff4444; opacity: 0.3; border: none; background: none; cursor: pointer; font-size: 18px; }
-        .btn-delete:hover { opacity: 1; }
-
-        /* --- WIDOK ARTYKUŁU (BEZ RAMEK, PEŁNA SZEROKOŚĆ) --- */
-        #article-view { display: none; width: 100%; animation: fadeIn 0.5s ease; }
+        /* --- WIDOK ARTYKUŁU (EPIC STYLE) --- */
+        #article-view { display: none; width: 100%; min-height: 100vh; background: #050b14; }
         
-        /* Sekcja Nagłówka */
-        .hero-section { 
-            width: 100%; 
-            padding: 100px 10% 60px 10%; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+        .hero-banner {
+            width: 100%;
+            height: 550px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
         }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.3) 100%);
+            z-index: 1;
+        }
+
+        .hero-content { position: relative; z-index: 2; width: 100%; max-width: 1200px; }
 
         .article-title { 
-            font-size: clamp(40px, 8vw, 90px); 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            line-height: 0.9; 
-            letter-spacing: -4px; 
-            margin-bottom: 30px;
-            color: #fff;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: clamp(40px, 6vw, 85px); font-weight: 900; text-transform: uppercase; line-height: 0.9; 
+            letter-spacing: -3px; margin-bottom: 20px; color: #fff; font-style: italic;
         }
 
-        .meta-glass-box {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .tag-accent { color: #00a2ff; margin-right: 5px; }
-
-        /* Sekcja Treści */
-        .content-section { 
-            width: 100%; 
-            padding: 60px 10%; 
-            display: flex; 
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .author-glass-row {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .author-logo { height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(0,162,255,0.3)); }
-        .author-name-big { font-size: 24px; font-weight: 800; color: #fff; }
-        .publish-date { font-size: 13px; opacity: 0.5; text-transform: uppercase; margin-top: 4px; }
-
-        .article-body-text {
-            font-size: 20px;
-            line-height: 1.8;
-            color: rgba(224, 224, 224, 0.85);
-            max-width: 900px; /* Dla lepszej czytelności tekstu */
-            white-space: pre-wrap;
-        }
-
-        .back-nav {
-            padding: 20px 10%;
-            cursor: pointer;
-            color: #00a2ff;
+        .meta-container { margin-top: 10px; }
+        
+        .meta-glass-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 13px;
-            transition: 0.3s;
+            color: #fff;
         }
-        .back-nav:hover { color: #fff; letter-spacing: 2px; }
+        .meta-glass-tag span { color: #00a2ff; margin-left: 5px; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Info o autorze pod tagiem (zgodnie ze screenem nr 2) */
+        .author-info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        .author-logo-small { 
+            height: 50px; width: 50px; 
+            border-radius: 50%; 
+            border: 2px solid #00a2ff; 
+            padding: 5px;
+            background: #000;
+        }
+        .author-text-data { display: flex; flex-direction: column; }
+        .author-name-main { font-size: 18px; font-weight: 800; color: #fff; }
+        .author-date-sub { font-size: 13px; opacity: 0.5; }
 
+        .content-body { padding: 60px 10%; font-size: 20px; line-height: 1.8; color: rgba(255,255,255,0.8); white-space: pre-wrap; max-width: 1000px; }
+        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; }
+
+        .news-card { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 25px 0; cursor: pointer; transition: 0.3s; }
+        .news-card:hover { padding-left: 10px; background: rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
@@ -144,20 +124,17 @@
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
             <div class="nav-links">
                 <div class="dropdown">
-                    <span class="nav-btn">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <span class="nav-btn" id="nav-club">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
                     <div class="dropdown-menu">
-                        <a href="zespol.html" class="nav-btn">I Zespół</a>
-                        <a href="historia.html" class="nav-btn">Historia</a>
+                        <a href="zespol.html" class="nav-btn" id="nav-team">I Zespół</a>
+                        <a href="historia.html" class="nav-btn" id="nav-history">Historia</a>
                     </div>
                 </div>
-                <a href="aktualnosci.html" class="nav-btn" style="color:#00a2ff; opacity:1;">Aktualności</a>
-                <a href="#" class="nav-btn">Kontakt</a>
+                <a href="aktualnosci.html" class="nav-btn" id="nav-news" style="color:#00a2ff; opacity:1;">Aktualności</a>
+                <a href="#" class="nav-btn" id="nav-contact">Kontakt</a>
             </div>
         </div>
         <div class="nav-right-container">
-            <div class="partner-section">
-                <img src="657223629_1253635633558394_588577037858878449_n-removebg-preview.png" style="height:35px;">
-            </div>
             <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="nav-btn"><i class="fab fa-instagram"></i></a>
             <div class="lang-dropdown">
                 <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span></div>
@@ -174,23 +151,22 @@
         
         <div id="list-view" class="list-container">
             <div class="admin-controls">
-                <button class="btn-add-small" onclick="checkPassAndToggle()">+ Dodaj wpis</button>
+                <button class="btn-add-small" onclick="checkPass()">+ Nowy Artykuł</button>
             </div>
 
             <div id="admin-panel">
-                <input type="text" id="post-title" class="admin-input" placeholder="Wielki Tytuł">
-                <textarea id="post-content" class="admin-textarea" rows="8" placeholder="Treść artykułu..."></textarea>
-                <button class="btn-add-small" style="background:#00a2ff; border:none" onclick="savePost()">Opublikuj teraz</button>
+                <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
+                <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia tła (URL)">
+                <textarea id="post-content" class="admin-input" rows="8" placeholder="Treść artykułu..."></textarea>
+                <button class="btn-add-small" style="background:#00a2ff; border:none" onclick="savePost()">Opublikuj</button>
             </div>
 
             <div id="news-list"></div>
         </div>
 
         <div id="article-view">
-            <div class="back-nav" onclick="showList()"><i class="fas fa-chevron-left"></i> Wróć do listy</div>
-            
-            <div id="dynamic-article-content">
-                </div>
+            <div class="back-nav" onclick="showList()"><i class="fas fa-chevron-left"></i> WRÓĆ DO LISTY</div>
+            <div id="dynamic-content"></div>
         </div>
 
     </div>
@@ -199,40 +175,49 @@
         const PASS = "admin123";
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
 
-        function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
-        function selectLang(l) { document.getElementById('current-lang').innerText = l; toggleLang(); }
+        // --- TŁUMACZENIE MENU ---
+        const translations = {
+            'PL': { club: 'Klub', team: 'I Zespół', history: 'Historia', news: 'Aktualności', contact: 'Kontakt' },
+            'UA': { club: 'Клуб', team: 'I Команда', history: 'Історія', news: 'Новини', contact: 'Контакт' },
+            'EN': { club: 'Club', team: 'First Team', history: 'History', news: 'News', contact: 'Contact' }
+        };
 
-        function checkPassAndToggle() {
-            if(prompt("Hasło admina:") === PASS) {
-                document.getElementById('admin-panel').style.display = 'block';
-            } else { alert("Błędne hasło!"); }
+        function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
+
+        function selectLang(l) { 
+            document.getElementById('current-lang').innerText = l;
+            document.getElementById('lang-menu').classList.remove('active');
+            
+            // Zmiana tekstów menu
+            const t = translations[l];
+            document.getElementById('nav-club').innerHTML = `${t.club} <i class="fas fa-chevron-down" style="font-size: 8px;"></i>`;
+            document.getElementById('nav-team').innerText = t.team;
+            document.getElementById('nav-history').innerText = t.history;
+            document.getElementById('nav-news').innerText = t.news;
+            document.getElementById('nav-contact').innerText = t.contact;
+        }
+
+        function checkPass() {
+            if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block';
         }
 
         function savePost() {
             const t = document.getElementById('post-title').value;
+            const img = document.getElementById('post-image').value || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2000';
             const c = document.getElementById('post-content').value;
             if(!t || !c) return;
-            posts.unshift({ id: Date.now(), title: t, content: c, date: new Date().toLocaleDateString('pl-PL') });
+
+            posts.unshift({ id: Date.now(), title: t, content: c, image: img, date: new Date().toLocaleDateString('pl-PL') });
             localStorage.setItem('dynamo_posts', JSON.stringify(posts));
             location.reload();
-        }
-
-        function deletePost(id, e) {
-            e.stopPropagation();
-            if(prompt("Podaj hasło do usunięcia:") === PASS) {
-                posts = posts.filter(p => p.id !== id);
-                localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-                renderList();
-            }
         }
 
         function renderList() {
             const list = document.getElementById('news-list');
             list.innerHTML = posts.map(p => `
                 <div class="news-card" onclick="openArticle(${p.id})">
-                    <div style="color:#00a2ff; font-size:12px; font-weight:bold;">${p.date}</div>
-                    <h2 style="font-size:32px; text-transform:uppercase; font-weight:900;">${p.title}</h2>
-                    <button class="btn-delete" onclick="deletePost(${p.id}, event)"><i class="fas fa-trash-alt"></i></button>
+                    <div style="font-size:11px; font-weight:bold; color:#00a2ff; margin-bottom:5px;">${p.date}</div>
+                    <h2 style="text-transform:uppercase; font-size:28px; font-weight:900;">${p.title}</h2>
                 </div>
             `).join('');
         }
@@ -242,24 +227,22 @@
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
             
-            document.getElementById('dynamic-article-content').innerHTML = `
-                <div class="hero-section">
-                    <h1 class="article-title">${p.title}</h1>
-                    <div class="meta-glass-box">
-                        Opublikowano w <span class="tag-accent"> Aktualności</span>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <div class="author-glass-row">
-                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo">
-                        <div>
-                            <div class="author-name-big">Dynamo Wrocław</div>
-                            <div class="publish-date">${p.date}</div>
+            document.getElementById('dynamic-content').innerHTML = `
+                <div class="hero-banner" style="background-image: url('${p.image}')">
+                    <div class="hero-content">
+                        <h1 class="article-title">${p.title}</h1>
+                        <div class="meta-glass-tag">OPUBLIKOWANO W <span>AKTUALNOŚCI</span></div>
+                        
+                        <div class="author-info-row">
+                            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-small">
+                            <div class="author-text-data">
+                                <div class="author-name-main">Dynamo Wrocław</div>
+                                <div class="author-date-sub">${p.date}</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="article-body-text">${p.content}</div>
                 </div>
+                <div class="content-body">${p.content}</div>
             `;
             window.scrollTo(0,0);
         }
