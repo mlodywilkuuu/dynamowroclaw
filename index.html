@@ -169,7 +169,8 @@
             
             const now = new Date();
 
-            // Filtracja: Pokaż tylko posty, których data już nadeszła
+            // 1. Filtrujemy tylko opublikowane (data <= teraz)
+            // 2. Sortujemy od najnowszych
             const publishedPosts = posts.filter(p => {
                 const postDate = new Date(p.date);
                 return postDate <= now;
@@ -180,18 +181,34 @@
                 return; 
             }
 
-            container.innerHTML = publishedPosts.slice(0, 6).map(p => `
-                <div class="news-card-mini" onclick="window.location.href='aktualnosci.html'">
-                    <div style="height:180px; background:url('${p.image}') center/cover; background-color: #1a2635;"></div>
-                    <div style="padding:20px;">
-                        <small style="color:#00a2ff; font-weight:800; font-size:10px;">${p.date.split('T')[0]}</small>
-                        <h3 style="font-size:16px; text-transform:uppercase; margin-top:8px; font-style:italic; line-height:1.2;">${p.title}</h3>
+            container.innerHTML = publishedPosts.slice(0, 6).map(p => {
+                // FORMATOWANIE DATY I GODZINY
+                const d = new Date(p.date);
+                const day = String(d.getDate()).padStart(2, '0');
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const year = d.getFullYear();
+                const hours = String(d.getHours()).padStart(2, '0');
+                const minutes = String(d.getMinutes()).padStart(2, '0');
+                
+                const formattedFullDate = `${day}.${month}.${year} | ${hours}:${minutes}`;
+
+                return `
+                    <div class="news-card-mini" onclick="window.location.href='aktualnosci.html'">
+                        <div style="height:180px; background:url('${p.image}') center/cover; background-color: #1a2635;"></div>
+                        <div style="padding:20px;">
+                            <small style="color:#00a2ff; font-weight:800; font-size:10px; letter-spacing:1px; text-transform:uppercase;">
+                                ${formattedFullDate}
+                            </small>
+                            <h3 style="font-size:16px; text-transform:uppercase; margin-top:8px; font-style:italic; line-height:1.2; letter-spacing:0.5px;">
+                                ${p.title}
+                            </h3>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // Sprawdzaj dostępność nowych postów co 30 sekund (bez przeładowania strony)
+        // Sprawdzaj dostępność zaplanowanych postów co 30 sekund
         setInterval(loadHomeNews, 30000);
 
         window.onload = loadHomeNews;
