@@ -2,11 +2,7 @@
 // 1. POŁĄCZENIE Z BAZĄ
 $db = new mysqli("localhost", "uzytkownik", "haslo", "nazwa_bazy");
 
-if ($db->connect_error) {
-    die("Błąd połączenia: " . $db->connect_error);
-}
-
-// 2. POBIERANIE - Sortowanie: najnowsze daty zawsze na samej górze
+// 2. SORTOWANIE (DESC sprawia, że najnowsze, np. 1 maja, są na górze)
 $query = "SELECT * FROM aktualnosci ORDER BY data_publikacji DESC";
 $result = $db->query($query);
 ?>
@@ -15,62 +11,43 @@ $result = $db->query($query);
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Aktualności - Dynamo Wrocław</title>
+    <title>Aktualności</title>
     <style>
-        /* Twoja pierwotna stylistyka strony aktualności */
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fff; }
-        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        /* PRZYCISK DO PANELU EDYCJI (widoczny tylko dla Ciebie) */
-        .admin-link { 
-            display: inline-block; 
-            margin-bottom: 20px; 
-            padding: 10px 15px; 
-            background: #0047ab; 
-            color: #fff; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-weight: bold;
+        /* Styl przycisku, który przenosi do panelu edycji */
+        .btn-zarzadzaj {
+            display: inline-block;
+            background: #0047ab;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px;
+            font-family: Arial, sans-serif;
         }
-
-        .news-entry { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .news-entry h2 { color: #0047ab; margin-bottom: 5px; }
-        .news-entry .date { color: #888; font-size: 0.9em; margin-bottom: 15px; }
-        .news-text { line-height: 1.6; color: #333; }
-        
-        .edit-direct { font-size: 12px; color: #0047ab; text-decoration: underline; margin-left: 10px; }
+        /* Tutaj możesz wkleić swoje stare style CSS, aby strona wyglądała identycznie */
     </style>
 </head>
 <body>
 
-<div class="content-wrapper">
+    <a href="zarzadzanie_lista.php" class="btn-zarzadzaj">DODAJ ARTYKUŁ / EDYTUJ</a>
 
-    <a href="zarzadzanie_lista.php" class="admin-link">⚙️ DODAJ / EDYTUJ ARTYKUŁY</a>
-
-    <h1>Aktualności</h1>
-
-    <?php if ($result && $result->num_rows > 0): ?>
-        <?php while($row = $result->fetch_assoc()): ?>
-            <div class="news-entry">
-                <h2>
-                    <?php echo htmlspecialchars($row['tytul']); ?>
-                    <a href="edytuj_artykul.php?id=<?php echo $row['id']; ?>" class="edit-direct">edytuj</a>
-                </h2>
+    <div id="aktualnosci-kontener">
+        <?php if ($result && $result->num_rows > 0): ?>
+            <?php while($row = $result->fetch_assoc()): ?>
                 
-                <div class="date">
-                    Dodano: <?php echo date("d.m.Y", strtotime($row['data_publikacji'])); ?>
-                </div>
+                <div class="news-entry">
+                    <h2 class="news-title"><?php echo $row['tytul']; ?></h2>
+                    <span class="news-date"><?php echo $row['data_publikacji']; ?></span>
+                    <div class="news-content">
+                        <?php echo nl2br($row['tresc']); ?>
+                    </div>
+                    <hr> </div>
 
-                <div class="news-text">
-                    <?php echo nl2br(htmlspecialchars($row['tresc'])); ?>
-                </div>
-            </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>Brak aktualności.</p>
-    <?php endif; ?>
-
-</div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p>Brak aktualności.</p>
+        <?php endif; ?>
+    </div>
 
 </body>
 </html>
