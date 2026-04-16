@@ -30,7 +30,6 @@
         .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; }
         .dropdown:hover .dropdown-menu { display: block; }
 
-        .nav-right-container { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; }
         .lang-menu { 
             display: none; position: absolute; right: 0; top: 100%; 
@@ -41,7 +40,7 @@
         .lang-option { padding: 10px 15px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
         .lang-option:hover { background: rgba(0, 162, 255, 0.1); color: #00a2ff; }
 
-        /* --- UKŁAD KAFELKÓW --- */
+        /* --- SIATKA --- */
         .main-content { margin-top: 100px; width: 100%; }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
 
@@ -60,7 +59,7 @@
         .card-date { font-size: 11px; font-weight: 800; color: #00a2ff; margin-bottom: 10px; }
         .card-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #fff; }
 
-        /* --- WIDOK ARTYKUŁU --- */
+        /* --- ARTYKUŁ --- */
         #article-view { display: none; width: 100%; min-height: 100vh; background: #050b14; }
         .hero-banner { width: 100%; height: 550px; background-size: cover; background-position: center; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
         .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.2) 100%); z-index: 1; }
@@ -68,15 +67,14 @@
         .article-title-main { font-size: clamp(35px, 5vw, 75px); font-weight: 900; text-transform: uppercase; line-height: 0.9; color: #fff; margin-bottom: 20px; }
 
         .meta-glass-tag { display: inline-block; padding: 5px 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #fff; }
-        .meta-glass-tag span { color: #00a2ff; margin-left: 5px; }
-
+        
         .author-info-row { display: flex; align-items: center; gap: 12px; margin-top: 25px; }
         .author-logo-small { height: 50px; width: 50px; border-radius: 50%; border: 2px solid #00a2ff; padding: 5px; background: #000; }
         .author-name-main { font-size: 18px; font-weight: 800; color: #fff; }
         .author-date-sub { font-size: 13px; opacity: 0.5; }
 
         .content-body { padding: 60px 10%; font-size: 20px; line-height: 1.8; color: rgba(255,255,255,0.8); white-space: pre-wrap; max-width: 1000px; }
-        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; }
+        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
@@ -156,22 +154,23 @@
 
         function updateUI() {
             const t = translations[currentLang];
-            // Menu stałe
+            
+            // 1. Menu stałe (zawsze w DOM)
             document.getElementById('nav-club').innerHTML = `${t.club} <i class="fas fa-chevron-down" style="font-size: 8px;"></i>`;
             document.getElementById('nav-team').innerText = t.team;
             document.getElementById('nav-history').innerText = t.history;
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-contact').innerText = t.contact;
 
-            // Elementy artykułu (jeśli otwarty)
+            // 2. Elementy artykułu (szukamy ich za każdym razem w DOM)
             const backBtn = document.getElementById('back-txt');
             if(backBtn) backBtn.innerHTML = `<i class="fas fa-chevron-left"></i> ${t.back}`;
             
-            const pubTag = document.getElementById('pub-tag-text');
-            if(pubTag) pubTag.innerText = t.pub;
+            const pubText = document.getElementById('pub-label');
+            if(pubText) pubText.innerText = t.pub;
             
-            const catTag = document.getElementById('cat-tag-text');
-            if(catTag) catTag.innerText = t.cat;
+            const catText = document.getElementById('cat-label');
+            if(catText) catText.innerText = t.cat;
         }
 
         function checkPass() { if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block'; }
@@ -204,13 +203,14 @@
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
             
+            // Generujemy HTML z unikalnymi ID dla tłumaczeń
             document.getElementById('dynamic-content').innerHTML = `
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
                         <h1 class="article-title-main">${p.title}</h1>
                         <div class="meta-glass-tag">
-                            <span id="pub-tag-text"></span> 
-                            <span id="cat-tag-text" style="color:#00a2ff; margin-left:5px;"></span>
+                            <span id="pub-label"></span> 
+                            <span id="cat-label" style="color:#00a2ff; margin-left:5px;"></span>
                         </div>
                         <div class="author-info-row">
                             <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-small">
@@ -223,7 +223,7 @@
                 </div>
                 <div class="content-body">${p.content}</div>
             `;
-            updateUI(); // Odśwież tłumaczenia natychmiast po wygenerowaniu HTML
+            updateUI(); // Wołamy updateUI po wrzuceniu HTML do DOM
             window.scrollTo(0,0);
         }
 
@@ -232,9 +232,8 @@
             document.getElementById('article-view').style.display = 'none';
         }
 
-        // Inicjalizacja
         renderList();
-        updateUI();
+        updateUI(); // Inicjalne tłumaczenie menu
     </script>
 </body>
 </html>
