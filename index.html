@@ -3,105 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamo Wrocław | Official Panel</title>
-    
-    <link rel="icon" type="image/png" href="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
+    <title>Dynamo Wrocław | Strona Główna</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
+        /* --- STYLE BAZOWE (Zgodne z aktualnościami) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            background: radial-gradient(circle at top right, #003366, #050b14);
+            background: #050b14;
             color: #e0e0e0;
             font-family: 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* --- NAVBAR --- */
         nav {
-            width: 100%;
-            padding: 10px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: fixed; top: 0; z-index: 2000;
+            width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 2000;
         }
-
         .nav-content-left { display: flex; align-items: center; gap: 40px; }
         .logo-img { height: 65px; width: auto; }
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        
-        .nav-btn { 
-            color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; 
-            cursor: pointer; padding: 10px; 
-        }
+        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; cursor: pointer; padding: 10px; }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
 
-        /* DROPDOWNS */
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-menu {
-            display: none; position: absolute; top: 100%; left: 0;
-            background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; 
-            transition: 0.3s;
+        /* --- MATCHCENTER --- */
+        .matchcenter-section {
+            margin-top: 100px;
+            padding: 40px 10%;
+            text-align: center;
         }
-        .dropdown:hover .dropdown-menu { display: block; }
+        .match-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 50px;
+            backdrop-filter: blur(10px);
+        }
+        .team-info img { height: 80px; filter: drop-shadow(0 0 10px rgba(0,162,255,0.2)); }
+        .score { font-size: 48px; font-weight: 900; letter-spacing: 5px; color: #00a2ff; }
 
-        /* JĘZYKI */
+        /* --- SLIDER ARTYKUŁÓW --- */
+        .news-slider-container {
+            padding: 60px 0;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10%;
+            margin-bottom: 30px;
+        }
+        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .slider-controls { display: flex; gap: 10px; }
+        .control-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .control-btn:hover { background: #00a2ff; border-color: #00a2ff; }
+
+        .news-wrapper {
+            display: flex;
+            gap: 25px;
+            padding: 10px 10%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .news-item {
+            min-width: 350px;
+            max-width: 350px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            transition: 0.4s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .news-item:hover { transform: translateY(-10px); border-color: #00a2ff; }
+        
+        .news-item-img {
+            width: 100%; height: 200px;
+            background-size: cover; background-position: center;
+        }
+        .news-item-content { padding: 20px; }
+        .news-item-date { font-size: 10px; color: #00a2ff; font-weight: 800; margin-bottom: 8px; }
+        .news-item-title { font-size: 18px; font-weight: 900; text-transform: uppercase; line-height: 1.2; }
+
+        /* --- LANG DROPDOWN --- */
         .lang-dropdown { position: relative; }
-        .lang-menu {
-            display: none; position: absolute; right: 0; top: 100%;
-            background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px; overflow: hidden; min-width: 80px;
+        .lang-menu { 
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 8px; min-width: 100px; 
         }
         .lang-menu.active { display: block; }
-        .lang-option { padding: 10px; cursor: pointer; font-size: 12px; transition: 0.3s; }
-        .lang-option:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
+        .lang-option { padding: 10px; cursor: pointer; font-size: 12px; }
 
-        /* NAV RIGHT */
-        .nav-right-container { display: flex; align-items: center; gap: 25px; }
-        .partner-section { display: flex; align-items: center; gap: 12px; padding-right: 20px; border-right: 1px solid rgba(255, 255, 255, 0.1); }
-        .partner-logo { height: 35px; width: auto; }
-        .insta-link { color: #fff; font-size: 18px; transition: 0.3s; opacity: 0.8; }
-        .insta-link:hover { color: #00a2ff; opacity: 1; }
-
-        /* --- CONTENT --- */
-        .main-content { margin-top: 85px; display: flex; flex-direction: column; align-items: center; }
-
-        .match-centre-container {
-            width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px);
-            padding: 30px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex; justify-content: center;
-        }
-
-        .match-wrapper { 
-            width: 95%; max-width: 1100px; display: flex; 
-            justify-content: space-between; align-items: center; gap: 20px;
-        }
-
-        .match-info-box { border-left: 2px solid #00a2ff; padding-left: 15px; }
-        .league-name { font-size: 10px; font-weight: 900; color:#00a2ff; letter-spacing: 2px; text-transform: uppercase; }
-        .match-round { font-size: 16px; font-weight: 700; }
-        .match-date { font-size: 11px; color:#8899a6; margin-top: 3px; }
-
-        .match-teams-display { display: flex; align-items: center; gap: 30px; flex-grow: 1; justify-content: center; }
-        .team-name { font-size: 22px; font-weight: 900; width: 250px; text-transform: uppercase; }
-        .score-vs { 
-            background: rgba(0, 162, 255, 0.15); border: 1px solid rgba(0, 162, 255, 0.4); 
-            padding: 12px 28px; border-radius: 12px; font-size: 26px; font-weight: 900; color: #00a2ff;
-        }
-
-        @media (max-width: 768px) {
-            .match-wrapper { flex-direction: column; text-align: center; }
-            .match-info-box { border-left: none; border-bottom: 2px solid #00a2ff; padding: 0 0 10px 0; }
-            .match-teams-display { flex-direction: column; gap: 15px; }
-            .team-name { width: auto; font-size: 18px; }
-        }
     </style>
 </head>
 <body>
@@ -110,30 +122,14 @@
         <div class="nav-content-left">
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
             <div class="nav-links">
-                <div class="dropdown">
-                    <span class="nav-btn">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
-                    <div class="dropdown-menu">
-                        <a href="zespol.html" class="nav-btn">I Zespół</a>
-                        <a href="historia.html" class="nav-btn">Historia</a>
-                    </div>
-                </div>
+                <a href="index.html" class="nav-btn" style="color:#00a2ff;">Start</a>
                 <a href="aktualnosci.html" class="nav-btn">Aktualności</a>
-                <a href="#" class="nav-btn">Kontakt</a>
+                <a href="zespol.html" class="nav-btn">Zespół</a>
             </div>
         </div>
-        
         <div class="nav-right-container">
-            <div class="partner-section">
-                <img src="657223629_1253635633558394_588577037858878449_n-removebg-preview.png" class="partner-logo">
-            </div>
-            <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="insta-link">
-                <i class="fab fa-instagram"></i>
-            </a>
-            
             <div class="lang-dropdown">
-                <div class="nav-btn" onclick="toggleLang()" style="opacity: 1;">
-                    <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span>
-                </div>
+                <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="current-lang">PL</span></div>
                 <div id="lang-menu" class="lang-menu">
                     <div class="lang-option" onclick="selectLang('PL')">PL</div>
                     <div class="lang-option" onclick="selectLang('UA')">UA</div>
@@ -144,46 +140,69 @@
     </nav>
 
     <div class="main-content">
-        <div class="match-centre-container">
-            <div class="match-wrapper">
-                <div class="match-info-box">
-                    <div class="league-name">Czwarta Liga - Wiosna 2026</div>
-                    <div class="match-round">Kolejka 4</div>
-                    <div class="match-date">21/04/2026 | 21:00</div>
+        <section class="matchcenter-section">
+            <div class="match-card">
+                <div class="team-info">
+                    <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
+                    <p style="margin-top:10px; font-weight:800;">DYNAMO WROCŁAW</p>
                 </div>
-
-                <div class="match-teams-display">
-                    <span class="team-name" style="text-align: right;">RunnersHood</span>
-                    <div class="score-vs">VS</div>
-                    <span class="team-name" style="text-align: left;">FC Dinamo Wrocław</span>
-                </div>
-                
-                <div style="min-width: 150px; text-align: right;">
-                    <div style="font-size: 10px; color:#00a2ff; font-weight: 700;">LOKALIZACJA</div>
-                    <div style="font-size: 12px;">Lotnicza 72 | Boisko nr 1</div>
+                <div class="score">3 : 1</div>
+                <div class="team-info">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Soccer_ball.svg/1200px-Soccer_ball.svg.png" style="opacity: 0.5;">
+                    <p style="margin-top:10px; font-weight:800;">PRZECIWNIK</p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="news-slider-container">
+            <div class="section-header">
+                <h2 class="section-title" id="txt-latest">Najnowsze Wiadomości</h2>
+                <div class="slider-controls">
+                    <button class="control-btn" onclick="scrollSlider(-380)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="control-btn" onclick="scrollSlider(380)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="news-wrapper" id="home-news-wrapper">
+                </div>
+        </section>
     </div>
 
     <script>
-        function toggleLang() {
-            document.getElementById('lang-menu').classList.toggle('active');
-        }
+        // Pobieranie artykułów z localStorage (tych samych co w aktualnosci.html)
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
 
-        function selectLang(lang) {
-            document.getElementById('current-lang').innerText = lang;
-            document.getElementById('lang-menu').classList.remove('active');
-            // Tutaj można dodać logikę zmiany języka strony
-        }
-
-        // Zamknij menu jeśli klikniesz poza nie
-        window.onclick = function(event) {
-            if (!event.target.closest('.lang-dropdown')) {
-                document.getElementById('lang-menu').classList.remove('active');
+        function renderHomeNews() {
+            const wrapper = document.getElementById('home-news-wrapper');
+            if(posts.length === 0) {
+                wrapper.innerHTML = "<p style='opacity:0.5'>Brak nowych wiadomości.</p>";
+                return;
             }
-        }
-    </script>
 
+            wrapper.innerHTML = posts.map(p => `
+                <a href="aktualnosci.html" class="news-item">
+                    <div class="news-item-img" style="background-image: url('${p.image}')"></div>
+                    <div class="news-item-content">
+                        <div class="news-item-date">${p.date}</div>
+                        <div class="news-item-title">${p.title}</div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function scrollSlider(val) {
+            document.getElementById('home-news-wrapper').scrollBy({ left: val, behavior: 'smooth' });
+        }
+
+        function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
+        function selectLang(l) { 
+            document.getElementById('current-lang').innerText = l;
+            document.getElementById('lang-menu').classList.remove('active');
+            // Tutaj można dodać logikę tłumaczenia dla strony głównej
+        }
+
+        // Inicjalizacja
+        renderHomeNews();
+    </script>
 </body>
 </html>
