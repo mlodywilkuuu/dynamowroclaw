@@ -9,130 +9,139 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; }
 
-        /* --- NAVBAR --- */
+        /* --- NAPRAWIONY NAVBAR --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(10, 21, 37, 0.95); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 9999;
+            background: #0a1525; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            position: fixed; top: 0; left: 0; z-index: 99999;
         }
-        .logo-img { height: 60px; }
-        .nav-btn { color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 10px; transition: 0.3s; }
-        .nav-btn:hover { color: #00a2ff; }
+        .nav-left { display: flex; align-items: center; gap: 25px; }
+        .logo-img { height: 60px; width: auto; }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-link { color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        .nav-link:hover { color: #00a2ff; }
+        .admin-btn { color: #00a2ff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #00a2ff; padding: 8px 15px; border-radius: 4px; transition: 0.3s; }
+        .admin-btn:hover { background: #00a2ff; color: #fff; }
 
-        /* --- HEADER --- */
-        .header-section { padding: 150px 10% 40px; background: linear-gradient(to bottom, #0a1525, #050b14); }
-        .admin-trigger { background: #00a2ff; color: #fff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: 800; font-size: 11px; display: inline-block; margin-top: 20px; transition: 0.3s; }
-        .admin-trigger:hover { background: #0082cc; transform: translateY(-2px); }
+        /* --- NAGŁÓWEK --- */
+        .header-section { padding: 150px 10% 50px; background: linear-gradient(to bottom, #0a1525, #050b14); }
+        .header-section h1 { font-size: 42px; text-transform: uppercase; font-style: italic; font-weight: 900; }
+        .header-section span { color: #00a2ff; }
 
-        /* --- GRID --- */
-        .container { padding: 40px 10%; min-height: 60vh; }
+        /* --- GRID ARTYKUŁÓW --- */
+        .container { padding: 40px 10%; min-height: 70vh; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
         
-        .card { background: #0a1525; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-5px); border-color: #00a2ff; }
-        .card-img { width: 100%; height: 220px; background-size: cover; background-position: center; background-color: #111; }
-        .card-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-date { color: #00a2ff; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
-        .card-title { font-size: 22px; margin-bottom: 15px; font-style: italic; text-transform: uppercase; font-weight: 900; line-height: 1.2; }
-        .card-text { opacity: 0.6; font-size: 14px; line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .article-card { background: #0a1525; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; display: flex; flex-direction: column; }
+        .article-card:hover { transform: translateY(-5px); border-color: #00a2ff; }
         
-        .read-btn { background: none; border: none; color: #fff; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: auto; }
-        .read-btn:hover { color: #00a2ff; }
+        .article-img { width: 100%; height: 220px; background-size: cover; background-position: center; background-color: #1a2635; }
+        .article-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .article-date { color: #00a2ff; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
+        .article-title { font-size: 22px; margin-bottom: 15px; font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 1.2; }
+        .article-excerpt { font-size: 14px; opacity: 0.6; line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* --- MODAL --- */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(5,11,20,0.98); z-index: 10000; overflow-y: auto; padding: 60px 20px; }
-        .modal-content { max-width: 850px; margin: 0 auto; line-height: 1.8; }
-        .close-btn { position: fixed; top: 20px; right: 30px; font-size: 40px; cursor: pointer; color: #00a2ff; }
+        .btn-more { background: none; border: none; color: #fff; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: auto; }
+        .btn-more:hover { color: #00a2ff; }
 
-        footer { padding: 60px 10%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.4; font-size: 12px; }
+        /* --- MODAL (Pełna treść) --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,11,20,0.98); z-index: 100000; overflow-y: auto; padding: 80px 20px; }
+        .modal-content { max-width: 800px; margin: 0 auto; line-height: 1.8; }
+        .modal-close { position: fixed; top: 25px; right: 35px; font-size: 40px; color: #00a2ff; cursor: pointer; z-index: 100001; }
+        
+        footer { padding: 60px 10%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.3; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<nav>
-    <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
-    <div class="nav-links">
-        <a href="index.html" class="nav-btn">Strona Główna</a>
-        <a href="zespol.html" class="nav-btn">Zespół</a>
-    </div>
-</nav>
-
-<div class="header-section">
-    <p style="color:#00a2ff; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 12px;">Centrum informacji</p>
-    <h1 style="font-size: 45px; font-style: italic; font-weight: 900; text-transform: uppercase;">Aktualności</h1>
-    <a href="admin-panel.html" class="admin-trigger"><i class="fas fa-plus-circle"></i> DODAJ NOWY ARTYKUŁ</a>
-</div>
-
-<div class="container">
-    <div id="news-list" class="news-grid">
+    <nav>
+        <div class="nav-left">
+            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Główna</a>
+                <a href="zespol.html" class="nav-link">Zespół</a>
+            </div>
         </div>
-</div>
+        <div>
+            <a href="admin-panel.html" class="admin-btn"><i class="fas fa-plus"></i> Nowy Post</a>
+        </div>
+    </nav>
 
-<div id="modal" class="modal">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <div id="modal-body" class="modal-content"></div>
-</div>
+    <div class="header-section">
+        <p style="color:#00a2ff; font-weight:800; text-transform:uppercase; letter-spacing:2px; font-size:12px; margin-bottom:10px;">FC Dynamo Wrocław</p>
+        <h1>Aktualności <span>Klubowe</span></h1>
+    </div>
 
-<footer>
-    &copy; 2026 FC Dynamo Wrocław.
-</footer>
+    <div class="container">
+        <div id="news-grid" class="news-grid">
+            </div>
+    </div>
 
-<script>
-    function renderNews() {
-        const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        const container = document.getElementById('news-list');
-        
-        if (posts.length === 0) {
-            container.innerHTML = '<p style="opacity:0.3; grid-column: 1/-1; text-align:center;">Brak wpisów w bazie.</p>';
-            return;
-        }
+    <div id="articleModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div id="modalBody" class="modal-content"></div>
+    </div>
 
-        container.innerHTML = posts.map((p, i) => `
-            <div class="card">
-                <div class="card-img" style="background-image: url('${p.image}')"></div>
-                <div class="card-body">
-                    <p class="card-date"><i class="far fa-calendar-alt"></i> ${p.date}</p>
-                    <h2 class="card-title">${p.title}</h2>
-                    <div class="card-text">${p.content}</div>
-                    <div style="display:flex; justify-content: space-between; align-items:center;">
-                        <button class="read-btn" onclick="openPost(${i})">CZYTAJ WIĘCEJ <i class="fas fa-chevron-right"></i></button>
-                        <button onclick="deletePost(${i})" style="color:red; background:none; border:none; cursor:pointer; font-size:12px; opacity:0.3;"><i class="fas fa-trash"></i></button>
+    <footer>&copy; 2026 FC Dynamo Wrocław.</footer>
+
+    <script>
+        function loadArticles() {
+            const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+            const grid = document.getElementById('news-grid');
+
+            if (posts.length === 0) {
+                grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; opacity:0.3; padding:50px;">Brak artykułów do wyświetlenia.</p>';
+                return;
+            }
+
+            grid.innerHTML = posts.map((post, index) => `
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('${post.image}')"></div>
+                    <div class="article-body">
+                        <span class="article-date">${post.date}</span>
+                        <h2 class="article-title">${post.title}</h2>
+                        <div class="article-excerpt">${post.content}</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto;">
+                            <button class="btn-more" onclick="openModal(${index})">Czytaj więcej <i class="fas fa-arrow-right"></i></button>
+                            <button onclick="deletePost(${index})" style="background:none; border:none; color:red; opacity:0.3; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
-    }
-
-    function openPost(i) {
-        const posts = JSON.parse(localStorage.getItem('dynamo_posts'));
-        const p = posts[i];
-        const modal = document.getElementById('modal');
-        document.getElementById('modal-body').innerHTML = `
-            <img src="${p.image}" style="width:100%; border-radius:15px; margin-bottom:40px; height: 400px; object-fit: cover;">
-            <p style="color:#00a2ff; font-weight:800; text-transform:uppercase;">${p.date}</p>
-            <h1 style="font-size:40px; margin: 10px 0 30px; font-style:italic; text-transform:uppercase;">${p.title}</h1>
-            <div style="font-size:18px; color: rgba(255,255,255,0.8); line-height:1.8;">${p.content}</div>
-        `;
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-
-    function deletePost(i) {
-        if(confirm("Czy na pewno chcesz usunąć ten artykuł?")) {
-            let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
-            posts.splice(i, 1);
-            localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-            renderNews();
+            `).join('');
         }
-    }
 
-    window.onload = renderNews;
-    window.onclick = (e) => { if(e.target == document.getElementById('modal')) closeModal(); }
-</script>
+        function openModal(index) {
+            const posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+            const post = posts[index];
+            const body = document.getElementById('modalBody');
+            
+            body.innerHTML = `
+                <img src="${post.image}" style="width:100%; border-radius:15px; margin-bottom:30px; max-height:450px; object-fit:cover;">
+                <p style="color:#00a2ff; font-weight:800; text-transform:uppercase; margin-bottom:10px;">${post.date}</p>
+                <h1 style="font-size:36px; text-transform:uppercase; font-style:italic; margin-bottom:25px;">${post.title}</h1>
+                <div style="font-size:18px; color:rgba(255,255,255,0.8);">${post.content}</div>
+            `;
+            
+            document.getElementById('articleModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('articleModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function deletePost(index) {
+            if(confirm("Czy na pewno usunąć ten artykuł?")) {
+                let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+                posts.splice(index, 1);
+                localStorage.setItem('dynamo_posts', JSON.stringify(posts));
+                loadArticles();
+            }
+        }
+
+        window.onload = loadArticles;
+        window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+    </script>
 </body>
 </html>
