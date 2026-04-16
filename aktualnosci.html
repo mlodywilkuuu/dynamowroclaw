@@ -41,77 +41,32 @@
         .main-content { margin-top: 85px; width: 100%; }
         .list-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
 
-        /* --- ADMIN PANEL --- */
-        .admin-controls { display: flex; justify-content: flex-end; margin-bottom: 20px; }
-        .btn-add-small { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        /* --- ADMIN PANEL (PRZYCISK EMOJI) --- */
+        .admin-controls { display: flex; justify-content: flex-end; margin-top: 20px; margin-bottom: 20px; }
+        .btn-add-emoji { font-size: 24px; cursor: pointer; background: none; border: none; opacity: 0.5; transition: 0.3s; }
+        .btn-add-emoji:hover { opacity: 1; transform: scale(1.2); }
+
         #admin-panel { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; display: none; backdrop-filter: blur(20px); }
         .admin-input { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-family: inherit; }
 
-        /* --- WIDOK ARTYKUŁU (EPIC STYLE) --- */
+        /* --- WIDOK ARTYKUŁU --- */
         #article-view { display: none; width: 100%; min-height: 100vh; background: #050b14; }
-        
-        .hero-banner {
-            width: 100%;
-            height: 550px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 10%;
-        }
+        .hero-banner { width: 100%; height: 550px; background-size: cover; background-position: center; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
+        .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.3) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; width: 100%; }
+        .article-title { font-size: clamp(40px, 6vw, 85px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -3px; margin-bottom: 20px; color: #fff; font-style: italic; }
 
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.3) 100%);
-            z-index: 1;
-        }
-
-        .hero-content { position: relative; z-index: 2; width: 100%; max-width: 1200px; }
-
-        .article-title { 
-            font-size: clamp(40px, 6vw, 85px); font-weight: 900; text-transform: uppercase; line-height: 0.9; 
-            letter-spacing: -3px; margin-bottom: 20px; color: #fff; font-style: italic;
-        }
-
-        .meta-container { margin-top: 10px; }
-        
-        .meta-glass-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #fff;
-        }
+        .meta-glass-tag { display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #fff; }
         .meta-glass-tag span { color: #00a2ff; margin-left: 5px; }
 
-        /* Info o autorze pod tagiem (zgodnie ze screenem nr 2) */
-        .author-info-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 25px;
-        }
-        .author-logo-small { 
-            height: 50px; width: 50px; 
-            border-radius: 50%; 
-            border: 2px solid #00a2ff; 
-            padding: 5px;
-            background: #000;
-        }
-        .author-text-data { display: flex; flex-direction: column; }
+        .author-info-row { display: flex; align-items: center; gap: 12px; margin-top: 25px; }
+        .author-logo-small { height: 50px; width: 50px; border-radius: 50%; border: 2px solid #00a2ff; padding: 5px; background: #000; }
         .author-name-main { font-size: 18px; font-weight: 800; color: #fff; }
         .author-date-sub { font-size: 13px; opacity: 0.5; }
 
         .content-body { padding: 60px 10%; font-size: 20px; line-height: 1.8; color: rgba(255,255,255,0.8); white-space: pre-wrap; max-width: 1000px; }
-        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; }
+        .back-nav { padding: 20px 10%; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 12px; transition: 0.3s; }
+        .back-nav:hover { color: #fff; }
 
         .news-card { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 25px 0; cursor: pointer; transition: 0.3s; }
         .news-card:hover { padding-left: 10px; background: rgba(255,255,255,0.05); }
@@ -127,7 +82,7 @@
                     <span class="nav-btn" id="nav-club">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
                     <div class="dropdown-menu">
                         <a href="zespol.html" class="nav-btn" id="nav-team">I Zespół</a>
-                        <a href="historia.html" class="nav-btn" id="nav-history">Historia</a>
+                        <a href="history.html" class="nav-btn" id="nav-history">Historia</a>
                     </div>
                 </div>
                 <a href="aktualnosci.html" class="nav-btn" id="nav-news" style="color:#00a2ff; opacity:1;">Aktualności</a>
@@ -151,21 +106,21 @@
         
         <div id="list-view" class="list-container">
             <div class="admin-controls">
-                <button class="btn-add-small" onclick="checkPass()">+ Nowy Artykuł</button>
+                <button class="btn-add-emoji" onclick="checkPass()">➕</button>
             </div>
 
             <div id="admin-panel">
                 <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
                 <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia tła (URL)">
                 <textarea id="post-content" class="admin-input" rows="8" placeholder="Treść artykułu..."></textarea>
-                <button class="btn-add-small" style="background:#00a2ff; border:none" onclick="savePost()">Opublikuj</button>
+                <button class="nav-btn" style="background:#00a2ff; border:none; border-radius: 6px;" onclick="savePost()">Opublikuj</button>
             </div>
 
             <div id="news-list"></div>
         </div>
 
         <div id="article-view">
-            <div class="back-nav" onclick="showList()"><i class="fas fa-chevron-left"></i> WRÓĆ DO LISTY</div>
+            <div class="back-nav" id="back-txt" onclick="showList()"><i class="fas fa-chevron-left"></i> WRÓĆ DO LISTY</div>
             <div id="dynamic-content"></div>
         </div>
 
@@ -174,27 +129,36 @@
     <script>
         const PASS = "admin123";
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+        let currentL = 'PL';
 
-        // --- TŁUMACZENIE MENU ---
         const translations = {
-            'PL': { club: 'Klub', team: 'I Zespół', history: 'Historia', news: 'Aktualności', contact: 'Kontakt' },
-            'UA': { club: 'Клуб', team: 'I Команда', history: 'Історія', news: 'Новини', contact: 'Контакт' },
-            'EN': { club: 'Club', team: 'First Team', history: 'History', news: 'News', contact: 'Contact' }
+            'PL': { club: 'Klub', team: 'I Zespół', history: 'Historia', news: 'Aktualności', contact: 'Kontakt', back: 'WRÓĆ DO LISTY', pub: 'OPUBLIKOWANO W', cat: 'AKTUALNOŚCI' },
+            'UA': { club: 'Клуб', team: 'I Команда', history: 'Історія', news: 'Новини', contact: 'Контакт', back: 'НАЗАД ДО СПИСКУ', pub: 'ОПУБЛІКОВАНО В', cat: 'НОВИНИ' },
+            'EN': { club: 'Club', team: 'First Team', history: 'History', news: 'News', contact: 'Contact', back: 'BACK TO LIST', pub: 'PUBLISHED IN', cat: 'NEWS' }
         };
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
 
         function selectLang(l) { 
+            currentL = l;
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
-            
-            // Zmiana tekstów menu
-            const t = translations[l];
+            updatePageTexts();
+        }
+
+        function updatePageTexts() {
+            const t = translations[currentL];
+            // Menu
             document.getElementById('nav-club').innerHTML = `${t.club} <i class="fas fa-chevron-down" style="font-size: 8px;"></i>`;
             document.getElementById('nav-team').innerText = t.team;
             document.getElementById('nav-history').innerText = t.history;
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-contact').innerText = t.contact;
+            
+            // Artykuł
+            if (document.getElementById('back-txt')) document.getElementById('back-txt').innerHTML = `<i class="fas fa-chevron-left"></i> ${t.back}`;
+            const pubTag = document.querySelector('.meta-glass-tag');
+            if (pubTag) pubTag.innerHTML = `${t.pub} <span>${t.cat}</span>`;
         }
 
         function checkPass() {
@@ -224,6 +188,7 @@
 
         function openArticle(id) {
             const p = posts.find(x => x.id === id);
+            const t = translations[currentL];
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
             
@@ -231,7 +196,7 @@
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
                         <h1 class="article-title">${p.title}</h1>
-                        <div class="meta-glass-tag">OPUBLIKOWANO W <span>AKTUALNOŚCI</span></div>
+                        <div class="meta-glass-tag">${t.pub} <span>${t.cat}</span></div>
                         
                         <div class="author-info-row">
                             <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-small">
