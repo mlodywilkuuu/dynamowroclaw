@@ -42,15 +42,26 @@
         }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
 
-        /* DROPDOWN */
+        /* DROPDOWNS */
         .dropdown { position: relative; display: inline-block; }
         .dropdown-menu {
-            display: block; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 0;
+            display: none; position: absolute; top: 100%; left: 0;
             background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; 
             border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; 
-            transition: all 0.3s ease; transform: translateY(10px);
+            transition: 0.3s;
         }
-        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
+        .dropdown:hover .dropdown-menu { display: block; }
+
+        /* JĘZYKI */
+        .lang-dropdown { position: relative; }
+        .lang-menu {
+            display: none; position: absolute; right: 0; top: 100%;
+            background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; overflow: hidden; min-width: 80px;
+        }
+        .lang-menu.active { display: block; }
+        .lang-option { padding: 10px; cursor: pointer; font-size: 12px; transition: 0.3s; }
+        .lang-option:hover { background: rgba(0, 162, 255, 0.2); color: #00a2ff; }
 
         /* NAV RIGHT */
         .nav-right-container { display: flex; align-items: center; gap: 25px; }
@@ -118,7 +129,17 @@
             <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="insta-link">
                 <i class="fab fa-instagram"></i>
             </a>
-            <div class="nav-btn" style="opacity: 1;"><i class="fas fa-globe" style="color:#00a2ff"></i> PL</div>
+            
+            <div class="lang-dropdown">
+                <div class="nav-btn" onclick="toggleLang()" style="opacity: 1;">
+                    <i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span>
+                </div>
+                <div id="lang-menu" class="lang-menu">
+                    <div class="lang-option" onclick="selectLang('PL')">PL</div>
+                    <div class="lang-option" onclick="selectLang('UA')">UA</div>
+                    <div class="lang-option" onclick="selectLang('EN')">EN</div>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -128,23 +149,41 @@
                 <div class="match-info-box">
                     <div class="league-name">Czwarta Liga - Wiosna 2026</div>
                     <div class="match-round">Kolejka 4</div>
-                    <div class="match-date">19/04/2026 | 17:00</div>
+                    <div class="match-date">21/04/2026 | 21:00</div>
                 </div>
 
                 <div class="match-teams-display">
-                    <span class="team-name" style="text-align: right;">FC Dinamo Wrocław</span>
+                    <span class="team-name" style="text-align: right;">RunnersHood</span>
                     <div class="score-vs">VS</div>
-                    <span class="team-name" style="text-align: left;">FC Domestos</span>
+                    <span class="team-name" style="text-align: left;">FC Dinamo Wrocław</span>
                 </div>
                 
                 <div style="min-width: 150px; text-align: right;">
                     <div style="font-size: 10px; color:#00a2ff; font-weight: 700;">LOKALIZACJA</div>
-                    <div style="font-size: 12px;">Lotnicza 72 | Boisko nr 2</div>
+                    <div style="font-size: 12px;">Lotnicza 72 | Boisko nr 1</div>
                 </div>
             </div>
         </div>
-        
-        </div>
+    </div>
+
+    <script>
+        function toggleLang() {
+            document.getElementById('lang-menu').classList.toggle('active');
+        }
+
+        function selectLang(lang) {
+            document.getElementById('current-lang').innerText = lang;
+            document.getElementById('lang-menu').classList.remove('active');
+            // Tutaj można dodać logikę zmiany języka strony
+        }
+
+        // Zamknij menu jeśli klikniesz poza nie
+        window.onclick = function(event) {
+            if (!event.target.closest('.lang-dropdown')) {
+                document.getElementById('lang-menu').classList.remove('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
