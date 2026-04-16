@@ -8,17 +8,46 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 40px 5%; }
-        .admin-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 40px; }
+        .admin-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 40px; }
         .card { background: #0a1525; padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
         h2 { text-transform: uppercase; font-style: italic; color: #007bff; margin-bottom: 20px; }
         label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; opacity: 0.6; margin-bottom: 8px; }
         
         input, .editor { width: 100%; background: #050b14; border: 1px solid #333; padding: 12px; color: #fff; border-radius: 6px; margin-bottom: 20px; outline: none; }
-        input[type="datetime-local"] { color-scheme: dark; } /* Poprawka widoczności kalendarza */
+        input[type="datetime-local"] { color-scheme: dark; }
 
-        .toolbar { background: #162130; padding: 10px; border-radius: 6px 6px 0 0; display: flex; gap: 8px; border: 1px solid #333; border-bottom: none; }
-        .tool-btn { background: #0a1525; border: 1px solid #444; color: #fff; width: 35px; height: 35px; cursor: pointer; border-radius: 4px; }
-        .editor { min-height: 300px; border-top: none; border-radius: 0 0 6px 6px; overflow-y: auto; }
+        /* ROZBUDOWANY TOOLBAR */
+        .toolbar { 
+            background: #162130; 
+            padding: 12px; 
+            border-radius: 8px 8px 0 0; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px; 
+            border: 1px solid #333; 
+            border-bottom: none; 
+        }
+        .tool-group { display: flex; gap: 4px; border-right: 1px solid #333; padding-right: 8px; margin-right: 4px; }
+        .tool-group:last-child { border-right: none; }
+        
+        .tool-btn { 
+            background: #0a1525; border: 1px solid #444; color: #fff; 
+            width: 36px; height: 36px; cursor: pointer; border-radius: 4px; 
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .tool-btn:hover { background: #007bff; border-color: #007bff; }
+        .tool-btn i { font-size: 14px; }
+        
+        select.tool-select { 
+            background: #0a1525; color: #fff; border: 1px solid #444; 
+            border-radius: 4px; padding: 0 5px; font-size: 12px; cursor: pointer; height: 36px;
+        }
+
+        .editor { 
+            min-height: 400px; border-top: none; border-radius: 0 0 8px 8px; 
+            overflow-y: auto; line-height: 1.6; background: #050b14; padding: 20px;
+        }
+        .editor:focus { border-color: #007bff; }
 
         .button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
         .btn { border: none; padding: 18px; border-radius: 6px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
@@ -36,23 +65,47 @@
 
 <div class="admin-grid">
     <div class="card">
-        <h2 id="form-title">Panel Publikacji</h2>
+        <h2 id="form-title">Edytor Artykułów</h2>
         <input type="hidden" id="edit-index" value="-1">
         
-        <label>Tytuł</label>
-        <input type="text" id="postTitle" placeholder="Nagłówek artykułu...">
+        <label>Tytuł Artykułu</label>
+        <input type="text" id="postTitle">
         
-        <label>Planowana Data i Godzina (użyj tylko jeśli planujesz na później)</label>
+        <label>Data i Godzina (tylko dla planowania)</label>
         <input type="datetime-local" id="postDateTime">
         
-        <label>Zdjęcie (URL)</label>
-        <input type="text" id="postImage" placeholder="https://...">
+        <label>Główne Zdjęcie (URL)</label>
+        <input type="text" id="postImage">
         
-        <label>Treść</label>
+        <label>Treść Artykułu</label>
         <div class="toolbar">
-            <button class="tool-btn" onclick="document.execCommand('bold')">B</button>
-            <button class="tool-btn" onclick="document.execCommand('italic')">I</button>
-            <button class="tool-btn" onclick="var link=prompt('Link:'); document.execCommand('createLink', false, link)">Link</button>
+            <div class="tool-group">
+                <button class="tool-btn" title="Pogrubienie" onclick="exec('bold')"><i class="fas fa-bold"></i></button>
+                <button class="tool-btn" title="Kursywa" onclick="exec('italic')"><i class="fas fa-italic"></i></button>
+                <button class="tool-btn" title="Podkreślenie" onclick="exec('underline')"><i class="fas fa-underline"></i></button>
+            </div>
+            
+            <div class="tool-group">
+                <select class="tool-select" onchange="exec('formatBlock', this.value); this.selectedIndex=0;">
+                    <option value="" selected disabled>Format</option>
+                    <option value="H2">Nagłówek Duży</option>
+                    <option value="H3">Nagłówek Średni</option>
+                    <option value="P">Zwykły Tekst</option>
+                </select>
+            </div>
+
+            <div class="tool-group">
+                <button class="tool-btn" onclick="exec('insertUnorderedList')"><i class="fas fa-list-ul"></i></button>
+                <button class="tool-btn" onclick="exec('justifyLeft')"><i class="fas fa-align-left"></i></button>
+                <button class="tool-btn" onclick="exec('justifyCenter')"><i class="fas fa-align-center"></i></button>
+            </div>
+
+            <div class="tool-group">
+                <input type="color" onchange="exec('foreColor', this.value)" title="Kolor tekstu" style="width:36px; height:36px; cursor:pointer; background:none; border:none;">
+                <button class="tool-btn" title="Link" onclick="addLink()"><i class="fas fa-link"></i></button>
+                <button class="tool-btn" title="Dodaj zdjęcie do treści" onclick="addImage()"><i class="fas fa-image"></i></button>
+                <button class="tool-btn" title="Usuń formatowanie" onclick="exec('removeFormat')"><i class="fas fa-eraser"></i></button>
+            </div>
         </div>
         <div id="editor" class="editor" contenteditable="true"></div>
         
@@ -60,26 +113,38 @@
             <button class="btn btn-now" onclick="savePost(true)">Opublikuj Teraz</button>
             <button class="btn btn-plan" onclick="savePost(false)">Zaplanuj Post</button>
         </div>
-        <center><a href="aktualnosci.html" style="display:block; color:#666; margin-top:20px; text-decoration:none; font-size:12px;">Wróć do strony głównej</a></center>
     </div>
 
     <div>
-        <h2>Zarządzanie Artykułami</h2>
+        <h2>Zarządzanie</h2>
         <div id="manager-list"></div>
     </div>
 </div>
 
 <script>
-    // Ustawia kalendarz na aktualny czas przy starcie
-    function resetDateTime() {
+    function resetTime() {
         const now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
         document.getElementById('postDateTime').value = now.toISOString().slice(0, 16);
     }
 
+    function exec(cmd, val = null) {
+        document.execCommand(cmd, false, val);
+        document.getElementById('editor').focus();
+    }
+
+    function addLink() {
+        const url = prompt("Podaj URL:");
+        if(url) exec('createLink', url);
+    }
+
+    function addImage() {
+        const url = prompt("Podaj URL zdjęcia:");
+        if(url) exec('insertImage', url);
+    }
+
     function renderList() {
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        // Sortowanie: od najnowszego (uwzględnia milisekundy)
         posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         localStorage.setItem('dynamo_posts', JSON.stringify(posts));
 
@@ -89,7 +154,7 @@
             return `
             <div class="post-item">
                 <div>
-                    <div style="font-weight:bold;">${p.title}</div>
+                    <div style="font-weight:bold; font-size:14px;">${p.title}</div>
                     <div style="font-size:11px; opacity:0.6;">${p.date.replace('T', ' ')} 
                         <span class="badge ${isFuture ? 'badge-future' : 'badge-now'}">
                             ${isFuture ? 'ZAPLANOWANY' : 'LIVE'}
@@ -97,7 +162,7 @@
                     </div>
                 </div>
                 <div>
-                    <button style="color:#fdd835; background:none; border:none; cursor:pointer;" onclick="editPost(${i})"><i class="fas fa-edit"></i></button>
+                    <button style="color:#fdd835; background:none; border:none; cursor:pointer; margin-right:10px;" onclick="editPost(${i})"><i class="fas fa-edit"></i></button>
                     <button style="color:#ff4444; background:none; border:none; cursor:pointer;" onclick="deletePost(${i})"><i class="fas fa-trash"></i></button>
                 </div>
             </div>`;
@@ -109,39 +174,33 @@
         const image = document.getElementById('postImage').value;
         const content = document.getElementById('editor').innerHTML;
         const editIdx = parseInt(document.getElementById('edit-index').value);
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
         
         let finalDate;
         if(isImmediate) {
-            // Jeśli "Opublikuj Teraz", bierzemy aktualny czas systemowy
             const now = new Date();
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             finalDate = now.toISOString().slice(0, 16);
         } else {
-            // Jeśli "Zaplanuj", bierzemy to co ustawione w kalendarzu
             finalDate = document.getElementById('postDateTime').value;
         }
 
-        if(!title || !finalDate || content.trim() === "") {
-            alert("Uzupełnij tytuł i treść posta!");
-            return;
-        }
+        if(!title || !finalDate) { alert("Tytuł i data są wymagane!"); return; }
 
-        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        const postData = { title, date: finalDate, image: image || 'https://via.placeholder.com/800', content };
+        const postData = { 
+            id: editIdx === -1 ? Date.now() : posts[editIdx].id, 
+            title, date: finalDate, image: image || 'https://via.placeholder.com/800', content 
+        };
 
-        if(editIdx === -1) {
-            posts.push(postData);
-        } else {
-            posts[editIdx] = postData;
-        }
+        if(editIdx === -1) posts.push(postData);
+        else posts[editIdx] = postData;
 
         localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-        alert(isImmediate ? "Opublikowano pomyślnie!" : "Post został zaplanowany!");
         location.reload();
     }
 
     function editPost(i) {
-        const posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
         const p = posts[i];
         document.getElementById('postTitle').value = p.title;
         document.getElementById('postDateTime').value = p.date;
@@ -153,7 +212,7 @@
     }
 
     function deletePost(i) {
-        if(confirm("Usunąć ten wpis?")) {
+        if(confirm("Usunąć?")) {
             let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
             posts.splice(i, 1);
             localStorage.setItem('dynamo_posts', JSON.stringify(posts));
@@ -161,7 +220,7 @@
         }
     }
 
-    window.onload = () => { resetDateTime(); renderList(); };
+    window.onload = () => { resetTime(); renderList(); };
 </script>
 </body>
 </html>
