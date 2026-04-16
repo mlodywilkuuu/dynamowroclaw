@@ -3,179 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaawansowany Panel Managera | Dynamo Wrocław</title>
+    <title>Panel Publikacji | Dynamo Wrocław</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; padding-top: 100px; }
+        body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 100px 5% 50px; }
 
-        nav {
-            width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
-            background: #0a1525; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-            position: fixed; top: 0; left: 0; z-index: 9999;
-        }
-        .logo-img { height: 50px; }
-
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-
-        .admin-card { 
-            background: #0a1525; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); 
-            padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
+        .admin-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
         
-        h1 { font-size: 28px; text-transform: uppercase; font-style: italic; margin-bottom: 30px; border-left: 4px solid #00a2ff; padding-left: 15px; }
+        /* Sekcja Formularza */
+        .card { background: #0a1525; border-radius: 12px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); }
+        h2 { font-style: italic; text-transform: uppercase; margin-bottom: 25px; color: #007bff; font-size: 20px; }
 
-        .form-group { margin-bottom: 25px; }
-        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; color: #00a2ff; margin-bottom: 10px; }
+        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; color: #fff; opacity: 0.6; margin-bottom: 8px; }
+        input, .editor { width: 100%; background: #050b14; border: 1px solid #1a2635; padding: 12px; color: #fff; border-radius: 6px; margin-bottom: 20px; outline: none; }
         
-        input { 
-            width: 100%; background: #050b14; border: 1px solid #1a2635; padding: 15px; 
-            color: #fff; border-radius: 8px; font-size: 16px; outline: none;
-        }
+        /* Edytor */
+        .toolbar { background: #162130; padding: 8px; border-radius: 6px 6px 0 0; display: flex; gap: 5px; border: 1px solid #1a2635; border-bottom: none; }
+        .tool-btn { background: #0a1525; border: 1px solid #333; color: #fff; width: 32px; height: 32px; cursor: pointer; border-radius: 4px; }
+        .editor { min-height: 250px; border-top: none; border-radius: 0 0 6px 6px; overflow-y: auto; }
 
-        /* --- ZAAWANSOWANY TOOLBAR --- */
-        .toolbar { 
-            background: #162130; padding: 10px; border-radius: 8px 8px 0 0; 
-            display: flex; flex-wrap: wrap; gap: 5px; border: 1px solid #1a2635; border-bottom: none; 
-        }
+        .btn-save { width: 100%; background: #007bff; color: #fff; border: none; padding: 15px; border-radius: 6px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-save:hover { background: #0056b3; }
+
+        /* Lista artykułów */
+        .post-list { max-height: 700px; overflow-y: auto; }
+        .post-item { background: #0a1525; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .post-item-info h4 { font-size: 14px; text-transform: uppercase; margin-bottom: 4px; }
+        .post-item-info span { font-size: 11px; opacity: 0.5; }
         
-        .toolbar-group { display: flex; gap: 5px; border-right: 1px solid #333; padding: 0 10px; margin-bottom: 5px; }
-        .toolbar-group:last-child { border-right: none; }
+        .action-btns { display: flex; gap: 10px; }
+        .btn-edit { color: #fdd835; background: none; border: none; cursor: pointer; }
+        .btn-delete { color: #ff4444; background: none; border: none; cursor: pointer; }
 
-        .tool-btn { 
-            background: #0a1525; border: 1px solid #333; color: #fff; min-width: 35px; height: 35px; 
-            display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; transition: 0.2s;
-            font-size: 14px; padding: 5px;
-        }
-        .tool-btn:hover { background: #00a2ff; border-color: #00a2ff; }
-        
-        select.tool-btn { padding: 0 5px; width: auto; font-size: 11px; }
-        input[type="color"] { padding: 0; width: 35px; height: 35px; border: none; cursor: pointer; }
-
-        /* --- EDYTOR --- */
-        .editor { 
-            min-height: 400px; background: #050b14; border: 1px solid #1a2635; padding: 25px; 
-            border-radius: 0 0 8px 8px; color: #fff; outline: none; font-size: 16px; line-height: 1.6;
-            overflow-y: auto;
-        }
-
-        .btn-row { display: flex; gap: 15px; margin-top: 30px; }
-        .btn-save { flex: 2; background: #00a2ff; color: #fff; border: none; padding: 18px; border-radius: 8px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
-        .btn-cancel { flex: 1; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 18px; border-radius: 8px; text-decoration: none; text-align: center; font-size: 14px; opacity: 0.6; }
+        @media (max-width: 850px) { .admin-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
-        <span style="font-size: 10px; font-weight: 800; opacity: 0.5;">DYNAMO PRO EDITOR</span>
-    </nav>
+<div class="admin-container">
+    <div class="card">
+        <h2 id="form-title">Nowa Publikacja</h2>
+        
+        <input type="hidden" id="edit-index" value="-1">
+        
+        <label>Tytuł</label>
+        <input type="text" id="postTitle" placeholder="Tytuł artykułu...">
 
-    <div class="container">
-        <div class="admin-card">
-            <h1>Panel <span>Publikacji</span></h1>
-            
-            <div class="form-group">
-                <label>Tytuł artykułu</label>
-                <input type="text" id="postTitle" placeholder="Wpisz tytuł...">
-            </div>
+        <label>Data Publikacji</label>
+        <input type="date" id="postDate">
 
-            <div class="form-group">
-                <label>Zdjęcie główne (URL)</label>
-                <input type="text" id="postImage" placeholder="Wklej link do zdjęcia...">
-            </div>
+        <label>Link do zdjęcia</label>
+        <input type="text" id="postImage" placeholder="Adres URL zdjęcia...">
 
-            <div class="form-group">
-                <label>Treść i Formatowanie</label>
-                <div class="toolbar">
-                    <div class="toolbar-group">
-                        <button class="tool-btn" onclick="format('bold')" title="Pogrubienie"><i class="fas fa-bold"></i></button>
-                        <button class="tool-btn" onclick="format('italic')" title="Kursywa"><i class="fas fa-italic"></i></button>
-                        <button class="tool-btn" onclick="format('underline')" title="Podkreślenie"><i class="fas fa-underline"></i></button>
-                        <button class="tool-btn" onclick="format('strikeThrough')" title="Przekreślenie"><i class="fas fa-strikethrough"></i></button>
-                    </div>
-
-                    <div class="toolbar-group">
-                        <select class="tool-btn" onchange="format('formatBlock', this.value); this.selectedIndex=0;">
-                            <option value="" selected disabled>Styl</option>
-                            <option value="H1">Nagłówek 1</option>
-                            <option value="H2">Nagłówek 2</option>
-                            <option value="H3">Nagłówek 3</option>
-                            <option value="P">Akapit</option>
-                        </select>
-                        <select class="tool-btn" onchange="format('fontSize', this.value); this.selectedIndex=0;">
-                            <option value="" selected disabled>Rozmiar</option>
-                            <option value="1">Bardzo mały</option>
-                            <option value="3">Normalny</option>
-                            <option value="5">Duży</option>
-                            <option value="7">Bardzo duży</option>
-                        </select>
-                    </div>
-
-                    <div class="toolbar-group">
-                        <input type="color" class="tool-btn" onchange="format('foreColor', this.value)" title="Kolor tekstu">
-                        <button class="tool-btn" onclick="format('hiliteColor', '#ffff00')" title="Zakreślacz"><i class="fas fa-highlighter"></i></button>
-                    </div>
-
-                    <div class="toolbar-group">
-                        <button class="tool-btn" onclick="format('justifyLeft')"><i class="fas fa-align-left"></i></button>
-                        <button class="tool-btn" onclick="format('justifyCenter')"><i class="fas fa-align-center"></i></button>
-                        <button class="tool-btn" onclick="format('justifyRight')"><i class="fas fa-align-right"></i></button>
-                    </div>
-
-                    <div class="toolbar-group">
-                        <button class="tool-btn" onclick="format('insertUnorderedList')"><i class="fas fa-list-ul"></i></button>
-                        <button class="tool-btn" onclick="format('insertOrderedList')"><i class="fas fa-list-ol"></i></button>
-                        <button class="tool-btn" onclick="addLink()"><i class="fas fa-link"></i></button>
-                        <button class="tool-btn" onclick="format('unlink')"><i class="fas fa-unlink"></i></button>
-                        <button class="tool-btn" onclick="format('removeFormat')" title="Wyczyść formatowanie"><i class="fas fa-eraser"></i></button>
-                    </div>
-                </div>
-                <div id="editor" class="editor" contenteditable="true"></div>
-            </div>
-
-            <div class="btn-row">
-                <a href="aktualnosci.html" class="btn-cancel">Anuluj</a>
-                <button class="btn-save" onclick="savePost()">Opublikuj Artykuł</button>
-            </div>
+        <label>Treść</label>
+        <div class="toolbar">
+            <button class="tool-btn" onclick="format('bold')"><b>B</b></button>
+            <button class="tool-btn" onclick="format('italic')"><i>I</i></button>
+            <button class="tool-btn" onclick="format('insertUnorderedList')"><i class="fas fa-list"></i></button>
         </div>
+        <div id="editor" class="editor" contenteditable="true"></div>
+
+        <button class="btn-save" onclick="savePost()">Zapisz Artykuł</button>
+        <center><a href="aktualnosci.html" style="color: #666; font-size: 12px; text-decoration: none; margin-top: 20px; display: block;">Wróć do strony głównej</a></center>
     </div>
 
-    <script>
-        function format(cmd, val = null) {
-            document.execCommand(cmd, false, val);
-            document.getElementById('editor').focus();
+    <div>
+        <h2>Zarządzaj Artykułami</h2>
+        <div id="post-manager-list" class="post-list">
+            </div>
+    </div>
+</div>
+
+<script>
+    // Ustawienie dzisiejszej daty na start
+    document.getElementById('postDate').valueAsDate = new Date();
+
+    function format(cmd) {
+        document.execCommand(cmd, false, null);
+    }
+
+    function savePost() {
+        const title = document.getElementById('postTitle').value;
+        const date = document.getElementById('postDate').value;
+        const img = document.getElementById('postImage').value;
+        const content = document.getElementById('editor').innerHTML;
+        const editIndex = parseInt(document.getElementById('edit-index').value);
+
+        if (!title || !content) { alert("Tytuł i treść są wymagane!"); return; }
+
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+
+        const postData = {
+            title: title,
+            date: date,
+            image: img || 'https://via.placeholder.com/800x450',
+            content: content
+        };
+
+        if (editIndex === -1) {
+            posts.unshift(postData); // Nowy post
+        } else {
+            posts[editIndex] = postData; // Edycja istniejącego
         }
 
-        function addLink() {
-            const url = prompt("Wpisz adres URL (np. https://google.com):");
-            if(url) format('createLink', url);
-        }
+        localStorage.setItem('dynamo_posts', JSON.stringify(posts));
+        resetForm();
+        renderManagerList();
+        alert("Zapisano pomyślnie!");
+    }
 
-        function savePost() {
-            const title = document.getElementById('postTitle').value;
-            const image = document.getElementById('postImage').value;
-            const content = document.getElementById('editor').innerHTML;
+    function renderManagerList() {
+        const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+        const container = document.getElementById('post-manager-list');
 
-            if (!title || content.trim() === "") {
-                alert("Tytuł i treść nie mogą być puste!");
-                return;
-            }
+        container.innerHTML = posts.map((p, i) => `
+            <div class="post-item">
+                <div class="post-item-info">
+                    <h4>${p.title}</h4>
+                    <span>${p.date}</span>
+                </div>
+                <div class="action-btns">
+                    <button class="btn-edit" onclick="editPost(${i})"><i class="fas fa-edit"></i></button>
+                    <button class="btn-delete" onclick="deletePost(${i})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-            const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-            const newPost = {
-                title: title,
-                image: image || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018',
-                content: content,
-                date: new Date().toLocaleDateString('pl-PL')
-            };
+    function editPost(i) {
+        const posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+        const p = posts[i];
 
-            posts.unshift(newPost);
+        document.getElementById('postTitle').value = p.title;
+        document.getElementById('postDate').value = p.date;
+        document.getElementById('postImage').value = p.image;
+        document.getElementById('editor').innerHTML = p.content;
+        document.getElementById('edit-index').value = i;
+        document.getElementById('form-title').innerText = "Edytujesz Artykuł";
+        window.scrollTo(0,0);
+    }
+
+    function deletePost(i) {
+        if(confirm("Usunąć ten artykuł na stałe?")) {
+            let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+            posts.splice(i, 1);
             localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-
-            alert("Artykuł opublikowany!");
-            window.location.href = "aktualnosci.html";
+            renderManagerList();
         }
-    </script>
+    }
+
+    function resetForm() {
+        document.getElementById('postTitle').value = "";
+        document.getElementById('postDate').valueAsDate = new Date();
+        document.getElementById('postImage').value = "";
+        document.getElementById('editor').innerHTML = "";
+        document.getElementById('edit-index').value = "-1";
+        document.getElementById('form-title').innerText = "Nowa Publikacja";
+    }
+
+    window.onload = renderManagerList;
+</script>
+
 </body>
 </html>
