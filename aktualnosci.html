@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg-color); color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
-        /* MENU STYL GŁÓWNA */
+        /* NAWIGACJA */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: #0a1525; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
@@ -18,9 +18,18 @@
         }
         .nav-left { display: flex; align-items: center; gap: 30px; }
         .logo-img { height: 55px; width: auto; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-item { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-item { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
         .nav-item:hover { color: var(--accent-blue); }
+
+        /* MENU JĘZYKOWE */
+        .lang-dropdown { position: relative; display: inline-block; margin-right: 15px; }
+        .lang-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; font-size: 10px; font-weight: 800; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+        .lang-content { display: none; position: absolute; background: #141b2a; min-width: 100px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); z-index: 1; border-radius: 4px; top: 100%; }
+        .lang-content a { color: white; padding: 10px 12px; text-decoration: none; display: block; font-size: 10px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .lang-content a:hover { background: var(--accent-blue); }
+        .lang-dropdown:hover .lang-content { display: block; }
+
         .btn-new-post { background: transparent; color: #fff; text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 10px 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
         .btn-new-post:hover { background: #fff; color: #0a1525; }
 
@@ -44,8 +53,7 @@
         .hero-content { position: relative; z-index: 2; }
         .epic-hero-title { font-size: 48px; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 1; }
         .epic-body { padding: 40px; }
-        .epic-author { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
-        .author-avatar { width: 50px; height: 50px; object-fit: contain; }
+        .epic-content { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.9); }
     </style>
 </head>
 <body>
@@ -59,7 +67,17 @@
                 <a href="aktualnosci.html" class="nav-item" style="color:var(--accent-blue)">Aktualności</a>
             </div>
         </div>
-        <a href="#" onclick="protectedAccess()" class="btn-new-post">Nowy Post</a>
+        <div style="display: flex; align-items: center;">
+            <div class="lang-dropdown">
+                <button class="lang-btn"><i class="fas fa-globe"></i> PL <i class="fas fa-chevron-down" style="font-size: 8px;"></i></button>
+                <div class="lang-content">
+                    <a href="#">POLSKI</a>
+                    <a href="#">UKRAINIAN</a>
+                    <a href="#">ENGLISH</a>
+                </div>
+            </div>
+            <a href="#" onclick="protectedAccess()" class="btn-new-post">Nowy Post</a>
+        </div>
     </nav>
 
     <div class="header-section">
@@ -77,59 +95,53 @@
 
     <script>
         function protectedAccess() {
-            const pass = prompt("Hasło:");
+            const pass = prompt("Hasło administratora:");
             if(pass === "admin123") window.location.href = "admin-panel.html";
-            else if(pass) alert("Błędne hasło!");
-        }
-
-        // FUNKCJA POBIERAJĄCA TYLKO AKTUALNE POSTY (POSORTOWANE)
-        function getVisiblePosts() {
-            let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-            const now = new Date().getTime();
-
-            // 1. Filtrujemy (usuwamy te z przyszłości)
-            let filtered = posts.filter(p => new Date(p.date).getTime() <= now);
-
-            // 2. Sortujemy od najnowszego
-            return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            else if(pass) alert("Brak dostępu.");
         }
 
         function loadNews() {
-            const posts = getVisiblePosts();
+            let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
             const grid = document.getElementById('news-grid');
-            
-            grid.innerHTML = posts.map((p, i) => `
-                <div class="article-card" onclick="openModal(${i})">
+            const now = new Date().getTime();
+
+            // Filtrowanie postów, które już powinny być widoczne i sortowanie
+            let visiblePosts = posts
+                .filter(p => new Date(p.date).getTime() <= now)
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+            if (visiblePosts.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.3; padding: 100px;">Czekamy na nowe wiadomości...</p>';
+                return;
+            }
+
+            // Używamy p.id zamiast indeksu pętli, aby uniknąć znikania artykułów
+            grid.innerHTML = visiblePosts.map(p => `
+                <div class="article-card" onclick="openModal('${p.id}')">
                     <div class="article-img" style="background-image: url('${p.image}')"></div>
                     <div class="article-info">
                         <h2 class="article-title-small">${p.title}</h2>
-                        <p style="font-size:11px; opacity:0.4;">${p.date.replace('T', ' ')}</p>
+                        <p style="font-size:11px; opacity:0.4; font-weight:700;">${p.date.replace('T', ' ')}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        function openModal(i) {
-            const posts = getVisiblePosts();
-            const p = posts[i];
-            
+        function openModal(postId) {
+            let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+            const p = posts.find(item => item.id == postId);
+            if(!p) return;
+
             document.getElementById('modalBody').innerHTML = `
                 <div class="epic-article">
                     <div class="epic-hero" style="background-image: url('${p.image}')">
                         <div class="hero-content">
-                            <p style="font-size:12px; font-weight:bold; margin-bottom:10px; opacity:0.8;">Opublikowano w Społeczność</p>
                             <h1 class="epic-hero-title">${p.title}</h1>
                         </div>
                     </div>
                     <div class="epic-body">
-                        <div class="epic-author">
-                            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-avatar">
-                            <div>
-                                <div style="font-weight:bold; font-size:18px;">Dynamo Wrocław</div>
-                                <div style="font-size:12px; opacity:0.5;">${p.date.replace('T', ' ')}</div>
-                            </div>
-                        </div>
-                        <div style="font-size:16px; line-height:1.8; color:rgba(255,255,255,0.9);">${p.content}</div>
+                        <div style="margin-bottom:20px; font-size:12px; opacity:0.5; font-weight:bold;">${p.date.replace('T', ' ')}</div>
+                        <div class="epic-content">${p.content}</div>
                     </div>
                 </div>`;
             document.getElementById('epicModal').style.display = 'block';
@@ -138,6 +150,7 @@
 
         function closeModal() { document.getElementById('epicModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
         window.onload = loadNews;
+        window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
     </script>
 </body>
 </html>
