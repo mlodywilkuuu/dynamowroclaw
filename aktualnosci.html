@@ -32,67 +32,42 @@
 
         .nav-right-container { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; min-width: 80px; z-index: 3000; }
+        .lang-menu { 
+            display: none; position: absolute; right: 0; top: 100%; 
+            background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 8px; min-width: 120px; z-index: 3000; max-height: 300px; overflow-y: auto;
+        }
         .lang-menu.active { display: block; }
-        .lang-option { padding: 10px; cursor: pointer; font-size: 12px; }
-        .lang-option:hover { color: #00a2ff; }
+        .lang-option { padding: 10px 15px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .lang-option:hover { background: rgba(0, 162, 255, 0.1); color: #00a2ff; }
 
-        /* --- UKŁAD TREŚCI --- */
+        /* --- UKŁAD KAFELKÓW --- */
         .main-content { margin-top: 100px; width: 100%; }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
 
-        /* --- ADMIN PANEL --- */
-        .admin-controls { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-        .btn-add-emoji { font-size: 28px; cursor: pointer; background: none; border: none; opacity: 0.4; transition: 0.3s; padding: 10px; }
+        .admin-controls { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .btn-add-emoji { font-size: 28px; cursor: pointer; background: none; border: none; opacity: 0.4; transition: 0.3s; }
         .btn-add-emoji:hover { opacity: 1; transform: scale(1.1); }
 
         #admin-panel { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; display: none; backdrop-filter: blur(20px); }
         .admin-input { width: 100%; padding: 12px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-family: inherit; }
 
-        /* --- SIATKA KAFELKOWA (GRID) --- */
-        .news-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-            gap: 30px; 
-            margin-bottom: 60px;
-        }
-
-        .news-card { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-card:hover { 
-            transform: translateY(-10px); 
-            border-color: #00a2ff;
-            background: rgba(255,255,255,0.06);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .card-content { padding: 25px; flex-grow: 1; }
-        .card-date { font-size: 11px; font-weight: 800; color: #00a2ff; margin-bottom: 10px; text-transform: uppercase; }
-        .card-title { font-size: 22px; font-weight: 900; text-transform: uppercase; line-height: 1.1; color: #fff; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .news-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; cursor: pointer; transition: 0.4s; }
+        .news-card:hover { transform: translateY(-10px); border-color: #00a2ff; }
+        .card-image { width: 100%; height: 200px; background-size: cover; background-position: center; }
+        .card-content { padding: 25px; }
+        .card-date { font-size: 11px; font-weight: 800; color: #00a2ff; margin-bottom: 10px; }
+        .card-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #fff; }
 
         /* --- WIDOK ARTYKUŁU --- */
         #article-view { display: none; width: 100%; min-height: 100vh; background: #050b14; }
         .hero-banner { width: 100%; height: 550px; background-size: cover; background-position: center; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
-        .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.3) 100%); z-index: 1; }
-        .hero-content { position: relative; z-index: 2; width: 100%; }
-        .article-title-main { font-size: clamp(35px, 5vw, 75px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -2px; margin-bottom: 20px; color: #fff; }
+        .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 0%, rgba(5,11,20,0.2) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; }
+        .article-title-main { font-size: clamp(35px, 5vw, 75px); font-weight: 900; text-transform: uppercase; line-height: 0.9; color: #fff; margin-bottom: 20px; }
 
-        .meta-glass-tag { display: inline-block; padding: 4px 12px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #fff; }
+        .meta-glass-tag { display: inline-block; padding: 5px 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #fff; }
         .meta-glass-tag span { color: #00a2ff; margin-left: 5px; }
 
         .author-info-row { display: flex; align-items: center; gap: 12px; margin-top: 25px; }
@@ -122,13 +97,16 @@
             </div>
         </div>
         <div class="nav-right-container">
-            <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="nav-btn"><i class="fab fa-instagram"></i></a>
             <div class="lang-dropdown">
                 <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span></div>
                 <div id="lang-menu" class="lang-menu">
-                    <div class="lang-option" onclick="selectLang('PL')">PL</div>
-                    <div class="lang-option" onclick="selectLang('UA')">UA</div>
-                    <div class="lang-option" onclick="selectLang('EN')">EN</div>
+                    <div class="lang-option" onclick="selectLang('PL')">🇵🇱 PL</div>
+                    <div class="lang-option" onclick="selectLang('UA')">🇺🇦 UA</div>
+                    <div class="lang-option" onclick="selectLang('EN')">🇬🇧 EN</div>
+                    <div class="lang-option" onclick="selectLang('DE')">🇩🇪 DE</div>
+                    <div class="lang-option" onclick="selectLang('ES')">🇪🇸 ES</div>
+                    <div class="lang-option" onclick="selectLang('IT')">🇮🇹 IT</div>
+                    <div class="lang-option" onclick="selectLang('FR')">🇫🇷 FR</div>
                 </div>
             </div>
         </div>
@@ -136,22 +114,18 @@
 
     <div class="main-content">
         <div id="list-view" class="container">
-            <div class="admin-controls">
-                <button class="btn-add-emoji" onclick="checkPass()">➕</button>
-            </div>
-
+            <div class="admin-controls"><button class="btn-add-emoji" onclick="checkPass()">➕</button></div>
             <div id="admin-panel">
-                <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
-                <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia tła (URL)">
-                <textarea id="post-content" class="admin-input" rows="8" placeholder="Treść artykułu..."></textarea>
-                <button class="nav-btn" style="background:#00a2ff; border:none; border-radius: 6px; padding: 12px 25px;" onclick="savePost()">Opublikuj</button>
+                <input type="text" id="post-title" class="admin-input" placeholder="Tytuł">
+                <input type="text" id="post-image" class="admin-input" placeholder="Link do zdjęcia (URL)">
+                <textarea id="post-content" class="admin-input" rows="8" placeholder="Treść..."></textarea>
+                <button class="nav-btn" style="background:#00a2ff; border-radius:6px; padding:10px 20px;" onclick="savePost()">Opublikuj</button>
             </div>
-
             <div id="news-grid" class="news-grid"></div>
         </div>
 
         <div id="article-view">
-            <div class="back-nav" id="back-txt" onclick="showList()"><i class="fas fa-chevron-left"></i> WRÓĆ DO LISTY</div>
+            <div class="back-nav" id="back-txt" onclick="showList()"></div>
             <div id="dynamic-content"></div>
         </div>
     </div>
@@ -159,36 +133,48 @@
     <script>
         const PASS = "admin123";
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        let currentL = 'PL';
+        let currentLang = 'PL';
 
         const translations = {
             'PL': { club: 'Klub', team: 'I Zespół', history: 'Historia', news: 'Aktualności', contact: 'Kontakt', back: 'WRÓĆ DO LISTY', pub: 'OPUBLIKOWANO W', cat: 'AKTUALNOŚCI' },
             'UA': { club: 'Клуб', team: 'I Команда', history: 'Історія', news: 'Новини', contact: 'Контакт', back: 'НАЗАД ДО СПИСКУ', pub: 'ОПУБЛІКОВАНО В', cat: 'НОВИНИ' },
-            'EN': { club: 'Club', team: 'First Team', history: 'History', news: 'News', contact: 'Contact', back: 'BACK TO LIST', pub: 'PUBLISHED IN', cat: 'NEWS' }
+            'EN': { club: 'Club', team: 'First Team', history: 'History', news: 'News', contact: 'Contact', back: 'BACK TO LIST', pub: 'PUBLISHED IN', cat: 'NEWS' },
+            'DE': { club: 'Klub', team: 'Erste Mannschaft', history: 'Geschichte', news: 'Nachrichten', contact: 'Kontakt', back: 'ZURÜCK ZUR LISTE', pub: 'VERÖFFENTLICHT IN', cat: 'NEWS' },
+            'ES': { club: 'Club', team: 'Primer Equipo', history: 'Historia', news: 'Noticias', contact: 'Contacto', back: 'VOLVER A LA LISTA', pub: 'PUBLICADO EN', cat: 'NOTICIAS' },
+            'IT': { club: 'Club', team: 'Prima Squadra', history: 'Storia', news: 'Notizie', contact: 'Contatto', back: 'TORNA ALLA LISTA', pub: 'PUBBLICATO IN', cat: 'NOTIZIE' },
+            'FR': { club: 'Club', team: 'Équipe Première', history: 'Histoire', news: 'Actualités', contact: 'Contact', back: 'RETOUR À LA LISTE', pub: 'PUBLIÉ DANS', cat: 'ACTUALITÉS' }
         };
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
 
         function selectLang(l) { 
-            currentL = l;
+            currentLang = l;
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
-            updatePageTexts();
+            updateUI();
         }
 
-        function updatePageTexts() {
-            const t = translations[currentL];
+        function updateUI() {
+            const t = translations[currentLang];
+            // Menu stałe
             document.getElementById('nav-club').innerHTML = `${t.club} <i class="fas fa-chevron-down" style="font-size: 8px;"></i>`;
             document.getElementById('nav-team').innerText = t.team;
             document.getElementById('nav-history').innerText = t.history;
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-contact').innerText = t.contact;
-            if (document.getElementById('back-txt')) document.getElementById('back-txt').innerHTML = `<i class="fas fa-chevron-left"></i> ${t.back}`;
+
+            // Elementy artykułu (jeśli otwarty)
+            const backBtn = document.getElementById('back-txt');
+            if(backBtn) backBtn.innerHTML = `<i class="fas fa-chevron-left"></i> ${t.back}`;
+            
+            const pubTag = document.getElementById('pub-tag-text');
+            if(pubTag) pubTag.innerText = t.pub;
+            
+            const catTag = document.getElementById('cat-tag-text');
+            if(catTag) catTag.innerText = t.cat;
         }
 
-        function checkPass() {
-            if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block';
-        }
+        function checkPass() { if(prompt("Hasło:") === PASS) document.getElementById('admin-panel').style.display = 'block'; }
 
         function savePost() {
             const t = document.getElementById('post-title').value;
@@ -215,7 +201,6 @@
 
         function openArticle(id) {
             const p = posts.find(x => x.id === id);
-            const t = translations[currentL];
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
             
@@ -223,7 +208,10 @@
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
                         <h1 class="article-title-main">${p.title}</h1>
-                        <div class="meta-glass-tag">${t.pub} <span>${t.cat}</span></div>
+                        <div class="meta-glass-tag">
+                            <span id="pub-tag-text"></span> 
+                            <span id="cat-tag-text" style="color:#00a2ff; margin-left:5px;"></span>
+                        </div>
                         <div class="author-info-row">
                             <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-small">
                             <div class="author-text-data">
@@ -235,6 +223,7 @@
                 </div>
                 <div class="content-body">${p.content}</div>
             `;
+            updateUI(); // Odśwież tłumaczenia natychmiast po wygenerowaniu HTML
             window.scrollTo(0,0);
         }
 
@@ -243,7 +232,9 @@
             document.getElementById('article-view').style.display = 'none';
         }
 
+        // Inicjalizacja
         renderList();
+        updateUI();
     </script>
 </body>
 </html>
