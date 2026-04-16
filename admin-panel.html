@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Managera | Dynamo Wrocław</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; padding-top: 100px; }
+
+        /* --- NAVBAR (Stały) --- */
+        nav {
+            width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: #0a1525; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            position: fixed; top: 0; left: 0; z-index: 9999;
+        }
+        .logo-img { height: 50px; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* --- KARTA EDYTORA --- */
+        .admin-card { 
+            background: #0a1525; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); 
+            padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        h1 { font-size: 28px; text-transform: uppercase; font-style: italic; margin-bottom: 30px; border-left: 4px solid #00a2ff; padding-left: 15px; }
+
+        .form-group { margin-bottom: 25px; }
+        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; color: #00a2ff; margin-bottom: 10px; letter-spacing: 1px; }
+        
+        input { 
+            width: 100%; background: #050b14; border: 1px solid #1a2635; padding: 15px; 
+            color: #fff; border-radius: 8px; font-size: 16px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: #00a2ff; box-shadow: 0 0 10px rgba(0,162,255,0.2); }
+
+        /* --- TOOLBAR --- */
+        .toolbar { 
+            background: #162130; padding: 10px; border-radius: 8px 8px 0 0; 
+            display: flex; gap: 8px; border: 1px solid #1a2635; border-bottom: none; 
+        }
+        .tool-btn { 
+            background: #0a1525; border: 1px solid #333; color: #fff; width: 35px; height: 35px; 
+            display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; transition: 0.2s;
+        }
+        .tool-btn:hover { background: #00a2ff; border-color: #00a2ff; }
+
+        /* --- EDYTOR WIZUALNY --- */
+        .editor { 
+            min-height: 300px; background: #050b14; border: 1px solid #1a2635; padding: 20px; 
+            border-radius: 0 0 8px 8px; color: #fff; outline: none; font-size: 16px; line-height: 1.6;
+        }
+        .editor:focus { border-color: #00a2ff; }
+
+        /* --- PRZYCISKI --- */
+        .btn-row { display: flex; gap: 15px; margin-top: 30px; }
+        .btn-save { 
+            flex: 2; background: #00a2ff; color: #fff; border: none; padding: 18px; 
+            border-radius: 8px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        }
+        .btn-save:hover { background: #0082cc; transform: translateY(-3px); }
+        .btn-cancel { 
+            flex: 1; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 18px; border-radius: 8px; text-decoration: none; text-align: center; font-size: 14px; opacity: 0.6; transition: 0.3s;
+        }
+        .btn-cancel:hover { opacity: 1; background: rgba(255,255,255,0.05); }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">
+            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img">
+        </a>
+        <span style="font-size: 10px; font-weight: 800; letter-spacing: 2px; opacity: 0.5;">ADMIN PANEL V1.0</span>
+    </nav>
+
+    <div class="container">
+        <div class="admin-card">
+            <h1>Dodaj nowy <span style="color:#00a2ff;">artykuł</span></h1>
+            
+            <div class="form-group">
+                <label>Tytuł publikacji</label>
+                <input type="text" id="postTitle" placeholder="Np. Dynamo Wrocław miażdży rywali w 4 lidze!">
+            </div>
+
+            <div class="form-group">
+                <label>Link do zdjęcia (URL)</label>
+                <input type="text" id="postImage" placeholder="Wklej link do zdjęcia (np. z Facebooka lub Unsplash)">
+            </div>
+
+            <div class="form-group">
+                <label>Treść artykułu</label>
+                <div class="toolbar">
+                    <button class="tool-btn" title="Pogrubienie" onclick="format('bold')"><i class="fas fa-bold"></i></button>
+                    <button class="tool-btn" title="Kursywa" onclick="format('italic')"><i class="fas fa-italic"></i></button>
+                    <button class="tool-btn" title="Nagłówek" onclick="format('formatBlock', 'h3')"><i class="fas fa-heading"></i></button>
+                    <button class="tool-btn" title="Lista" onclick="format('insertUnorderedList')"><i class="fas fa-list"></i></button>
+                    <button class="tool-btn" title="Wyczyść" onclick="format('removeFormat')"><i class="fas fa-eraser"></i></button>
+                </div>
+                <div id="editor" class="editor" contenteditable="true" placeholder="Zacznij pisać tutaj..."></div>
+            </div>
+
+            <div class="btn-row">
+                <a href="aktualnosci.html" class="btn-cancel">Anuluj</a>
+                <button class="btn-save" onclick="savePost()">Opublikuj artykuł</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obsługa formatowania tekstu
+        function format(cmd, val = null) {
+            document.execCommand(cmd, false, val);
+            document.getElementById('editor').focus();
+        }
+
+        // Funkcja zapisu
+        function savePost() {
+            const title = document.getElementById('postTitle').value;
+            const image = document.getElementById('postImage').value;
+            const content = document.getElementById('editor').innerHTML;
+
+            // Walidacja
+            if (!title || content === "" || content === "<br>") {
+                alert("Musisz podać przynajmniej tytuł i treść artykułu!");
+                return;
+            }
+
+            // Pobieranie obecnych postów
+            const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+
+            // Tworzenie nowego obiektu posta
+            const newPost = {
+                title: title,
+                image: image || 'https://images.unsplash.com/photo-1574629810360-7efbbe195018', // Domyślne zdjęcie jeśli brak
+                content: content,
+                date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })
+            };
+
+            // Dodawanie na początek listy
+            posts.unshift(newPost);
+
+            // Zapis do pamięci przeglądarki
+            localStorage.setItem('dynamo_posts', JSON.stringify(posts));
+
+            // Potwierdzenie i powrót
+            alert("Sukces! Artykuł został opublikowany.");
+            window.location.href = "aktualnosci.html";
+        }
+    </script>
+</body>
+</html>
