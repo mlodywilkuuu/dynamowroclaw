@@ -9,16 +9,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #050b14; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR (PRZYCISKI NA PRAWO) --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: rgba(10, 21, 37, 0.95); backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 9999;
         }
-        .nav-left { display: flex; align-items: center; flex-shrink: 0; min-width: 250px; }
+        .nav-left { flex-shrink: 0; }
         .logo-img { height: 60px; width: auto; display: block; }
         
-        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-right { display: flex; gap: 15px; align-items: center; }
         .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 10px; transition: 0.3s; }
         .nav-btn:hover { color: #00a2ff; }
 
@@ -38,18 +38,18 @@
         .hero-banner { width: 100%; height: 500px; background-size: cover; background-position: center; position: relative; display: flex; align-items: flex-end; padding: 60px 10%; }
         .hero-banner::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #050b14 5%, transparent 100%); }
         .hero-content { position: relative; z-index: 2; width: 100%; }
-        .article-title-main { font-size: clamp(30px, 6vw, 60px); font-weight: 900; text-transform: uppercase; font-style: italic; color: #fff; line-height: 1; margin: 15px 0; }
         
-        .badge-row { display: flex; gap: 10px; }
-        .badge { padding: 5px 12px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
-        .badge-staff { background: #b084ff; color: #fff; }
-        .badge-news { border: 1px solid #00a2ff; color: #00a2ff; }
+        .article-title-main { font-size: clamp(30px, 6vw, 60px); font-weight: 900; text-transform: uppercase; font-style: italic; color: #fff; line-height: 1; margin-top: 15px; }
+        
+        .badge-news { display: inline-block; padding: 5px 15px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: 1px solid #00a2ff; color: #00a2ff; }
 
-        .content-body { padding: 50px 10%; font-size: 19px; line-height: 1.8; max-width: 1000px; color: #ccc; }
-        .author-box { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        .content-body { padding: 30px 10% 80px; font-size: 19px; line-height: 1.8; max-width: 1000px; color: #ccc; }
+        
+        /* Wyżej przesunięte logo i data */
+        .author-box { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; margin-top: -20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         .author-img { height: 45px; border-radius: 50%; border: 1px solid #00a2ff; padding: 3px; }
 
-        .back-nav { padding: 110px 10% 20px; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 11px; display: inline-block; }
+        .back-nav { padding: 110px 10% 10px; cursor: pointer; color: #00a2ff; font-weight: 800; text-transform: uppercase; font-size: 11px; display: inline-block; }
 
         /* GRID */
         #list-view { margin-top: 120px; padding: 0 10%; }
@@ -69,7 +69,7 @@
         <div class="nav-left">
             <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
         </div>
-        <div class="nav-links">
+        <div class="nav-right">
             <a href="aktualnosci.html" class="nav-btn" id="nav-news">Aktualności</a>
             <a href="zespol.html" class="nav-btn" id="nav-team">Zespół</a>
             <div class="lang-container">
@@ -106,25 +106,21 @@
         const PASS = "admin123";
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
         let currentLang = 'PL';
-        let activePost = null;
 
         const translations = {
-            'PL': { news: 'Aktualności', team: 'Zespół', back: '← WRÓĆ DO LISTY', pub: 'OPUBLIKOWANO W', cat: 'AKTUALNOŚCI' },
-            'EN': { news: 'News', team: 'Team', back: '← BACK TO LIST', pub: 'PUBLISHED IN', cat: 'NEWS' },
-            'UA': { news: 'Новини', team: 'Команда', back: '← НАЗАД', pub: 'ОПУБЛІКОВАНО В', cat: 'НОВИНИ' }
+            'PL': { news: 'Aktualności', team: 'Zespół', back: '← WRÓĆ DO LISTY', cat: 'AKTUALNOŚCI' },
+            'EN': { news: 'News', team: 'Team', back: '← BACK TO LIST', cat: 'NEWS' },
+            'UA': { news: 'Новини', team: 'Команда', back: '← НАЗАД', cat: 'НОВИНИ' }
         };
 
         function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
 
-        async function selectLang(l) {
+        function selectLang(l) {
             currentLang = l;
             document.getElementById('current-lang').innerText = l;
             document.getElementById('lang-menu').classList.remove('active');
             updateUI();
-            if(activePost) {
-                // Opcjonalne: Tutaj można dodać wywołanie do API tłumacza dla treści p.content
-                renderArticle(activePost); 
-            }
+            if(window.currentActiveId) openArticle(window.currentActiveId);
         }
 
         function updateUI() {
@@ -151,26 +147,17 @@
         }
 
         function openArticle(id) {
-            activePost = posts.find(x => x.id === id);
+            window.currentActiveId = id;
+            const p = posts.find(x => x.id === id);
+            const t = translations[currentLang];
             document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
-            renderArticle(activePost);
-            window.scrollTo(0,0);
-        }
-
-        function renderArticle(p) {
-            const t = translations[currentLang];
+            
             document.getElementById('dynamic-article').innerHTML = `
                 <div class="hero-banner" style="background-image: url('${p.image}')">
                     <div class="hero-content">
-                        <div class="badge-row">
-                            <span class="badge badge-staff">STAFF</span>
-                            <span class="badge badge-news">${t.cat}</span>
-                        </div>
+                        <span class="badge badge-news">${t.cat}</span>
                         <h1 class="article-title-main">${p.title}</h1>
-                        <p style="font-size:12px; font-weight:800; opacity:0.8; text-transform:uppercase">
-                            ${t.pub} <span style="color:#00a2ff; margin-left:5px">${t.cat}</span>
-                        </p>
                     </div>
                 </div>
                 <div class="content-body">
@@ -181,6 +168,7 @@
                     <div id="post-text-content">${p.content.replace(/\n/g, '<br>')}</div>
                 </div>
             `;
+            window.scrollTo(0,0);
         }
 
         function renderGrid() {
@@ -188,7 +176,7 @@
             grid.innerHTML = posts.map(p => `
                 <div class="news-card" onclick="openArticle(${p.id})">
                     <div class="card-img" style="background-image: url('${p.image}')"></div>
-                    <div class="card-info">
+                    <div class="card-info" style="padding: 20px;">
                         <small style="color:#00a2ff; font-weight:800">${p.date}</small>
                         <h3 style="margin-top:10px; text-transform:uppercase; font-style:italic">${p.title}</h3>
                     </div>
