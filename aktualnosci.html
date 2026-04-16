@@ -1,12 +1,12 @@
 <?php
-// 1. POŁĄCZENIE Z BAZĄ (Wpisz swoje dane)
+// 1. POŁĄCZENIE Z BAZĄ DANYCH
 $db = new mysqli("localhost", "uzytkownik", "haslo", "nazwa_bazy");
 
 if ($db->connect_error) {
     die("Błąd połączenia: " . $db->connect_error);
 }
 
-// 2. POBIERANIE ARTYKUŁÓW - Najnowsze zawsze na górze (sortowanie po dacie DESC)
+// 2. LOGIKA SORTOWANIA: Najnowsze zawsze na górze (DESC)
 $query = "SELECT * FROM aktualnosci ORDER BY data_publikacji DESC";
 $result = $db->query($query);
 ?>
@@ -18,61 +18,92 @@ $result = $db->query($query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aktualności | Dynamo Wrocław</title>
     <style>
-        /* Styl strony głównej / Podstrony aktualności */
-        body { font-family: 'Helvetica', Arial, sans-serif; line-height: 1.6; margin: 0; background: #f0f2f5; color: #1c1e21; }
-        header { background: #0047ab; color: white; padding: 40px 20px; text-align: center; margin-bottom: 30px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        /* STYLIZACJA STRONY AKTUALNOŚCI */
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+        .wrapper { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        /* PASEK ADMINA - Tylko do zarządzania */
+        .admin-controls { 
+            background: #fff; 
+            padding: 15px; 
+            margin-bottom: 30px; 
+            border-radius: 8px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-left: 5px solid #0047ab;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-manage { 
+            background: #0047ab; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+        }
 
-        /* PRZYCISK ADMINISTRACYJNY (Panel Edycji) */
-        .admin-nav { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn-panel { background: #28a745; color: white; padding: 10px 18px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 14px; }
-        .btn-panel:hover { background: #218838; }
+        /* WYGLĄD KARTY ARTYKUŁU */
+        .article-card { 
+            background: white; 
+            margin-bottom: 30px; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .article-card:hover { transform: translateY(-5px); }
+        
+        .article-body { padding: 25px; }
+        .meta-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .date { color: #0047ab; font-weight: bold; font-size: 14px; }
+        
+        .edit-btn { 
+            font-size: 12px; 
+            text-decoration: none; 
+            color: #777; 
+            border: 1px solid #ddd; 
+            padding: 3px 10px; 
+            border-radius: 4px; 
+        }
+        .edit-btn:hover { background: #eee; }
 
-        /* WYGLĄD ARTYKUŁÓW NA LIŚCIE */
-        .news-item { background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative; }
-        .news-item h2 { margin-top: 0; color: #0047ab; font-size: 24px; }
-        .news-date { color: #65676b; font-size: 14px; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .news-content { color: #4b4f56; margin-bottom: 15px; }
-
-        /* PRZYCISK EDYCJI PRZY ARTYKULE (Widoczny dla admina) */
-        .edit-tag { font-size: 12px; color: #0047ab; text-decoration: none; border: 1px solid #0047ab; padding: 2px 8px; border-radius: 4px; float: right; }
-        .edit-tag:hover { background: #0047ab; color: white; }
-
-        .no-news { text-align: center; padding: 50px; color: #888; }
+        h2 { margin: 0 0 15px 0; color: #1a1a1a; font-size: 26px; }
+        .content { color: #444; line-height: 1.6; }
+        
+        .no-data { text-align: center; padding: 50px; color: #999; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>AKTUALNOŚCI DYNAMO WROCŁAW</h1>
-</header>
+<div class="wrapper">
 
-<div class="container">
-
-    <div class="admin-nav">
-        <span>Zalogowano jako Administrator</span>
-        <a href="zarzadzanie_lista.php" class="btn-panel">+ Zarządzaj / Dodaj nowy</a>
+    <div class="admin-controls">
+        <span style="font-weight: bold; color: #555;">Zarządzanie treścią Dynamo Wrocław</span>
+        <a href="zarzadzanie_lista.php" class="btn-manage">+ Dodaj / Edytuj artykuły</a>
     </div>
 
     <?php if ($result && $result->num_rows > 0): ?>
         <?php while($row = $result->fetch_assoc()): ?>
-            <article class="news-item">
-                <a href="edytuj_artykul.php?id=<?php echo $row['id']; ?>" class="edit-tag">Edytuj</a>
-                
-                <span class="news-date"><?php echo date("d.m.Y", strtotime($row['data_publikacji'])); ?></span>
-                <h2><?php echo htmlspecialchars($row['tytul']); ?></h2>
-                
-                <div class="news-content">
-                    <?php 
-                        // Wyświetla fragment treści (pierwsze 200 znaków)
-                        echo nl2br(htmlspecialchars(substr($row['tresc'], 0, 200))); 
-                    ?>...
+            <div class="article-card">
+                <div class="article-body">
+                    <div class="meta-info">
+                        <span class="date">📅 <?php echo date("d.m.Y", strtotime($row['data_publikacji'])); ?></span>
+                        <a href="edytuj_artykul.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edytuj ten wpis</a>
+                    </div>
+                    
+                    <h2><?php echo htmlspecialchars($row['tytul']); ?></h2>
+                    
+                    <div class="content">
+                        <?php echo nl2br(htmlspecialchars($row['tresc'])); ?>
+                    </div>
                 </div>
-            </article>
+            </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <div class="no-news">
-            <p>Obecnie nie ma żadnych aktualności. Wróć później!</p>
+        <div class="no-data">
+            <h3>Brak aktualności do wyświetlenia.</h3>
+            <p>Użyj panelu powyżej, aby dodać pierwszy artykuł.</p>
         </div>
     <?php endif; ?>
 
