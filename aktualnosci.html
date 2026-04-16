@@ -6,169 +6,195 @@
     <title>Aktualności | Dynamo Wrocław</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* --- STYLE Z INDEX.HTML --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: radial-gradient(circle at top right, #003366, #050b14);
             color: #e0e0e0;
             font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
-            padding-top: 100px; 
-            overflow-x: hidden;
         }
 
-        /* --- NAVBAR --- */
         nav {
             width: 100%; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 2000;
         }
-        .nav-content { display: flex; align-items: center; gap: 20px; }
-        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; opacity: 0.7; transition: 0.3s; padding: 10px; }
+        .nav-content-left { display: flex; align-items: center; gap: 40px; }
+        .logo-img { height: 65px; width: auto; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-btn { color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; transition: 0.3s; cursor: pointer; padding: 10px; }
         .nav-btn:hover { opacity: 1; color: #00a2ff; }
-
-        .main-container { max-width: 1100px; margin: 0 auto; padding: 20px; position: relative; }
         
-        /* --- PRZYCISK DODAWANIA --- */
-        .add-news-trigger {
-            width: 100%; background: rgba(0, 162, 255, 0.1); border: 2px dashed rgba(0, 162, 255, 0.4);
-            color: #00a2ff; padding: 20px; border-radius: 12px; cursor: pointer;
-            font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 30px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .add-news-trigger:hover { background: rgba(0, 162, 255, 0.2); border-color: #00a2ff; transform: scale(1.01); }
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: rgba(10, 21, 37, 0.98); min-width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-top: 5px; }
+        .dropdown:hover .dropdown-menu { display: block; }
 
-        /* --- PANEL ADMINISTRATORA --- */
-        #admin-panel { background: rgba(0,0,0,0.5); padding: 30px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #444; display: none; }
-        .admin-input, .admin-textarea { width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; font-family: inherit; }
-        .btn-publish { background: #00a2ff; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .nav-right-container { display: flex; align-items: center; gap: 25px; }
+        .lang-dropdown { position: relative; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: rgba(10, 21, 37, 0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; min-width: 80px; }
+        .lang-menu.active { display: block; }
+        .lang-option { padding: 10px; cursor: pointer; font-size: 12px; }
+        .lang-option:hover { color: #00a2ff; }
+
+        /* --- KONTENER TREŚCI --- */
+        .main-content { margin-top: 100px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 95%; max-width: 1100px; }
+
+        /* --- MAŁY PRZYCISK DODAWANIA --- */
+        .admin-controls { width: 100%; display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .btn-add-small { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        .btn-add-small:hover { background: #00a2ff; border-color: #00a2ff; }
+
+        /* --- PANEL FORMULARZA --- */
+        #admin-panel { background: rgba(0,0,0,0.6); padding: 30px; border-radius: 16px; border: 1px solid #444; margin-bottom: 30px; display: none; }
+        .admin-input, .admin-textarea { width: 100%; padding: 15px; margin: 10px 0; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; border-radius: 8px; font-family: inherit; }
 
         /* --- LISTA KART --- */
-        .news-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 25px; border-radius: 16px; margin-bottom: 25px; cursor: pointer; transition: 0.3s ease; }
-        .news-card:hover { border-color: #00a2ff; background: rgba(255,255,255,0.06); }
-        .news-card-date { color: #00a2ff; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
-        .news-card-title { font-size: 28px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
+        .news-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 25px; border-radius: 16px; margin-bottom: 20px; cursor: pointer; position: relative; transition: 0.3s; }
+        .news-card:hover { border-color: #00a2ff; transform: translateY(-3px); }
+        .btn-delete { position: absolute; top: 20px; right: 20px; color: #ff4444; opacity: 0.5; border: none; background: none; cursor: pointer; padding: 10px; }
+        .btn-delete:hover { opacity: 1; }
 
-        /* --- WIDOK EPIC GAMES --- */
-        #article-view { display: none; }
-        .back-btn { cursor: pointer; color: #00a2ff; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; }
-        .article-hero-header { background: rgba(0,0,0,0.6); padding: 60px 40px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .article-main-title { font-size: 60px; font-weight: 900; text-transform: uppercase; line-height: 1; color: #fff; margin-bottom: 20px; }
-        .tag-aktualnosci { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; color: #fff; font-weight: bold; font-size: 14px; border: 1px solid rgba(255,255,255,0.15); }
-        .article-content-wrapper { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
-        .article-author-block { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .author-logo-img { height: 50px; width: auto; }
-        .author-name { font-size: 18px; font-weight: bold; color: #fff; }
-        .article-body-text { font-size: 18px; line-height: 1.8; color: rgba(255,255,255,0.9); white-space: pre-wrap; }
+        /* --- WYGLĄD ARTYKUŁU EPIC GAMES --- */
+        #article-view { display: none; width: 100%; }
+        .article-hero { background: rgba(0,0,0,0.5); padding: 80px 40px; border-radius: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .article-hero h1 { font-size: 55px; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -2px; margin-bottom: 25px; }
+        .article-tag { color: rgba(255,255,255,0.6); font-size: 14px; }
+        .article-tag span { background: rgba(255,255,255,0.1); color: #fff; padding: 5px 12px; border-radius: 4px; font-weight: bold; margin-left: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        
+        .article-body-container { background: rgba(255,255,255,0.02); padding: 50px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .article-author-row { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; padding-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .author-name { font-size: 20px; font-weight: bold; }
+        .article-text { font-size: 19px; line-height: 1.8; color: #ccc; white-space: pre-wrap; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-content">
-            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height:60px;"></a>
-            <a href="index.html" class="nav-btn">Strona Główna</a>
-            <a href="aktualnosci.html" class="nav-btn" style="color:#00a2ff; opacity:1;">Aktualności</a>
+        <div class="nav-content-left">
+            <a href="index.html"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="logo-img"></a>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <span class="nav-btn">Klub <i class="fas fa-chevron-down" style="font-size: 8px;"></i></span>
+                    <div class="dropdown-menu">
+                        <a href="zespol.html" class="nav-btn">I Zespół</a>
+                        <a href="historia.html" class="nav-btn">Historia</a>
+                    </div>
+                </div>
+                <a href="aktualnosci.html" class="nav-btn" style="color:#00a2ff; opacity:1;">Aktualności</a>
+                <a href="#" class="nav-btn">Kontakt</a>
+            </div>
+        </div>
+        <div class="nav-right-container">
+            <div class="partner-section">
+                <img src="657223629_1253635633558394_588577037858878449_n-removebg-preview.png" style="height:35px;">
+            </div>
+            <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="nav-btn"><i class="fab fa-instagram"></i></a>
+            <div class="lang-dropdown">
+                <div class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe" style="color:#00a2ff"></i> <span id="current-lang">PL</span></div>
+                <div id="lang-menu" class="lang-menu">
+                    <div class="lang-option" onclick="selectLang('PL')">PL</div>
+                    <div class="lang-option" onclick="selectLang('UA')">UA</div>
+                    <div class="lang-option" onclick="selectLang('EN')">EN</div>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <div class="main-container">
+    <div class="main-content">
+        <div class="container">
+            
+            <div id="list-view">
+                <div class="admin-controls">
+                    <button class="btn-add-small" onclick="checkPassAndToggle()">+ Dodaj artykuł</button>
+                </div>
 
-        <div id="list-controls">
-            <div class="add-news-trigger" onclick="toggleAdmin()">
-                <i class="fas fa-plus-circle"></i> Dodaj nowy artykuł
+                <div id="admin-panel">
+                    <input type="text" id="post-title" class="admin-input" placeholder="Tytuł artykułu">
+                    <textarea id="post-content" class="admin-textarea" rows="8" placeholder="Treść..."></textarea>
+                    <button class="btn-add-small" style="background:#00a2ff" onclick="savePost()">Opublikuj</button>
+                </div>
+
+                <div id="news-list"></div>
             </div>
-        </div>
 
-        <div id="admin-panel">
-            <h3>Nowy Wpis</h3>
-            <input type="text" id="admin-title" class="admin-input" placeholder="Wielki Tytuł Artykułu">
-            <textarea id="admin-content" class="admin-textarea" rows="10" placeholder="Treść aktualności..."></textarea>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-publish" onclick="saveArticle()">Opublikuj</button>
-                <button onclick="toggleAdmin()" style="background:none; border:none; color:#777; cursor:pointer;">Anuluj</button>
+            <div id="article-view">
+                <div class="nav-btn" onclick="showList()" style="margin-bottom:20px; display:inline-block;"><i class="fas fa-arrow-left"></i> Powrót</div>
+                <div id="article-content"></div>
             </div>
+
         </div>
-
-        <div id="news-list"></div>
-
-        <div id="article-view">
-            <div class="back-btn" onclick="showList()"><i class="fas fa-arrow-left"></i> Wróć</div>
-            <div id="full-article-content"></div>
-        </div>
-
     </div>
 
     <script>
-        let articles = JSON.parse(localStorage.getItem('dynamo_news')) || [];
+        const PASS = "admin123";
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
 
-        function toggleAdmin() {
-            const panel = document.getElementById('admin-panel');
-            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        function toggleLang() { document.getElementById('lang-menu').classList.toggle('active'); }
+        function selectLang(l) { document.getElementById('current-lang').innerText = l; toggleLang(); }
+
+        function checkPassAndToggle() {
+            if(prompt("Podaj hasło administratora:") === PASS) {
+                document.getElementById('admin-panel').style.display = 'block';
+            } else { alert("Błędne hasło!"); }
         }
 
-        function timeAgo(ts) {
-            const diff = Math.floor((Date.now() - ts) / 1000);
-            if (diff < 60) return 'przed chwilą';
-            if (diff < 3600) return Math.floor(diff/60) + ' min. temu';
-            if (diff < 86400) return Math.floor(diff/3600) + ' godz. temu';
-            return Math.floor(diff/86400) + ' dni temu';
+        function savePost() {
+            const t = document.getElementById('post-title').value;
+            const c = document.getElementById('post-content').value;
+            if(!t || !c) return;
+            posts.unshift({ id: Date.now(), title: t, content: c, date: new Date().toLocaleDateString() });
+            localStorage.setItem('dynamo_posts', JSON.stringify(posts));
+            location.reload();
         }
 
-        function saveArticle() {
-            const t = document.getElementById('admin-title').value;
-            const c = document.getElementById('admin-content').value;
-            if(!t || !c) return alert("Wypełnij pola!");
-
-            articles.unshift({ id: Date.now(), timestamp: Date.now(), title: t, content: c });
-            localStorage.setItem('dynamo_news', JSON.stringify(articles));
-            
-            document.getElementById('admin-title').value = '';
-            document.getElementById('admin-content').value = '';
-            toggleAdmin();
-            renderList();
+        function deletePost(id, e) {
+            e.stopPropagation();
+            if(prompt("Podaj hasło, aby usunąć:") === PASS) {
+                posts = posts.filter(p => p.id !== id);
+                localStorage.setItem('dynamo_posts', JSON.stringify(posts));
+                renderList();
+            } else { alert("Błąd!"); }
         }
 
         function renderList() {
-            document.getElementById('list-controls').style.display = 'block';
-            const listDiv = document.getElementById('news-list');
-            listDiv.innerHTML = articles.map(art => `
-                <div class="news-card" onclick="openArticle(${art.id})">
-                    <div class="news-card-date">${timeAgo(art.timestamp)}</div>
-                    <div class="news-card-title">${art.title}</div>
-                    <p style="opacity:0.6">${art.content.substring(0, 120)}...</p>
+            const list = document.getElementById('news-list');
+            list.innerHTML = posts.map(p => `
+                <div class="news-card" onclick="openArticle(${p.id})">
+                    <div style="color:#00a2ff; font-size:12px; font-weight:bold; margin-bottom:5px;">${p.date}</div>
+                    <h2 style="text-transform:uppercase;">${p.title}</h2>
+                    <button class="btn-delete" onclick="deletePost(${p.id}, event)"><i class="fas fa-trash"></i></button>
                 </div>
             `).join('');
         }
 
         function openArticle(id) {
-            const art = articles.find(a => a.id === id);
-            document.getElementById('list-controls').style.display = 'none';
-            document.getElementById('news-list').style.display = 'none';
+            const p = posts.find(x => x.id === id);
+            document.getElementById('list-view').style.display = 'none';
             document.getElementById('article-view').style.display = 'block';
-            window.scrollTo(0,0);
-
-            document.getElementById('full-article-content').innerHTML = `
-                <div class="article-hero-header">
-                    <h1 class="article-main-title">${art.title}</h1>
-                    <div class="tag-aktualnosci">Opublikowano w AKTUALNOŚCI</div>
+            document.getElementById('article-content').innerHTML = `
+                <div class="article-hero">
+                    <div class="article-tag">Opublikowano w <span>AKTUALNOŚCI</span></div>
+                    <h1>${p.title}</h1>
                 </div>
-                <div class="article-content-wrapper">
-                    <div class="article-author-block">
-                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="author-logo-img">
+                <div class="article-body-container">
+                    <div class="article-author-row">
+                        <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height:50px;">
                         <div>
                             <div class="author-name">Dynamo Wrocław</div>
-                            <div style="font-size:12px; opacity:0.5;">${timeAgo(art.timestamp)}</div>
+                            <div style="font-size:12px; opacity:0.5;">${p.date}</div>
                         </div>
                     </div>
-                    <div class="article-body-text">${art.content}</div>
+                    <div class="article-text">${p.content}</div>
                 </div>
             `;
+            window.scrollTo(0,0);
         }
 
         function showList() {
+            document.getElementById('list-view').style.display = 'block';
             document.getElementById('article-view').style.display = 'none';
-            renderList();
-            document.getElementById('news-list').style.display = 'block';
         }
 
         renderList();
