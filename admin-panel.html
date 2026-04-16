@@ -8,139 +8,140 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #050b14; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 50px 5%; }
-        .admin-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; }
+        .admin-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 40px; }
         .card { background: #0a1525; padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
         h2 { text-transform: uppercase; font-style: italic; color: #007bff; margin-bottom: 25px; font-size: 22px; }
-        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; opacity: 0.6; margin-bottom: 8px; color: #fff; }
+        label { display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; opacity: 0.6; margin-bottom: 8px; }
         input, .editor { width: 100%; background: #050b14; border: 1px solid #1a2635; padding: 12px; color: #fff; border-radius: 6px; margin-bottom: 20px; outline: none; }
-        .toolbar { background: #162130; padding: 8px; border-radius: 6px 6px 0 0; display: flex; gap: 5px; border: 1px solid #1a2635; border-bottom: none; }
-        .tool-btn { background: #0a1525; border: 1px solid #333; color: #fff; width: 35px; height: 35px; cursor: pointer; border-radius: 4px; }
-        .editor { min-height: 250px; border-top: none; border-radius: 0 0 6px 6px; overflow-y: auto; }
-        .btn-save { width: 100%; background: #007bff; color: #fff; border: none; padding: 18px; border-radius: 6px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
-        .btn-save:hover { background: #0056b3; }
         
-        /* LISTA ZARZĄDZANIA */
+        .toolbar { background: #162130; padding: 10px; border-radius: 6px 6px 0 0; display: flex; flex-wrap: wrap; gap: 8px; border: 1px solid #1a2635; border-bottom: none; }
+        .tool-btn { background: #0a1525; border: 1px solid #333; color: #fff; width: 34px; height: 34px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .tool-btn:hover { background: #007bff; }
+        
+        .editor { min-height: 350px; border-top: none; border-radius: 0 0 6px 6px; overflow-y: auto; line-height: 1.6; background: #050b14; padding: 15px; border: 1px solid #1a2635; }
+        .btn-save { width: 100%; background: #007bff; color: #fff; border: none; padding: 18px; border-radius: 6px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        
         .post-item { background: #0a1525; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .btn-edit { color: #fdd835; background: none; border: none; cursor: pointer; font-size: 18px; margin-right: 15px; }
-        .btn-delete { color: #ff4444; background: none; border: none; cursor: pointer; font-size: 18px; }
+        .status-badge { font-size: 9px; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; margin-left: 10px; }
+        .status-planned { background: #fdd835; color: #000; }
+        .status-live { background: #4caf50; color: #fff; }
     </style>
 </head>
 <body>
 
 <div class="admin-grid">
     <div class="card">
-        <h2 id="form-title">Nowa Publikacja</h2>
+        <h2 id="form-title">Nowa Publikacja / Planowanie</h2>
         <input type="hidden" id="edit-index" value="-1">
         
         <label>Tytuł Artykułu</label>
-        <input type="text" id="postTitle" placeholder="Wpisz tytuł...">
+        <input type="text" id="postTitle">
         
-        <label>Data (Bardzo ważne dla kolejności)</label>
-        <input type="date" id="postDate">
+        <label>Data i Godzina Publikacji (Zaplanuj kiedy post ma być widoczny)</label>
+        <input type="datetime-local" id="postDateTime">
         
-        <label>Link do zdjęcia głównego</label>
-        <input type="text" id="postImage" placeholder="https://...">
+        <label>Zdjęcie (URL)</label>
+        <input type="text" id="postImage">
         
-        <label>Treść artykułu</label>
+        <label>Treść</label>
         <div class="toolbar">
             <button class="tool-btn" onclick="document.execCommand('bold')"><i class="fas fa-bold"></i></button>
             <button class="tool-btn" onclick="document.execCommand('italic')"><i class="fas fa-italic"></i></button>
-            <button class="tool-btn" onclick="document.execCommand('insertUnorderedList')"><i class="fas fa-list-ul"></i></button>
+            <button class="tool-btn" onclick="addLink()"><i class="fas fa-link"></i></button>
         </div>
         <div id="editor" class="editor" contenteditable="true"></div>
         
-        <button class="btn-save" onclick="savePost()">Zapisz i Opublikuj</button>
-        <a href="aktualnosci.html" style="display:block; text-align:center; color:#666; margin-top:20px; text-decoration:none; font-size:13px; font-weight:bold;">← Wróć do aktualności</a>
+        <button class="btn-save" onclick="savePost()">Zapisz / Zaplanuj</button>
+        <a href="aktualnosci.html" style="display:block; text-align:center; color:#666; margin-top:20px; text-decoration:none; font-size:12px;">Wróć do aktualności</a>
     </div>
 
     <div>
-        <h2>Zarządzaj Postami</h2>
+        <h2>Wszystkie Posty</h2>
         <div id="manager-list"></div>
     </div>
 </div>
 
 <script>
-    // Ustawienie dzisiejszej daty na starcie
-    document.getElementById('postDate').valueAsDate = new Date();
+    // Ustawienie aktualnego czasu w kalendarzu
+    function setCurrentTime() {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('postDateTime').value = now.toISOString().slice(0, 16);
+    }
+
+    function addLink() {
+        const url = prompt("URL:");
+        if(url) document.execCommand('createLink', false, url);
+    }
 
     function renderList() {
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        
-        // Sortujemy bazę danych od najnowszej daty
         posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         
-        // Zapisujemy posortowaną wersję, aby indeksy (i) zawsze były poprawne
-        localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-        
-        const listContainer = document.getElementById('manager-list');
-        if (posts.length === 0) {
-            listContainer.innerHTML = '<p style="opacity:0.3">Brak postów do zarządzania.</p>';
-            return;
-        }
-
-        listContainer.innerHTML = posts.map((p, i) => `
+        const now = new Date().getTime();
+        document.getElementById('manager-list').innerHTML = posts.map((p, i) => {
+            const isPlanned = new Date(p.date).getTime() > now;
+            return `
             <div class="post-item">
                 <div>
-                    <div style="font-weight:bold; font-size:15px; margin-bottom:3px;">${p.title}</div>
-                    <div style="font-size:11px; opacity:0.5; font-weight:bold;">${p.date}</div>
+                    <div style="font-weight:bold;">${p.title}</div>
+                    <div style="font-size:11px; opacity:0.6;">${p.date.replace('T', ' ')} 
+                        <span class="status-badge ${isPlanned ? 'status-planned' : 'status-live'}">
+                            ${isPlanned ? 'Zaplanowany' : 'Opublikowany'}
+                        </span>
+                    </div>
                 </div>
                 <div>
-                    <button class="btn-edit" onclick="editPost(${i})"><i class="fas fa-edit"></i></button>
-                    <button class="btn-delete" onclick="deletePost(${i})"><i class="fas fa-trash"></i></button>
+                    <button style="color:#fdd835; background:none; border:none; cursor:pointer;" onclick="editPost(${i})"><i class="fas fa-edit"></i></button>
+                    <button style="color:#ff4444; background:none; border:none; cursor:pointer;" onclick="deletePost(${i})"><i class="fas fa-trash"></i></button>
                 </div>
-            </div>`).join('');
+            </div>`;
+        }).join('');
     }
 
     function savePost() {
         const title = document.getElementById('postTitle').value;
-        const date = document.getElementById('postDate').value;
+        const date = document.getElementById('postDateTime').value;
         const image = document.getElementById('postImage').value;
         const content = document.getElementById('editor').innerHTML;
         const editIdx = parseInt(document.getElementById('edit-index').value);
 
-        if(!title || !date || content.trim() === "") {
-            alert("Uzupełnij tytuł, datę i treść!");
-            return;
-        }
+        if(!title || !date) { alert("Tytuł i data są wymagane!"); return; }
 
         let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-        const newPost = { title, date, image: image || 'https://via.placeholder.com/800', content };
+        const postData = { title, date, image: image || 'https://via.placeholder.com/800', content };
 
-        if(editIdx === -1) {
-            posts.push(newPost);
-        } else {
-            posts[editIdx] = newPost;
-        }
+        if(editIdx === -1) posts.push(postData);
+        else posts[editIdx] = postData;
 
         localStorage.setItem('dynamo_posts', JSON.stringify(posts));
-        alert("Pomyślnie zapisano!");
-        location.reload(); // Przeładowanie odświeża listę i sortowanie
+        location.reload();
     }
 
     function editPost(i) {
-        const posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+        let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+        posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         const p = posts[i];
         
         document.getElementById('postTitle').value = p.title;
-        document.getElementById('postDate').value = p.date;
+        document.getElementById('postDateTime').value = p.date;
         document.getElementById('postImage').value = p.image;
         document.getElementById('editor').innerHTML = p.content;
         document.getElementById('edit-index').value = i;
-        document.getElementById('form-title').innerText = "Tryb Edycji Artykułu";
-        document.getElementById('form-title').style.color = "#fdd835";
         window.scrollTo(0,0);
     }
 
     function deletePost(i) {
-        if(confirm("Czy na pewno chcesz bezpowrotnie usunąć ten artykuł?")) {
-            let posts = JSON.parse(localStorage.getItem('dynamo_posts'));
+        if(confirm("Usunąć?")) {
+            let posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
+            posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             posts.splice(i, 1);
             localStorage.setItem('dynamo_posts', JSON.stringify(posts));
             renderList();
         }
     }
     
-    window.onload = renderList;
+    window.onload = () => { setCurrentTime(); renderList(); };
 </script>
 </body>
 </html>
