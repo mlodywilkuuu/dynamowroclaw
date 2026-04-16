@@ -1,12 +1,12 @@
 <?php
-// 1. POŁĄCZENIE Z BAZĄ DANYCH
+// 1. POŁĄCZENIE Z BAZĄ
 $db = new mysqli("localhost", "uzytkownik", "haslo", "nazwa_bazy");
 
 if ($db->connect_error) {
     die("Błąd połączenia: " . $db->connect_error);
 }
 
-// 2. LOGIKA SORTOWANIA: Najnowsze zawsze na górze (DESC)
+// 2. POBIERANIE - Sortowanie: najnowsze daty zawsze na samej górze
 $query = "SELECT * FROM aktualnosci ORDER BY data_publikacji DESC";
 $result = $db->query($query);
 ?>
@@ -15,96 +15,59 @@ $result = $db->query($query);
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aktualności | Dynamo Wrocław</title>
+    <title>Aktualności - Dynamo Wrocław</title>
     <style>
-        /* STYLIZACJA STRONY AKTUALNOŚCI */
-        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-        .wrapper { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        /* Twoja pierwotna stylistyka strony aktualności */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fff; }
+        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
-        /* PASEK ADMINA - Tylko do zarządzania */
-        .admin-controls { 
-            background: #fff; 
-            padding: 15px; 
-            margin-bottom: 30px; 
-            border-radius: 8px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            border-left: 5px solid #0047ab;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .btn-manage { 
+        /* PRZYCISK DO PANELU EDYCJI (widoczny tylko dla Ciebie) */
+        .admin-link { 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            padding: 10px 15px; 
             background: #0047ab; 
-            color: white; 
-            padding: 10px 20px; 
+            color: #fff; 
             text-decoration: none; 
-            border-radius: 5px; 
-            font-weight: bold; 
-        }
-
-        /* WYGLĄD KARTY ARTYKUŁU */
-        .article-card { 
-            background: white; 
-            margin-bottom: 30px; 
-            border-radius: 10px; 
-            overflow: hidden; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .article-card:hover { transform: translateY(-5px); }
-        
-        .article-body { padding: 25px; }
-        .meta-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .date { color: #0047ab; font-weight: bold; font-size: 14px; }
-        
-        .edit-btn { 
-            font-size: 12px; 
-            text-decoration: none; 
-            color: #777; 
-            border: 1px solid #ddd; 
-            padding: 3px 10px; 
             border-radius: 4px; 
+            font-weight: bold;
         }
-        .edit-btn:hover { background: #eee; }
 
-        h2 { margin: 0 0 15px 0; color: #1a1a1a; font-size: 26px; }
-        .content { color: #444; line-height: 1.6; }
+        .news-entry { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .news-entry h2 { color: #0047ab; margin-bottom: 5px; }
+        .news-entry .date { color: #888; font-size: 0.9em; margin-bottom: 15px; }
+        .news-text { line-height: 1.6; color: #333; }
         
-        .no-data { text-align: center; padding: 50px; color: #999; }
+        .edit-direct { font-size: 12px; color: #0047ab; text-decoration: underline; margin-left: 10px; }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="content-wrapper">
 
-    <div class="admin-controls">
-        <span style="font-weight: bold; color: #555;">Zarządzanie treścią Dynamo Wrocław</span>
-        <a href="zarzadzanie_lista.php" class="btn-manage">+ Dodaj / Edytuj artykuły</a>
-    </div>
+    <a href="zarzadzanie_lista.php" class="admin-link">⚙️ DODAJ / EDYTUJ ARTYKUŁY</a>
+
+    <h1>Aktualności</h1>
 
     <?php if ($result && $result->num_rows > 0): ?>
         <?php while($row = $result->fetch_assoc()): ?>
-            <div class="article-card">
-                <div class="article-body">
-                    <div class="meta-info">
-                        <span class="date">📅 <?php echo date("d.m.Y", strtotime($row['data_publikacji'])); ?></span>
-                        <a href="edytuj_artykul.php?id=<?php echo $row['id']; ?>" class="edit-btn">Edytuj ten wpis</a>
-                    </div>
-                    
-                    <h2><?php echo htmlspecialchars($row['tytul']); ?></h2>
-                    
-                    <div class="content">
-                        <?php echo nl2br(htmlspecialchars($row['tresc'])); ?>
-                    </div>
+            <div class="news-entry">
+                <h2>
+                    <?php echo htmlspecialchars($row['tytul']); ?>
+                    <a href="edytuj_artykul.php?id=<?php echo $row['id']; ?>" class="edit-direct">edytuj</a>
+                </h2>
+                
+                <div class="date">
+                    Dodano: <?php echo date("d.m.Y", strtotime($row['data_publikacji'])); ?>
+                </div>
+
+                <div class="news-text">
+                    <?php echo nl2br(htmlspecialchars($row['tresc'])); ?>
                 </div>
             </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <div class="no-data">
-            <h3>Brak aktualności do wyświetlenia.</h3>
-            <p>Użyj panelu powyżej, aby dodać pierwszy artykuł.</p>
-        </div>
+        <p>Brak aktualności.</p>
     <?php endif; ?>
 
 </div>
