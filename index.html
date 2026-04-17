@@ -16,73 +16,69 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: fixed; top: 0; z-index: 10000;
         }
         .nav-container { display: flex; align-items: center; gap: 40px; }
-        .logo-img { height: 50px; cursor: pointer; }
+        .logo-img { height: 50px; }
         .nav-links { display: flex; gap: 20px; }
         .nav-btn { color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { color: #00a2ff; }
 
         /* --- HERO --- */
         .hero { 
-            height: 50vh; background: linear-gradient(to bottom, transparent, #050b14), url('https://images.unsplash.com/photo-1574629810360-7efbbe195018') center/cover;
+            height: 45vh; background: linear-gradient(to bottom, transparent, #050b14), url('https://images.unsplash.com/photo-1574629810360-7efbbe195018') center/cover;
             display: flex; align-items: center; padding: 0 10%; 
         }
-        .hero-title { font-size: clamp(30px, 6vw, 60px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.9; }
+        .hero-title { font-size: clamp(30px, 6vw, 55px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.9; }
 
-        /* --- SECTION GENERIC --- */
-        .section-padding { padding: 60px 10%; }
+        /* --- SECTIONS --- */
+        .section-padding { padding: 40px 10%; }
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
         .section-title-alt { font-size: 9px; color: #00a2ff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
-        .section-main-title { font-size: 26px; text-transform: uppercase; font-style: italic; }
+        .section-main-title { font-size: 24px; text-transform: uppercase; font-style: italic; }
 
-        /* --- MATCH CENTER (HORIZON STYLE) --- */
-        .calendar-list { display: flex; flex-direction: column; gap: 10px; }
-        .match-stripe { 
-            display: flex; align-items: center; background: #0a1525; border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 6px; height: 80px; transition: 0.3s;
-        }
-        .match-stripe:hover { border-color: #00a2ff; background: #0d1b2e; }
-        .m-date-box { 
-            background: #00a2ff; color: #fff; min-width: 80px; height: 100%; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-        }
-        .m-day { font-size: 22px; font-weight: 900; line-height: 1; }
-        .m-month { font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        /* --- CALENDAR (STRICT REAL MADRID STYLE) --- */
+        .cal-carousel { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; padding-bottom: 20px; }
+        .cal-carousel::-webkit-scrollbar { display: none; }
         
-        .m-info-core { flex: 1; display: flex; align-items: center; justify-content: space-around; padding: 0 15px; }
-        .m-team-unit { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; font-size: 12px; width: 35%; }
-        .m-logo-img { width: 35px; height: 35px; object-fit: contain; }
-        .m-result { font-size: 24px; font-weight: 900; color: #fff; min-width: 60px; text-align: center; font-style: italic; }
-        .m-meta { padding: 0 20px; border-left: 1px solid rgba(255,255,255,0.1); font-size: 11px; color: #666; text-align: right; min-width: 150px; }
+        .cal-tile { 
+            min-width: 280px; background: #fff; color: #000; border-radius: 15px; overflow: hidden; 
+            display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .cal-tile-top { background: #050b14; padding: 20px; height: 120px; position: relative; display: flex; justify-content: space-around; align-items: center; }
+        .cal-tile-top img { height: 50px; object-fit: contain; }
+        .cal-tile-top .vs-small { color: rgba(255,255,255,0.2); font-weight: 900; font-style: italic; font-size: 20px; }
+        
+        .cal-tile-bottom { padding: 20px; background: #fff; flex-grow: 1; }
+        .cal-league-name { font-size: 10px; color: #666; font-weight: 700; text-transform: uppercase; }
+        .cal-matchday { font-size: 16px; font-weight: 800; margin: 5px 0 15px 0; display: block; }
+        .cal-info-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #333; margin-bottom: 8px; font-weight: 600; }
+        .cal-info-row i { color: #00a2ff; width: 15px; }
+        .cal-more { margin-top: 15px; color: #00a2ff; font-weight: 800; font-size: 11px; text-transform: uppercase; display: block; border-top: 1px solid #eee; padding-top: 10px; }
 
         /* --- CAROUSELS --- */
-        .carousel-outer { display: flex; gap: 15px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 15px; scrollbar-width: none; }
-        .carousel-outer::-webkit-scrollbar { display: none; }
-        .ctrl-btn { background: #162130; border: 1px solid #333; color: #fff; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .ctrl-btn:hover { background: #00a2ff; border-color: #00a2ff; }
+        .carousel-container { display: flex; gap: 15px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+        .carousel-container::-webkit-scrollbar { display: none; }
+        .scroll-btn { background: #162130; border: 1px solid #333; color: #fff; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .scroll-btn:hover { background: #00a2ff; border-color: #00a2ff; }
 
-        /* --- NEWS CARDS --- */
-        .art-card { min-width: 280px; background: #0a1525; border-radius: 10px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; transition: 0.3s; }
-        .art-card:hover { transform: translateY(-3px); border-color: #00a2ff; }
+        /* --- ARTICLES --- */
+        .news-box { min-width: 260px; background: #0a1525; border-radius: 12px; overflow: hidden; border: 1px solid #1a2635; cursor: pointer; }
 
-        /* --- SQUAD CARDS --- */
-        .player-tile { 
-            min-width: 190px; height: 260px; background: #0a1525; border-radius: 10px; position: relative; 
-            overflow: hidden; border: 1px solid rgba(255,255,255,0.1); 
-        }
-        .p-num-bg { position: absolute; top: 5px; right: 10px; font-size: 35px; font-weight: 900; color: rgba(0, 162, 255, 0.15); z-index: 1; }
-        .p-photo { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .p-caption { position: absolute; bottom: 0; width: 100%; padding: 15px; background: linear-gradient(to top, #000, transparent); z-index: 2; }
-        .p-label { font-weight: 800; text-transform: uppercase; font-size: 13px; }
+        /* --- SQUAD FIX --- */
+        #squad-carousel { min-height: 300px; display: flex; gap: 15px; }
+        /* Styl dla zaimportowanych kafelków z zespol.html */
+        .player-card { min-width: 200px !important; flex-shrink: 0; }
 
-        /* --- FOOTER --- */
-        footer { background: #03070d; padding: 60px 10% 20px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .f-main { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; margin-bottom: 40px; }
-        .f-logo { height: 60px; }
-        .f-social-box { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .f-insta-icon { color: #fff; text-decoration: none; font-size: 30px; transition: 0.3s; }
-        .f-insta-icon:hover { color: #E1306C; transform: scale(1.1); }
-        .f-info-text { max-width: 500px; color: #555; font-size: 12px; line-height: 1.6; }
-        .f-copyright { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; text-align: center; color: #333; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        /* --- FOOTER (EXTENDED) --- */
+        footer { background: #02050a; padding: 60px 10% 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .f-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 50px; }
+        .f-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: #00a2ff; margin-bottom: 20px; letter-spacing: 1px; }
+        .f-text { color: #666; font-size: 13px; line-height: 1.6; }
+        .f-list { list-style: none; }
+        .f-list li { margin-bottom: 10px; }
+        .f-list a { color: #888; text-decoration: none; font-size: 13px; transition: 0.3s; }
+        .f-list a:hover { color: #fff; }
+        .insta-btn-big { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 20px; font-weight: 800; transition: 0.3s; }
+        .insta-btn-big:hover { color: #00a2ff; }
+        .f-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; color: #333; font-size: 11px; }
     </style>
 </head>
 <body>
@@ -99,140 +95,180 @@
 
     <header class="hero">
         <div>
-            <p style="color: #00a2ff; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; font-size: 12px;">Wrocław Pro Liga</p>
+            <p class="section-title-alt">Oficjalna strona klubu</p>
             <h1 class="hero-title">FC DINAMO<br>WROCŁAW</h1>
         </div>
     </header>
 
-    <section class="section-padding">
+    <section class="section-padding" style="background: #080e1a;">
         <div class="section-header">
             <div>
                 <p class="section-title-alt">Match Center</p>
-                <h2 class="section-main-title">Terminarz i Wyniki</h2>
+                <h2 class="section-main-title">Kalendarz</h2>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="scroll-btn" onclick="scrollX('cal-track', -300)"><i class="fas fa-chevron-left"></i></button>
+                <button class="scroll-btn" onclick="scrollX('cal-track', 300)"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
         
-        <div class="calendar-list">
-            <div class="match-stripe">
-                <div class="m-date-box"><span class="m-day">02</span><span class="m-month">Kwi</span></div>
-                <div class="m-info-core">
-                    <div class="m-team-unit" style="justify-content: flex-end;">Dinamo <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="m-logo-img"></div>
-                    <div class="m-result">2 - 2</div>
-                    <div class="m-team-unit"><div style="width:35px;height:35px;background:#eee;border-radius:50%"></div> NDB</div>
+        <div id="cal-track" class="cal-carousel">
+            <div class="cal-tile">
+                <div class="cal-tile-top">
+                    <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
+                    <span class="vs-small">2 - 2</span>
+                    <div style="width:50px;height:50px;background:#eee;border-radius:50%"></div>
                 </div>
-                <div class="m-meta">Kolejka 1<br>Boisko nr 2</div>
+                <div class="cal-tile-bottom">
+                    <span class="cal-league-name">Piłka nożna · Czwarta Liga</span>
+                    <span class="cal-matchday">Kolejka 1</span>
+                    <div class="cal-info-row"><i class="far fa-calendar"></i> Czwartek, 02 Kwi, 20:00</div>
+                    <div class="cal-info-row"><i class="fas fa-map-marker-alt"></i> Boisko nr 2</div>
+                    <span class="cal-more">Szczegóły meczu</span>
+                </div>
             </div>
 
-            <div class="match-stripe">
-                <div class="m-date-box"><span class="m-day">07</span><span class="m-month">Kwi</span></div>
-                <div class="m-info-core">
-                    <div class="m-team-unit" style="justify-content: flex-end;">Mocne Chłopy <div style="width:35px;height:35px;background:#333;border-radius:50%"></div></div>
-                    <div class="m-result">6 - 2</div>
-                    <div class="m-team-unit"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="m-logo-img"> Dinamo</div>
+            <div class="cal-tile">
+                <div class="cal-tile-top">
+                    <div style="width:50px;height:50px;background:#333;border-radius:50%"></div>
+                    <span class="vs-small">6 - 2</span>
+                    <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
                 </div>
-                <div class="m-meta">Kolejka 2<br>Boisko nr 1</div>
+                <div class="cal-tile-bottom">
+                    <span class="cal-league-name">Piłka nożna · Czwarta Liga</span>
+                    <span class="cal-matchday">Kolejka 2</span>
+                    <div class="cal-info-row"><i class="far fa-calendar"></i> Wtorek, 07 Kwi, 19:00</div>
+                    <div class="cal-info-row"><i class="fas fa-map-marker-alt"></i> Boisko nr 1</div>
+                    <span class="cal-more">Szczegóły meczu</span>
+                </div>
             </div>
 
-            <div class="match-stripe" style="border: 1px solid #00a2ff;">
-                <div class="m-date-box" style="background:#000"><span class="m-day">21</span><span class="m-month">Kwi</span></div>
-                <div class="m-info-core">
-                    <div class="m-team-unit" style="justify-content: flex-end;">RunnersHood <div style="width:35px;height:35px;background:#ccc;border-radius:50%"></div></div>
-                    <div class="m-result" style="color:#00a2ff; font-size:16px;">21:00</div>
-                    <div class="m-team-unit"><img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="m-logo-img"> Dinamo</div>
+            <div class="cal-tile" style="border: 2px solid #00a2ff;">
+                <div class="cal-tile-top">
+                    <div style="width:50px;height:50px;background:#ccc;border-radius:50%"></div>
+                    <span class="vs-small">VS</span>
+                    <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png">
                 </div>
-                <div class="m-meta" style="color:#00a2ff">Następny mecz<br>Boisko nr 1</div>
+                <div class="cal-tile-bottom">
+                    <span class="cal-league-name" style="color:#00a2ff">Następny mecz</span>
+                    <span class="cal-matchday">Kolejka 4</span>
+                    <div class="cal-info-row"><i class="far fa-calendar"></i> Wtorek, 21 Kwi, 21:00</div>
+                    <div class="cal-info-row"><i class="fas fa-map-marker-alt"></i> Boisko nr 1</div>
+                    <span class="cal-more">Bilety / Info</span>
+                </div>
             </div>
         </div>
-    </section>
-
-    <section class="section-padding" style="background: rgba(255,255,255,0.01);">
-        <div class="section-header">
-            <div>
-                <p class="section-title-alt">Media</p>
-                <h2 class="section-main-title">Aktualności</h2>
-            </div>
-            <div style="display: flex; gap: 8px;">
-                <button class="ctrl-btn" onclick="slideNav('news-carousel', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="ctrl-btn" onclick="slideNav('news-carousel', 1)"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-        <div id="news-carousel" class="carousel-outer"></div>
     </section>
 
     <section class="section-padding">
         <div class="section-header">
             <div>
-                <p class="section-title-alt">Team</p>
-                <h2 class="section-main-title">Nasza Kadra</h2>
+                <p class="section-title-alt">Aktualności</p>
+                <h2 class="section-main-title">Z obozu Dinama</h2>
             </div>
-            <div style="display: flex; gap: 8px;">
-                <button class="ctrl-btn" onclick="slideNav('squad-carousel', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="ctrl-btn" onclick="slideNav('squad-carousel', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div style="display: flex; gap: 10px;">
+                <button class="scroll-btn" onclick="scrollX('news-track', -300)"><i class="fas fa-chevron-left"></i></button>
+                <button class="scroll-btn" onclick="scrollX('news-track', 300)"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
-        <div id="squad-carousel" class="carousel-outer"></div>
+        <div id="news-track" class="carousel-container"></div>
+    </section>
+
+    <section class="section-padding" style="background: rgba(255,255,255,0.02);">
+        <div class="section-header">
+            <div>
+                <p class="section-title-alt">Skład</p>
+                <h2 class="section-main-title">Nasza Kadra</h2>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="scroll-btn" onclick="scrollX('squad-carousel', -250)"><i class="fas fa-chevron-left"></i></button>
+                <button class="scroll-btn" onclick="scrollX('squad-carousel', 250)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div id="squad-carousel" class="carousel-container">
+            </div>
     </section>
 
     <footer>
-        <div class="f-main">
-            <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" class="f-logo">
-            <div class="f-info-text">
-                FC Dinamo Wrocław to amatorski klub piłkarski rywalizujący we wrocławskich rozgrywkach ligowych. Naszą misją jest promowanie sportowej rywalizacji i integracja lokalnej społeczności poprzez pasję do futbolu.
+        <div class="f-grid">
+            <div>
+                <img src="99bf7218-0759-45fb-820f-d026f07d5ee3-removebg-preview.png" style="height: 60px; margin-bottom: 20px;">
+                <p class="f-text">Oficjalny serwis FC Dinamo Wrocław. Jesteśmy pasjonatami piłki nożnej, tworzącymi historię na wrocławskich boiskach.</p>
             </div>
-            <div class="f-social-box">
-                <span style="font-size: 10px; text-transform: uppercase; color: #555; letter-spacing: 2px;">Oficjalny Instagram</span>
-                <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="f-insta-icon">
-                    <i class="fab fa-instagram"></i>
+            <div>
+                <h4 class="f-title">Klub</h4>
+                <ul class="f-list">
+                    <li><a href="zespol.html">Pierwsza Drużyna</a></li>
+                    <li><a href="aktualnosci.html">Aktualności</a></li>
+                    <li><a href="#">Terminarz</a></li>
+                    <li><a href="#">Galeria</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="f-title">Social Media</h4>
+                <a href="https://www.instagram.com/ks_dinamo_wroclaw_/" target="_blank" class="insta-btn-big">
+                    <i class="fab fa-instagram"></i> Instagram
                 </a>
+                <p class="f-text" style="margin-top: 15px;">Śledź nasze codzienne relacje i wyniki na żywo.</p>
             </div>
         </div>
-        <div class="f-copyright">
-            &copy; 2026 FC Dinamo Wrocław. Created for football fans.
+        <div class="f-bottom">
+            <span>© 2026 FC DINAMO WROCŁAW</span>
+            <span>PROJEKT I REALIZACJA: DINAMO MEDIA</span>
         </div>
     </footer>
 
     <script>
-        function slideNav(id, dir) {
-            document.getElementById(id).scrollLeft += (dir * 300);
+        function scrollX(id, amount) {
+            document.getElementById(id).scrollLeft += amount;
         }
 
-        async function loadSquad() {
+        async function initSquad() {
             try {
-                const res = await fetch('zespol.html');
-                const text = await res.text();
-                const doc = new DOMParser().parseFromString(text, 'text/html');
+                const response = await fetch('zespol.html');
+                const html = await response.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
                 const players = doc.querySelectorAll('.player-card');
                 const container = document.getElementById('squad-carousel');
-                if(players.length > 0) {
+                
+                if (players.length > 0) {
                     container.innerHTML = '';
-                    players.forEach(p => container.appendChild(p.cloneNode(true)));
+                    players.forEach(p => {
+                        const clone = p.cloneNode(true);
+                        // Upewnienie się, że styl z zespol.html nie psuje layoutu
+                        clone.style.minWidth = "220px";
+                        container.appendChild(clone);
+                    });
                 }
-            } catch (e) { console.error("Squad load error"); }
+            } catch (e) { console.error("Squad load fail", e); }
         }
 
-        function loadNews() {
+        function initNews() {
             const posts = JSON.parse(localStorage.getItem('dynamo_posts')) || [];
-            const container = document.getElementById('news-carousel');
-            const now = new Date();
-            const published = posts.filter(p => new Date(p.date) <= now).sort((a,b) => new Date(b.date) - new Date(a.date));
+            const container = document.getElementById('news-track');
+            const published = posts.filter(p => new Date(p.date) <= new Date())
+                                   .sort((a,b) => new Date(b.date) - new Date(a.date));
 
-            if(published.length === 0) {
+            if (published.length === 0) {
                 container.innerHTML = "<p style='opacity:0.2; padding:20px;'>Brak aktualności.</p>";
                 return;
             }
 
-            container.innerHTML = published.slice(0, 8).map(p => `
-                <div class="art-card" onclick="window.location.href='aktualnosci.html'">
+            container.innerHTML = published.slice(0, 6).map(p => `
+                <div class="news-box" onclick="window.location.href='aktualnosci.html'">
                     <div style="height:160px; background:url('${p.image}') center/cover #1a2635;"></div>
                     <div style="padding:15px;">
                         <small style="color:#00a2ff; font-weight:800; font-size:9px;">${p.date.split('T')[0]}</small>
-                        <h3 style="font-size:14px; text-transform:uppercase; margin-top:8px; font-style:italic; line-height:1.2;">${p.title}</h3>
+                        <h3 style="font-size:14px; text-transform:uppercase; margin-top:5px; font-style:italic;">${p.title}</h3>
                     </div>
                 </div>
             `).join('');
         }
 
-        window.onload = () => { loadSquad(); loadNews(); };
+        window.onload = () => {
+            initSquad();
+            initNews();
+        };
     </script>
 </body>
 </html>
